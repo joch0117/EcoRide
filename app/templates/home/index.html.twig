@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<main class="flex-grow-1">
+        <!--  Carrousel -->
+    <section id="carousel-section" class="vh-100">
+    <div id="ecoRideCarousel" class="carousel slide vh-100" data-bs-ride="carousel" data-bs-wrap="true">
+    
+    <!-- Indicateurs -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#ecoRideCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#ecoRideCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#ecoRideCarousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#ecoRideCarousel" data-bs-slide-to="3"></button>
+        </div>
+
+    <!-- Slides -->
+        <div class="carousel-inner vh-100">
+            <div class="carousel-item active vh-100">
+                <img src="{{ asset('images/image1.png') }}" class="d-block w-100 h-100 object-fit-cover" alt="Présentation EcoRide">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center bg-opacity-75 bg-success rounded p-3">
+                    <h2 class="fs-3 fw-bold">EcoRide : Covoiturage Responsable</h2>
+                    <p class="fs-5">Chez EcoRide, nous croyons qu’il est temps de repenser nos déplacements. Nous avons créé une plateforme de covoiturage conçue pour réduire l’impact environnemental de la mobilité tout en facilitant les trajets du quotidien. Notre priorité : faire rimer écologie, simplicité et économies.</p>
+                </div>
+            </div>
+
+            <div class="carousel-item vh-100">
+                <img src="{{ asset('images/image2.png') }}" class="d-block w-100 h-100 object-fit-cover" alt="Économie et écologie">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center bg-opacity-75 bg-success rounded p-3">
+                    <h2 class="fs-3 fw-bold">Rejoignez notre communauté</h2>
+                    <p class="fs-5">Chaque membre de notre communauté contribue à construire un réseau de transport plus humain et plus responsable. Qu’ils soient conducteurs ou passagers, nos utilisateurs partagent bien plus qu’un trajet : ils participent à un changement de société, ensemble.</p>
+                </div>
+            </div>
+
+            <div class="carousel-item vh-100">
+                <img src="{{ asset('images/image3.png') }}" class="d-block w-100 h-100 object-fit-cover" alt="Communauté EcoRide">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center bg-opacity-75 bg-success rounded p-3">
+                    <h2 class="fs-3 fw-bold">Le choix de l'électrique</h2>
+                    <p class="fs-5">EcoRide met en avant les véhicules électriques et les trajets partagés. Grâce à un système de crédits équitables, nous encourageons les bons comportements tout en offrant une alternative fiable et moderne aux transports classiques.</p>
+                </div>
+            </div>
+            <div class="carousel-item vh-100">
+                <img src="{{ asset('images/image4.png') }}" class="d-block w-100 h-100 object-fit-cover" alt="Communauté EcoRide">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center bg-opacity-75 bg-success rounded p-3">
+                    <h2 class="fs-3 fw-bold">Nos engagement</h2>
+                    <p class="fs-5">Sécurité, transparence et convivialité sont les piliers de notre service. Notes, préférences, historique : tout est pensé pour créer une expérience fluide, agréable et sécurisante à chaque covoiturage.</p>
+                </div>
+            </div>
+        </div>
+
+            <!-- Contrôles précédent/suivant -->
+            <button class="carousel-control-prev opacity-100 " type="button" data-bs-target="#ecoRideCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next opacity-100 " type="button" data-bs-target="#ecoRideCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+    </div>
+    </section>
+
+</main>
+{% endblock %}

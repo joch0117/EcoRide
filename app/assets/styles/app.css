@@ -1,0 +1,187 @@
+
+/*===================
+réinitialisation du navigateur
+=====================*/
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+/*===================
+Palette de couleur global
+=====================*/
+:root{
+    --eco-green:#004D40;
+    --eco-light-green: #00A676;
+    --eco-cream: #F5F5Dc;
+    --eco-dark:#1E1E1E;
+    --eco-white:#ffffff;
+    --base-font-size:16px;
+}
+
+/*====================
+style global
+=====================*/
+
+html{
+    font-size:100%;
+    scroll-behavior: smooth;
+}
+body{
+    font-family:system-ui, sans-serif;
+    background-color:var(--eco-cream);
+    color: var(--eco-green);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex:1;
+}
+
+/* Couleurs utilitaires */
+.bg-eco-green {
+    background-color: var(--eco-green) !important;
+}
+
+.bg-eco-light-green {
+    background-color: var(--eco-light-green) !important;
+}
+
+.bg-eco-cream {
+    background-color: var(--eco-cream) !important;
+}
+
+.text-eco-cream {
+    color: var(--eco-cream) !important;
+}
+
+.text-eco-green {
+    color: var(--eco-green) !important;
+}
+
+.text-eco-dark {
+    color: var(--eco-dark) !important;
+}
+/*=================
+composants
+===================*/
+
+/*carroussel*/
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--eco-light-green);
+    border-radius: 50%;
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: none; 
+}
+
+/*bouton*/
+.btn-eco{
+    background-color: var(--eco-light-green);
+    color: var(--eco-cream);
+    border: none;
+    border-radius: 0.6rem;
+    padding:0.6rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3 ease;
+}
+.btn-eco:hover{
+    background-color: var(--eco-green);
+    color: var(--eco-cream);
+}
+.btn-responsive {
+    width: 100%; /* par défaut : mobile */
+    max-width: 300px; /* limite en desktop */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* cartes*/
+.card-eco{
+    background-color: var(--eco-green)!important;
+    color: var(--eco-cream)!important;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.card-eco-wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 1rem;
+}
+
+/* Formulaires */
+.form-control {
+    border: 1px solid var(--eco-light-green);
+    border-radius: 0.5rem;
+    padding: 0.6rem;
+    font-size: 1rem;
+}
+
+.form-control::placeholder {
+    color: rgba(0, 77, 64, 0.6);
+}
+/* ================================
+STRUCTURES PAR PAGE
+=================================== */
+/* === Page : Connexion & Inscription === */
+
+.form-auth {
+    background-color: var(--eco-cream);
+    color: var(--eco-green);
+    padding: 1.5rem;
+    border: 2px solid var(--eco-green);
+    border-radius: 1rem;
+    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+    width: 90vw;
+    max-width: 25rem;
+    margin: 0 auto;
+}
+
+.title-auth {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* page espace utilisateur*/
+.section-user-box {
+    background-color: var(--eco-cream);
+    color: var(--eco-green);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-layout {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+
+/* ================================
+RESPONSIVE DESIGN
+=================================== */
+
+@media (min-width: 768px) {
+    /* tablette */
+}
+
+@media (min-width: 1024px) {
+    /* desktop */
+    .form-auth {
+        max-width: 35rem; 
+    }
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EcoRide{% endblock %}</title>
+
+    {{ encore_entry_link_tags('app') }}
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="d-flex flex-column h-100">
+
+    <header>
+        <nav class="navbar navbar-dark bg-eco-green text-eco-cream fixed-top">
+            <div class="container-fluid d-flex align-items-center">
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                
+                <a class="navbar-brand position-absolute start-50 translate-middle-x d-flex align-items-center" href="#">
+                    <img src="{{ asset('images/logo.png') }}" alt="EcoRide" class="img-fluid me-2" style="max-height: 40px;">
+                    EcoRide
+                </a>
+
+                <div class="offcanvas offcanvas-start bg-eco-green text-eco-cream" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item"><a class="nav-link" href="#">Accueil</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Covoiturage</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Connexion</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Créer un compte</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                        </ul>
+
+                        <form class="d-grid gap-2 mt-3" role="search">
+                            <input type="text" class="form-control" placeholder="Départ" aria-label="search">
+                            <input type="text" class="form-control" placeholder="Arrivée" aria-label="search">
+                            <input type="date" class="form-control" aria-label="Date">
+                            <button class="btn btn-success w-100" type="submit"><i class="bi bi-search"></i> Rechercher</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+        {% block body %}{% endblock %}
+    
+        <footer class="footer mt-auto bg-eco-green text-eco-cream text-light text-center">
+            <p>© 2025 EcoRide - <a href="#" class="text-light">Mentions légales</a></p>
+        </footer>
+
+    {{ encore_entry_script_tags('app') }}
+
+    {% block javascripts %}{% endblock %}
+</body>
+</html>
