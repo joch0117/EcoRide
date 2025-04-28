@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+
 use App\Entity\User;
+use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request ;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,44 +17,45 @@ use Symfony\Component\Routing\Attribute\Route;
 final class RegistrationController extends AbstractController
 {
     #[Route('/registration', name: 'app_registration')]
-    public function index(HttpFoundationRequest $request,UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $em,Security $security): Response
+    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security): Response
     {
-        if($request->isMethod('POST')){
-            $pseudo=$request->request->get('pseudo');
-            $email=$request->request->get('email');
-            $password=$request->request->get('password');
-            $confirmPassword = $request->request->get('confirmPassword');
-            if($password !== $confirmPassword){
-                $this->addFlash('danger','Les mots de passe ne correspondent pas.');
-                return $this->redirectToRoute('app_registration');
-            }
-            if(!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};\'":\\|,.<>\/?]).{8,}$/', $password)){
-                $this->addFlash('danger','Le mot de passe doit contenir au minimum 8 carractére , une majuscule et un chiffre et un carractére spécial.');
-                return $this->redirectToRoute('app_registration');
-            }
-            $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $email]);
+        $form = $this->createForm(RegisterType::class);
+        $form->handleRequest($request);
 
-            if ($existingUser) {
-                $this->addFlash('danger', 'Un compte existe déjà avec cet email.');
-                return $this->redirectToRoute('app_registration');
-            }
-            try{
-            $user = new User();
-            $user->setUsername($pseudo);
-            $user->setEmail($email);
-            $hashedPassword = $passwordHasher->hashPassword($user, $password);
-            $user->setPassword($hashedPassword);
-            $user->setCredit(20);
-            $em->persist($user);
-            $em->flush();
-            $security->login($user);
-            $referer = $request->headers->get('referer') ?? $this->generateUrl('app_home');
-            return $this->redirect($referer);
-            }catch(\Exception $e){
-                $this->addFlash('danger', 'Une erreur est survenue lors de votre inscription.');
-                return $this->redirectToRoute('app_registration');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            if ($data['password'] !== $data['confirmPassword']) {
+                $form->get('confirmPassword')->addError(new FormError('Les mots de passe ne correspondent pas.'));
+            } else {
+                $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $data['email']]);
+                if ($existingUser) {
+                    $form->get('email')->addError(new FormError('Un compte existe déjà avec cet email.'));
+                } else {
+                    try {
+                        $user = new User();
+                        $user->setUsername($data['pseudo']);
+                        $user->setEmail($data['email']);
+                        $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
+                        $user->setPassword($hashedPassword);
+
+                        $em->persist($user);
+                        $em->flush();
+
+                        $security->login($user);
+
+                        return $this->redirectToRoute('app_home');
+                    } catch (\Exception $e) {
+                        $this->addFlash('danger', 'Une erreur est survenue lors de votre inscription.');
+                        return $this->redirectToRoute('app_registration');
+                    }
+                }
             }
         }
-        return $this->render('registration/index.html.twig');
+
+        return $this->render('registration/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
+
 }
