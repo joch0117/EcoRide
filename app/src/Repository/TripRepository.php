@@ -16,28 +16,28 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
-//    /**
-//     * @return Trip[] Returns an array of Trip objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findBySearch(?string $departureCity, ?string $arrivalCity, ?\DateTimeInterface $date): array
+    {
+        $qb = $this->createQueryBuilder('t');
 
-//    public function findOneBySomeField($value): ?Trip
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if ($departureCity) {
+            $qb->andWhere('t.departure_city LIKE :departureCity')
+                ->setParameter('departureCity', '%' . $departureCity . '%');
+        }
+
+        if ($arrivalCity) {
+            $qb->andWhere('t.arrival_city LIKE :arrivalCity')
+                ->setParameter('arrivalCity', '%' . $arrivalCity . '%');
+        }
+
+        if ($date) {
+            $qb->andWhere('DATE(t.departure_datetime) = :departureDate')
+                ->setParameter('departureDate', $date->format('Y-m-d'));
+        }
+
+        return $qb
+            ->orderBy('t.departure_datetime', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
