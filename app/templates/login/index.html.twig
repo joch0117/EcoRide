@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}connection{% endblock %}
 
 {% block body %}
     <main class="container mt-5 pt-5">
@@ -15,11 +15,11 @@
                 <form id="registrationForm" class="form-user" action="{{ path('app_login') }}" method="POST">
                     <div class="mb-3">
                         <label for="email" class="form-label">Adresse e-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre e-mail" value="{{ last_username }}" required>
+                        <input type="email" class="form-control" id="email" name="_username" placeholder="Entrez votre e-mail" value="{{ last_username }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" name="password"placeholder="Entrez votre mot de passe" required>
+                        <input type="password" class="form-control" id="password" name="_password"placeholder="Entrez votre mot de passe" required>
                     </div>
                     <div class="mb-3 text-center">
                         <small><a href="{{ path('app_registration') }}" class="center">créer votre compte</a></small>
