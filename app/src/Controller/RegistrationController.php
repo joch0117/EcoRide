@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Security\LoginAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -42,10 +43,11 @@ final class RegistrationController extends AbstractController
                         $em->persist($user);
                         $em->flush();
 
-                        $security->login($user);
+                        $security->login($user, LoginAuthenticator::class);
 
                         return $this->redirectToRoute('app_home');
                     } catch (\Exception $e) {
+                        dd($e->getMessage());
                         $this->addFlash('danger', 'Une erreur est survenue lors de votre inscription.');
                         return $this->redirectToRoute('app_registration');
                     }

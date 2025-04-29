@@ -4,30 +4,41 @@
 
 {% block body %}
     <main class="container mt-5 pt-5">
-        <section class="p-4 rounded">
-            <h3 class="text-center">Recherchez un covoiturage</h3>
-            {{ form_start(form) }}
-            <div class="row g-2 mt-3">
-                <div class="col-12 col-md-9">
-                    <div class="row g-2">
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            {{ form_row(form.departureCity) }}
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            {{ form_row(form.arrivalCity) }}
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            {{ form_row(form.date) }}
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            {{ form_row(form.search) }}
-                        </div>
+    <section class="p-4 rounded">
+        <h3 class="text-center">Recherchez un covoiturage</h3>
+        {{ form_start(form) }}
+        <div class="row g-2 mt-3">
+            <div class="col-12 col-md-9">
+                <div class="row g-2">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label for="{{ form.departureCity.vars.id }}" class="form-label">
+                            {{ form.departureCity.vars.label }}
+                        </label>
+                        {{ form_widget(form.departureCity, { attr: {'class': 'form-control'} }) }}
+                        {{ form_errors(form.departureCity) }}
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label for="{{ form.arrivalCity.vars.id }}" class="form-label">
+                            {{ form.arrivalCity.vars.label }}
+                        </label>
+                        {{ form_widget(form.arrivalCity, { attr: {'class': 'form-control'} }) }}
+                        {{ form_errors(form.arrivalCity) }}
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label for="{{ form.date.vars.id }}" class="form-label">
+                            {{ form.date.vars.label }}
+                        </label>
+                        {{ form_widget(form.date, { attr: {'class': 'form-control'} }) }}
+                        {{ form_errors(form.date) }}
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-end">
+                        {{ form_widget(form.search, { attr: {'class': 'btn btn-eco w-100'} }) }}
                     </div>
                 </div>
             </div>
+        </div>
         {{ form_end(form) }}
-
-        </section>
+    </section>
         <!--filtres-->
         <section class="p-3 mt-4 rounded shadow-sm bg-eco-green text-eco-cream">
             <h5 class="mb-3">Filtres</h5>

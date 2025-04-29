@@ -2,28 +2,41 @@
 
 namespace App\Controller;
 
+use App\Form\LoginFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-final class LoginController extends AbstractController
+class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'app_login')]
-
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    #[Route(path: '/login', name: 'app_login')]
+    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
+        // Si l'utilisateur est déjà connecté, on peut le rediriger
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-        return $this->render('login/index.html.twig', [
-            'last_username' => $lastUsername,
+
+        // Créer un formulaire avec les données du dernier login tenté
+        $form = $this->createForm(LoginFormType::class, [
+            'email' => $lastUsername,
+        ]);
+
+        return $this->render('login/login.html.twig', [
+            'loginForm' => $form->createView(),
             'error' => $error,
         ]);
     }
 
-    #[Route('/logout', name: 'app_logout')]
+    #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
+
