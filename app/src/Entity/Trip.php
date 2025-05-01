@@ -41,6 +41,11 @@ class Trip
 
     #[Assert\NotNull]
     #[Assert\Positive]
+    #[ORM\Column(type:'integer')]
+    private ?int $duration=null;
+
+    #[Assert\NotNull]
+    #[Assert\Positive]
     #[ORM\Column]
     private ?int $price = null;
 
@@ -329,6 +334,17 @@ class Trip
             }
         }
 
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): static
+    {
+        $this->duration = $duration;
         return $this;
     }
 }

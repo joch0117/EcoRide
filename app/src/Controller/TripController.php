@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\FilterTripType;
 use App\Form\SearchTripType;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,19 +23,35 @@ final class TripController extends AbstractController
 
         $form = $this->createForm(SearchTripType::class,$searchData);
         $form->handleRequest($request);
-        $data=$form->getData();
+        $search=$form->getData();
+
+        $filterData = [
+            'maxPrice' => $request->query->get('maxPrice'),
+            'vehicleType' => $request->query->get('vehicleType'),
+            'sortBy' => $request->query->get('sortBy'),
+            'isEcological' => $request->query->getBoolean('isEcological'),
+            'minRating' => $request->query->get('minRating'),
+            'maxDuration' => $request->query->get('maxDuration'),
+        ];
+
+        $filterForm = $this->createForm(FilterTripType::class, $filterData, [
+            'method' => 'GET'
+        ]);
+
+        $filterForm->handleRequest($request);
+        $filters = $filterForm->getData();
         $trips = [];
     
-        if($data['departureCity'] || $data['arrivalCity'] || $data['date']){
-            $trips=$tripRepository->findBySearch(
-                $data['departureCity'],
-                $data['arrivalCity'],
-                $data['date']
-            );
-        }
+        $trips = $tripRepository->findBySearch(
+            $search['departureCity'] ?? null,
+            $search['arrivalCity'] ?? null,
+            $search['date'] ?? null,
+            $filters
+        );
     
         return $this->render('trip/search.html.twig', [
             'form' => $form->createView(),
+            'filterForm' => $filterForm->createView(),
             'trips' => $trips,
         ]);
     }

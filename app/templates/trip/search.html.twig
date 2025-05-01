@@ -42,34 +42,54 @@
         <!--filtres-->
         <section class="p-3 mt-4 rounded shadow-sm bg-eco-green text-eco-cream">
             <h5 class="mb-3">Filtres</h5>
-            <form class="row g-2">
+    
+            {{ form_start(filterForm, {
+                method: 'get',
+                attr: { class: 'row g-2' }
+            }) }}
                 <div class="col-12 col-sm-6 col-md-3">
-                <label for="tri" class="form-label">Trier par</label>
-                <select id="tri" class="form-select">
-                    <option selected disabled>Choisir</option>
-                    <option value="prix">Prix</option>
-                    <option value="distance">Distance</option>
-                    <option value="horaire">Horaire</option>
-                </select>
+                    {{ form_row(filterForm.sortBy, {
+                        label_attr: { class: 'form-label' },
+                        attr: { class: 'form-select' }
+                    }) }}
                 </div>
                 <div class="col-12 col-sm-6 col-md-3">
-                <label for="vehicule" class="form-label">Type de véhicule</label>
-                <select id="vehicule" class="form-select">
-                    <option selected disabled>Choisir</option>
-                    <option value="electrique">Électrique</option>
-                    <option value="hybride">Hybride</option>
-                    <option value="essence">Thermique</option>
-                </select>
+                    {{ form_row(filterForm.vehicleType, {
+                        label_attr: { class: 'form-label' },
+                        attr: { class: 'form-select' }
+                    }) }}
                 </div>
                 <div class="col-12 col-sm-6 col-md-3">
-                <label for="prix-max" class="form-label">Prix max </label>
-                <input type="number" id="prix-max" class="form-control" placeholder="Ex : 20">
+                    {{ form_row(filterForm.maxPrice, {
+                        label_attr: { class: 'form-label' },
+                        attr: { class: 'form-control', placeholder: 'Ex : 20' }
+                    }) }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.maxDuration, {
+                        label_attr: { class: 'form-label' },
+                        attr: { class: 'form-control', placeholder: 'Ex : 120' }
+                    }) }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.minRating, {
+                        label_attr: { class: 'form-label' },
+                        attr: { class: 'form-select' }
+                    }) }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center">
+                    {{ form_row(filterForm.isEcological, {
+                        label_attr: { class: 'form-check-label ms-2' },
+                        row_attr: { class: 'form-check' },
+                        attr: { class: 'form-check-input' }
+                    }) }}
                 </div>
                 <div class="col-12 col-sm-6 col-md-3 align-self-end">
-                <button type="submit" class="btn btn-eco w-100 mt-2">Appliquer</button>
+                    <button type="submit" class="btn btn-eco w-100 mt-2">Appliquer</button>
                 </div>
-            </form>
+            {{ form_end(filterForm) }}
         </section>
+
         <section class="mt-4">
             <div class="row g-3 justify-content-center">
                 {% for trip in trips %}
