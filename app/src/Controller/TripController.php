@@ -14,14 +14,23 @@ final class TripController extends AbstractController
     #[Route('/recherche-covoiturage', name: 'app_trip_search')]
     public function search(TripRepository $tripRepository,Request $request): Response
     {
-        $form = $this->createForm(SearchTripType::class);
+        $searchData =[
+            'departureCity'=>$request->query->get('departureCity'),
+            'arrivalCity'=>$request->query->get('arrivalCity'),
+            'date'=>$request->query->get('date'),
+        ];
+
+        $form = $this->createForm(SearchTripType::class,$searchData);
         $form->handleRequest($request);
-    
+        $data=$form->getData();
         $trips = [];
     
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $trips = $tripRepository->findBySearch($data['departureCity'], $data['arrivalCity'], $data['date']);
+        if($data['departureCity'] || $data['arrivalCity'] || $data['date']){
+            $trips=$tripRepository->findBySearch(
+                $data['departureCity'],
+                $data['arrivalCity'],
+                $data['date']
+            );
         }
     
         return $this->render('trip/search.html.twig', [

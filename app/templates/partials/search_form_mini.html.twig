@@ -1,0 +1,34 @@
+{# Mini-formulaire de recherche trip utilisé ds le menu #}
+
+{{ form_start(form, {
+    method: 'GET',
+    action: path('app_trip_search')
+}) }}
+    <div class="d-grid gap-2 mt-3">
+        {{ form_widget(form.departureCity, {
+            'attr': {
+                'class': 'form-control',
+                'placeholder': 'Départ'
+            }
+        }) }}
+
+        {{ form_widget(form.arrivalCity, {
+            'attr': {
+                'class': 'form-control',
+                'placeholder': 'Arrivée'
+            }
+        }) }}
+
+        {{ form_widget(form.date, {
+            'attr': {
+                'class': 'form-control'
+            }
+        }) }}
+
+        {{ form_widget(form.search, {
+            'attr': {
+                'class': 'btn btn-eco w-100'
+            }
+        }) }}
+    </div>
+{{ form_end(form) }}

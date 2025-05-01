@@ -43,13 +43,7 @@
                             {% endif %}
                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                         </ul>
-
-                        <form class="d-grid gap-2 mt-3" role="search">
-                            <input type="text" class="form-control" placeholder="Départ" aria-label="search">
-                            <input type="text" class="form-control" placeholder="Arrivée" aria-label="search">
-                            <input type="date" class="form-control" aria-label="Date">
-                            <button class="btn btn-success w-100" type="submit"><i class="bi bi-search"></i> Rechercher</button>
-                        </form>
+                        {% include 'partials/search_form_mini.html.twig' with { form: miniForm } %}
                     </div>
                 </div>
             </div>
