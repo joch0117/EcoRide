@@ -6,8 +6,9 @@ namespace App\Enum;
 
 enum EnergyType: string
 {
-    case ELECTRIC= 'electric';
-    case HYBRID='hybrid';
-    case DIESEL='diesel';
-    case PETROL='petrol';
+    case ESSENCE = 'essence';
+    case DIESEL = 'diesel';
+    case ELECTRIQUE = 'electrique';
+    case HYBRIDE = 'hybride';
+    case GPL = 'gpl';
 }

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ajouter un vehicule - Eco Ride{% endblock %}
+
+{% block body %}
+<main class="pt-5 mt-5 flex-grow-1">
+    <div class="container d-flex justify-content-center">
+        <div class="bg-eco-green text-eco-cream p-4 rounded shadow" style="width: 100%; max-width: 600px;">
+
+            <h1 class="text-center mb-4">Ajouter un véhicule</h1>
+
+            {% if form.vars.submitted and not form.vars.valid %}
+                <div class="alert alert-danger">
+                    Certaines informations sont manquantes ou invalides.
+                </div>
+            {% endif %}
+
+            {{ form_start(form) }}
+
+                <div class="mb-3">
+                    {{ form_label(form.plate, 'Plaque d’immatriculation') }}
+                    {{ form_widget(form.plate, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.brand, 'Marque') }}
+                    {{ form_widget(form.brand, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.model, 'Modèle') }}
+                    {{ form_widget(form.model, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.color, 'Couleur') }}
+                    {{ form_widget(form.color, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.first_registration, 'Première immatriculation') }}
+                    {{ form_widget(form.first_registration, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.energy_type, 'Type d’énergie') }}
+                    {{ form_widget(form.energy_type, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.seats_total, 'Nombre de sièges') }}
+                    {{ form_widget(form.seats_total, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-eco btn-lg rounded-pill px-5">
+                        Ajouter
+                    </button>
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</main>
+{% endblock %}

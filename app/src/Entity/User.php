@@ -314,7 +314,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isDriver(): ?bool
     {
-        return $this->is_driver;
+        return $this->is_driver === true;
     }
 
     public function setIsDriver(bool $is_driver): static

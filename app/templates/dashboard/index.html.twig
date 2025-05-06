@@ -42,7 +42,7 @@
                         class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
                         Publier un trajet
                 </a>
-                <a href="{#{{ path('app_publier_trajet') }}#}"
+                <a href="{{ path('app_vehicle') }}"
                         class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
                         Ajouter un vehicule
                 </a>
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Colonne droite -->
-            <div class="col-12 col-lg-8 d-flex flex-column gap-3">
+            <section class="col-12 col-lg-8 d-flex flex-column gap-3">
                 <div class="section-user-box">
                     <span>Pseudo</span>
                     <span>{{ user.username }}</span>
@@ -86,15 +86,31 @@
                     <span>Crédits restants</span>
                     <span>{{ user.credit ?? 0 }} crédits</span>
                 </div>
+            </section>
+            {% if vehicles|length > 0 %}
+            <section class="mt-5">
+            <h2 class="text-center mb-4">Mes véhicules</h2>
 
-                <div class="text-center mt-3">
-                    
+            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+                {% for vehicle in vehicles %}
+                    <div class="col">
+                        <div class="card bg-eco-cream text-eco-green shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ vehicle.brand }} {{ vehicle.model }}</h5>
+                                <ul class="list-unstyled small mb-0">
+                                    <li><strong>Plaque :</strong> {{ vehicle.plate }}</li>
+                                    <li><strong>Couleur :</strong> {{ vehicle.color }}</li>
+                                    <li><strong>Énergie :</strong> {{ vehicle.energyType.value|capitalize }}</li>
+                                    <li><strong>Sièges :</strong> {{ vehicle.seatsTotal }}</li>
+                                    <li><strong>1re immatriculation :</strong> {{ vehicle.firstRegistration|date('d/m/Y') }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
                 </div>
-
-                <div class="text-center mt-4">
-                    
-                </div>
-            </div>
+                {% endif %}
+            </section>
         </div>
     </div>
 </main>

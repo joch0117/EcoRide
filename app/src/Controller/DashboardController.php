@@ -22,12 +22,19 @@ final class DashboardController extends AbstractController
             return $this->redirectToRoute('app_user_profile');
         }
 
+        if($user->isDriver() && $user->getVehicles()->isEmpty()){
+            $this->addFlash('warning','Ajoutez un vehicule pour accéder à votre espace chauffeur');
+            return $this->redirectToRoute('app_vehicle');
+        }
+
         $average= $reviewRepo->getAverageForDriver($user) ?? 0.0;
+        $vehicles= $user->getVehicles();
         
         return $this->render('dashboard/index.html.twig',
     [
         'user'=>$user,
         'average'=>$average,
+        'vehicles'=> $vehicles,
     ]);
     }
 }
