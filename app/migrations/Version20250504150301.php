@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250427135738 extends AbstractMigration
+final class Version20250504150301 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -36,7 +36,7 @@ final class Version20250427135738 extends AbstractMigration
             CREATE TABLE review (id INT AUTO_INCREMENT NOT NULL, trip_id INT DEFAULT NULL, writer_id INT DEFAULT NULL, driver_id INT DEFAULT NULL, rating SMALLINT NOT NULL, comment LONGTEXT NOT NULL, status VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)', INDEX IDX_794381C6A5BC2E0E (trip_id), INDEX IDX_794381C61BC7E6B6 (writer_id), INDEX IDX_794381C6C3423909 (driver_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE trip (id INT AUTO_INCREMENT NOT NULL, driver_id INT NOT NULL, vehicle_id INT NOT NULL, departure_city VARCHAR(80) NOT NULL, arrival_city VARCHAR(80) NOT NULL, departure_datetime DATETIME NOT NULL, arrival_datetime DATETIME NOT NULL, price INT NOT NULL, seats_available SMALLINT NOT NULL, is_ecological TINYINT(1) NOT NULL, status VARCHAR(255) NOT NULL, INDEX IDX_7656F53BC3423909 (driver_id), INDEX IDX_7656F53B545317D1 (vehicle_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+            CREATE TABLE trip (id INT AUTO_INCREMENT NOT NULL, driver_id INT NOT NULL, vehicle_id INT NOT NULL, departure_city VARCHAR(80) NOT NULL, arrival_city VARCHAR(80) NOT NULL, departure_datetime DATETIME NOT NULL, arrival_datetime DATETIME NOT NULL, duration INT NOT NULL, price INT NOT NULL, seats_available SMALLINT NOT NULL, is_ecological TINYINT(1) NOT NULL, status VARCHAR(255) NOT NULL, INDEX IDX_7656F53BC3423909 (driver_id), INDEX IDX_7656F53B545317D1 (vehicle_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL COMMENT '(DC2Type:json)', password VARCHAR(255) NOT NULL, username VARCHAR(50) NOT NULL, surname VARCHAR(50) DEFAULT NULL, firstname VARCHAR(50) DEFAULT NULL, phone VARCHAR(20) DEFAULT NULL, date_birth DATE DEFAULT NULL, photo_url VARCHAR(255) NOT NULL, is_passenger TINYINT(1) NOT NULL, is_driver TINYINT(1) NOT NULL, credit INT NOT NULL, average_rating DOUBLE PRECISION DEFAULT NULL, is_suspended TINYINT(1) NOT NULL, UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB

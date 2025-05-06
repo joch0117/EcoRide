@@ -26,11 +26,6 @@
                     {{ form_errors(loginForm.password) }}
                 </div>
 
-                <div class="mb-3 form-check">
-                    {{ form_widget(loginForm.rememberMe, {'attr': {'class': 'form-check-input'}}) }}
-                    {{ form_label(loginForm.rememberMe, 'Se souvenir de moi', {'label_attr': {'class': 'form-check-label'}}) }}
-                </div>
-
                 <div class="mb-3 text-center">
                     <small><a href="{{ path('app_registration') }}">Créer votre compte</a></small>
                 </div>

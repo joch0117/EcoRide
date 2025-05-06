@@ -3,11 +3,11 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class LoginFormType extends AbstractType
 {
@@ -17,14 +17,17 @@ class LoginFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Adresse e-mail',
                 'attr' => ['autocomplete' => 'email'],
+                'constraints'=>[
+                    new Assert\NotBlank(['message'=>'Veuillez saisir votre adresse e-mail.']),
+                    new Assert\Email(['message'=>'Adresse e-mail invalide']),
+                ]
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'attr' => ['autocomplete' => 'current-password'],
-            ])
-            ->add('rememberMe', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Se souvenir de moi',
+                'constraints'=>[
+                    new Assert\NotBlank(['message'=>'Veuillez saisir votre mot de passe;']),
+                ]
             ]);
     }
 

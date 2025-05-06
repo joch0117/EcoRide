@@ -29,22 +29,22 @@
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.password) }}
+                {{ form_label(form.plainPassword.first, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.plainPassword.first) }}
                 <small class="form-text text-muted">
                     Doit contenir au moins 8 caractères, une majuscule et un chiffre.
                 </small>
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.confirmPassword, 'Confirmer le mot de passe', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.confirmPassword, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.confirmPassword) }}
+                {{ form_label(form.plainPassword.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.plainPassword.second) }}
             </div>
 
             <div class="mb-3">
-                {{ form_widget(form.register, {'attr': {'class': 'btn btn-eco btn-success w-100'}}) }}
+                <button type="submit" class="btn btn-eco btn-success w-100">Créer mon compte</button>
             </div>
 
             {{ form_end(form) }}

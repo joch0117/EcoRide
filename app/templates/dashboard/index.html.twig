@@ -11,7 +11,7 @@
         <div class="row">
             <!-- Colonne gauche -->
             <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0 d-flex flex-column align-items-center">
-                <img src="{{ user.photoProfil ?? asset('uploads/users/default_profil.png') }}"
+                <img src="{{ user.photoUrl ? asset(user.photoUrl) :asset('uploads/users/default_profil.png') }}"
                         alt="Photo de profil"
                         class="rounded-circle mb-2"
                         style="width: 100px; height: 100px; object-fit: cover;">
@@ -53,7 +53,7 @@
                 <div class="section-user-box">
                     <span>Date de naissance</span>
                     <span>
-                        {#{{ user.date_birth ? user.date_birth|date('d/m/Y') : 'Non renseignée' }}#}
+                        {{ user.datebirth ? user.datebirth|date('d/m/Y') : 'Non renseignée' }}
                     </span>
                 </div>
                 <div class="section-user-box">
@@ -62,17 +62,10 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <a href="{#{{ path('app_modifier_profil') }}#}"
+                    <a href="{{ path('app_user_profile') }}"
                         class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive">
                         Modifier mon compte
                     </a>
-                </div>
-
-                <div class="section-user-box mt-4">
-                    <span>Statut chauffeur</span>
-                    <div class="form-check form-switch m-0">
-                        <input class="form-check-input" type="checkbox" id="isDriver" {% if user.isDriver %}checked{% endif %} disabled>
-                    </div>
                 </div>
 
                 <div class="text-center mt-4">

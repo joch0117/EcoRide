@@ -17,40 +17,34 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class RegistrationController extends AbstractController
 {
-    #[Route('/registration', name: 'app_registration')]
+    #[Route('/register', name: 'app_registration')]
     public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security): Response
     {
-        $form = $this->createForm(RegisterType::class);
+        $user = new User();
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
-            if ($data['password'] !== $data['confirmPassword']) {
-                $form->get('confirmPassword')->addError(new FormError('Les mots de passe ne correspondent pas.'));
+            // Vérifie email existant
+            if ($em->getRepository(User::class)->findOneBy(['email' => $user->getEmail()])) {
+                $form->get('email')->addError(new FormError('Un compte existe déjà avec cet email.'));
             } else {
-                $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $data['email']]);
-                if ($existingUser) {
-                    $form->get('email')->addError(new FormError('Un compte existe déjà avec cet email.'));
-                } else {
-                    try {
-                        $user = new User();
-                        $user->setUsername($data['pseudo']);
-                        $user->setEmail($data['email']);
-                        $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
-                        $user->setPassword($hashedPassword);
+                $plainPassword = $form->get('plainPassword')->getData();
 
-                        $em->persist($user);
-                        $em->flush();
+                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+                $user->setPassword($hashedPassword);
+                $user->setRoles(['ROLE_USER']);
 
-                        $security->login($user, LoginAuthenticator::class);
+                try {
+                    $em->persist($user);
+                    $em->flush();
 
-                        return $this->redirectToRoute('app_home');
-                    } catch (\Exception $e) {
-                        dd($e->getMessage());
-                        $this->addFlash('danger', 'Une erreur est survenue lors de votre inscription.');
-                        return $this->redirectToRoute('app_registration');
-                    }
+                    $security->login($user, LoginAuthenticator::class);
+
+                    return $this->redirectToRoute('app_home');
+                } catch (\Throwable $e) {
+                    $this->addFlash('danger', 'Erreur interne : inscription échouée.');
+                    return $this->redirectToRoute('app_registration');
                 }
             }
         }
@@ -59,5 +53,4 @@ final class RegistrationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

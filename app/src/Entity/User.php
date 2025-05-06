@@ -602,4 +602,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    public function isProfilComplet(): bool
+    {
+        return !empty($this->surname)
+        && !empty($this->firstname)
+        && !empty($this->date_birth)
+        && !empty($this->phone);
+    }
+
+    
 }

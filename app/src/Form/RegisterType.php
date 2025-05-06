@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\{TextType, EmailType, PasswordType, RepeatedType, SubmitType};
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegisterType extends AbstractType
 {
@@ -15,22 +15,60 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('pseudo', TextType::class, [
-                'label' => 'Pseudo'
+                'label' => 'Pseudo',
+                'property_path'=>'username',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Le pseudo est obligatoire.']),
+                    new Assert\Length([
+                        'min' => 3,
+                        'max' => 30,
+                        'minMessage' => 'Minimum {{ limit }} caractères.',
+                        'maxMessage' => 'Maximum {{ limit }} caractères.'
+                    ]),
+                    new Assert\Regex([
+                        // autorise lettres, chiffres, tirets, espaces, accents légers, mais pas < > { }
+                        'pattern' => '/^[\p{L}\p{N}\s\-_\'éèêàùçœ]+$/u',
+                        'message' => 'Le pseudo contient des caractères non autorisés.'
+                    ])
+                ]
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Adresse e-mail'
+                'label' => 'Adresse email',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'L\'email est requis.']),
+                    new Assert\Email(['message' => 'Adresse email invalide.'])
+                ]
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe'
-            ])
-            ->add('confirmPassword', PasswordType::class, [
-                'label' => 'Confirmer le mot de passe'
-            ])
-            ->add('register', SubmitType::class, [
-                'label' => 'S\'inscrire',
-                'attr' => ['class' => 'btn btn-eco btn-success w-100']
-            ])
-        ;
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'mapped' => false,
+                'first_options' => [
+                    'label' => 'Mot de passe',
+                    'constraints' => [
+                        new Assert\NotBlank(['message' => 'Le mot de passe est requis.']),
+                        new Assert\Length(['min' => 8]),
+                        new Assert\Regex([
+                            'pattern' => '/(?=.*[A-Z])(?=.*\d)/',
+                            'message' => 'Le mot de passe doit contenir au moins une majuscule et un chiffre.'
+                        ])
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'Confirmation du mot de passe'
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+            ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id' => 'register_user'
+        ]);
     }
 }
+
 
