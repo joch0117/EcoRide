@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
+use app\Enum\StatusReview;
 use App\Entity\Review;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
 /**
  * @extends ServiceEntityRepository<Review>
  */
@@ -15,6 +16,20 @@ class ReviewRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Review::class);
     }
+
+    // src/Repository/ReviewRepository.php
+    public function getAverageForDriver(User $driver): ?float
+    {
+    return (float) $this->createQueryBuilder('r')
+        ->select('AVG(r.rating)')
+        ->where('r.driver = :driver')
+        ->andWhere('r.status = :status')
+        ->setParameter('driver', $driver)
+        ->setParameter('status', StatusReview::APPROVED)
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
 
 //    /**
 //     * @return Review[] Returns an array of Review objects

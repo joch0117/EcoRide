@@ -16,16 +16,42 @@
                         class="rounded-circle mb-2"
                         style="width: 100px; height: 100px; object-fit: cover;">
 
-                <div class="leaf-rating mb-2" style="font-size: 1.5rem;">
-                    {% set moyenne = user.average_rating ?? 0 %}
-                    {% for i in 1..moyenne %}
-                        🌿
+                {% set average = average ?? 0 %}
+                {% set fullLeaves = average|round(0, 'floor') %}
+                <div class="leaf-rating mb-2" style="font-size: 1.2rem;">
+                    {% if fullLeaves > 0 %}
+                    {% for i in 1..fullLeaves %}
+                    🌿
                     {% endfor %}
+                    {% for i in 1..(5 - fullLeaves) %}
+                    <span class="text-muted">🌿</span>
+                    {% endfor %}
+                    {% endif %}
                 </div>
 
-                <a href="{#{{ path('app_historique') }}#}" class="btn btn-eco rounded-pill px-4 py-2 small">
+                <div class="d-flex flex-column align-items-center gap-2 mt-3">
+                <a href="{#{{ path('app_historique') }}#}" class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
                     Historique covoiturage
                 </a>
+                <a href="{{ path('app_user_profile') }}"
+                        class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
+                        Modifier mon compte
+                </a>
+                {% if user.isDriver %}
+                <a href="{#{{ path('app_publier_trajet') }}#}"
+                        class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
+                        Publier un trajet
+                </a>
+                <a href="{#{{ path('app_publier_trajet') }}#}"
+                        class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
+                        Ajouter un vehicule
+                </a>
+                <a href="{#{{ path('app_publier_trajet') }}#}"
+                        class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
+                        Modifier mes préférences
+                </a>
+                {% endif %}
+                </div>
             </div>
 
             <!-- Colonne droite -->
@@ -62,17 +88,11 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <a href="{{ path('app_user_profile') }}"
-                        class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive">
-                        Modifier mon compte
-                    </a>
+                    
                 </div>
 
                 <div class="text-center mt-4">
-                    <a href="{#{{ path('app_publier_trajet') }}#}"
-                        class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive">
-                        Publier un trajet
-                    </a>
+                    
                 </div>
             </div>
         </div>

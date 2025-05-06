@@ -83,8 +83,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $credit = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?float $average_rating = null;
 
     #[ORM\Column]
     private ?bool $is_suspended = null;
@@ -334,18 +332,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCredit(int $credit): static
     {
         $this->credit = $credit;
-
-        return $this;
-    }
-
-    public function getAverageRating(): ?float
-    {
-        return $this->average_rating;
-    }
-
-    public function setAverageRating(?float $average_rating): static
-    {
-        $this->average_rating = $average_rating;
 
         return $this;
     }
@@ -611,5 +597,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         && !empty($this->phone);
     }
 
-    
+    /** Retourne la moyenne des notes validées reçues par chauffeur */
+    public function getAverageRating(): ?float
+    {
+    $notes = [];
+
+    foreach ($this->getDriverReviews() as $review) {          
+        if ($review->getStatus()?->value === 'VALIDATED') {   
+            $rating = $review->getRating();                  
+            if ($rating !== null) {
+                $notes[] = $rating;
+            }
+        }
+    }
+
+        return $notes ? array_sum($notes) / count($notes) : null;
+    }
+
 }
