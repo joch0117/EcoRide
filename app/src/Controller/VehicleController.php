@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Form\FormError;
 
 #[IsGranted('ROLE_USER')]
 final class VehicleController extends AbstractController
@@ -36,8 +37,15 @@ final class VehicleController extends AbstractController
         $session->remove('redirect_after_vehicle');
 
         if($form->isSubmitted()&& $form->isValid()){
-            $em->persist($vehicle);
-            $em->flush();
+            $existing=$em->getRepository(Vehicle::class)->findOneBy(['plate'=>$vehicle->getPlate()]);
+            if($existing){
+                $form->addError(new FormError('Un véhicule avec cette plaque existe déjà.'));
+            }
+            if(count($form->getErrors(true))===0){
+                $em->persist($vehicle);
+                $em->flush();
+            }
+            
 
             $this->addFlash('success','Véhicule ajouté avec succès.');
             return $this->redirect($redirectUrl);

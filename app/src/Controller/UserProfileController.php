@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Form\FormError;
+use DateTime;
 use App\Entity\User;
 use App\Form\EditProfilUserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,7 +36,23 @@ final class UserProfileController extends AbstractController
             try {
                 /** @var UploadedFile|null $photoFile */
                 $photoFile = $form->get('photo_url')->getData();
-    
+
+                //vérification de l'age pour être chauffeur
+                if ($user->isDriver()){
+                    $birthDate = $user->getDatebirth();
+                    if ($birthDate){
+                        $now= new DateTime();
+                        $age=$now->diff($birthDate)->y;
+
+                        if ($age<18){
+                            $form->get('is_driver')->addError(new FormError('Vous devez avoir au moin 18 ans '));
+                            return $this->render('user_profile/index.html.twig',[
+                                'form'=>$form->createView(),
+                                'user'=>$user,
+                            ]);
+                        }
+                    }
+                }
                 if ($photoFile) {
                     // Vérifier le type MIME
                     $mimeType = $photoFile->getMimeType();
@@ -56,7 +74,10 @@ final class UserProfileController extends AbstractController
     
                     $user->setPhotoUrl('uploads/users/' . $newFilename);
                 }
-    
+                //définition  photo de profil par defaut
+                if(!$user->getPhotoUrl()){
+                    $user->setPhotoUrl('uploads/users/default_profil.png');
+                }
                 $em->flush();
                 $this->addFlash('success', 'Profil mis à jour avec succès.');
                 return $this->redirectToRoute('app_dashboard');
