@@ -40,12 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[Assert\NotBlank]
-    #[Assert\Length(min:8)]
-    #[Assert\Regex(
-        pattern: "/^(?=.*[A-Z])(?=.*\d).+$/",
-        message:"Le mot de passe dois contenir au moin une majuscule et un chiffre."
-    )]
     #[ORM\Column]
     private ?string $password = null;
     

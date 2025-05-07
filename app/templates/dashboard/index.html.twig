@@ -46,10 +46,6 @@
                         class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
                         Ajouter un vehicule
                 </a>
-                <a href="{#{{ path('app_publier_trajet') }}#}"
-                        class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
-                        Modifier mes préférences
-                </a>
                 {% endif %}
                 </div>
             </div>
@@ -87,6 +83,7 @@
                     <span>{{ user.credit ?? 0 }} crédits</span>
                 </div>
             </section>
+            {% if user.isDriver %}
             {% if vehicles|length > 0 %}
             <section class="mt-5">
             <h2 class="text-center mb-4">Mes véhicules</h2>
@@ -111,9 +108,52 @@
                 </div>
                 {% endif %}
             </section>
+            
+            <section id="preferences-section" class="mt-5 ">
+            <h4 class="mb-4">Préférences</h4>
+
+            <div class="row row-cols-1 row-cols-md-2 g-3 mb-5" id="imposed-prefs">
+                <div class="col">
+                    <label for="pref-fumeur" class="form-label">Fumeur</label>
+                    <select id="pref-fumeur" class="form-select bg-eco-cream text-eco-green">
+                        <option selected>Refusé</option>
+                        <option>Accepté</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="pref-animal" class="form-label">Animaux</label>
+                    <select id="pref-animal" class="form-select bg-eco-cream text-eco-green">
+                        <option selected>Refusé</option>
+                        <option>Accepté</option>
+                    </select>
+                </div>
+            </div>
+
+            <h4 class="mb-4">Ajouter des préférences</h4>
+
+            <form id="add-pref-form" class="row g-3 align-items-center mb-4">
+                <div class="col-md-6">
+                    <input type="text" id="new-pref-label" class="form-control bg-eco-cream text-eco-green" placeholder="Nouvelle préférence (ex : musique)">
+                </div>
+                <div class="col-auto">
+                    <select id="new-pref-value" class="form-select bg-eco-cream text-eco-green">
+                        <option value="true">Accepté</option>
+                        <option value="false" selected>Refusé</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Ajouter</button>
+                </div>
+            </form>
+
+                <ul id="custom-pref-list" class="list-group ">
+
+                </ul>
+            </section>
+
+            {% endif %}
         </div>
     </div>
 </main>
-
 
 {% endblock %}

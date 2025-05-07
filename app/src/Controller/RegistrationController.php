@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Services\PreferenceService;
 use App\Security\LoginAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_registration')]
-    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security): Response
+    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security,PreferenceService $pService): Response
     {
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
@@ -37,6 +38,8 @@ final class RegistrationController extends AbstractController
 
                 try {
                     $em->persist($user);
+                    //mise à jour des préférence imposé par la plateforme
+                    $pService->createUserWithDefaultPreferences($user);
                     $em->flush();
 
                     $security->login($user, LoginAuthenticator::class);
