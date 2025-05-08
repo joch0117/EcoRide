@@ -13,12 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[ORM\Table(name:'user',indexes: [
-    new ORM\Index(columns:['email']),
-    new ORM\Index(columns:['username']),
-    new ORM\Index(columns:['is_driver']),
-    new ORM\Index(columns:['is_passenger'])
-])]
+#[ORM\Table(name:'user')]
+#[ORM\Index(columns:['email'])]
+#[ORM\Index(columns:['username'])]
+#[ORM\Index(columns:['is_driver'])]
+#[ORM\Index(columns:['is_passenger'])]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

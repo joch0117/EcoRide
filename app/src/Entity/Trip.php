@@ -39,7 +39,6 @@ class Trip
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $arrival_datetime = null;
 
-    #[Assert\NotNull]
     #[Assert\Positive]
     #[ORM\Column(type:'integer')]
     private ?int $duration=null;
@@ -94,6 +93,7 @@ class Trip
         $this->incidentReports = new ArrayCollection();
         $this->creditTransactions = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->status = StatusTrip::SCHEDULED;
     }
 
     public function getId(): ?int

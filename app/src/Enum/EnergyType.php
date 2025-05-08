@@ -11,4 +11,10 @@ enum EnergyType: string
     case ELECTRIQUE = 'electrique';
     case HYBRIDE = 'hybride';
     case GPL = 'gpl';
+
+
+public function label():string{
+    return $this->value;
+}
+
 }

@@ -32,9 +32,8 @@ final class VehicleController extends AbstractController
         $form=$this->createForm(VehiculeType::class , $vehicle);
         $form->handleRequest($request);
         
-        $session=$request->getSession();
-        $redirectUrl = $session->get('redirect_after_vehicle',$this->generateUrl('app_dashboard'));
-        $session->remove('redirect_after_vehicle');
+        $redirectUrl = $request->headers->get('referer') ?? $this->generateUrl('app_dashboard');
+        
 
         if($form->isSubmitted()&& $form->isValid()){
             $existing=$em->getRepository(Vehicle::class)->findOneBy(['plate'=>$vehicle->getPlate()]);
@@ -44,15 +43,13 @@ final class VehicleController extends AbstractController
             if(count($form->getErrors(true))===0){
                 $em->persist($vehicle);
                 $em->flush();
+                $this->addFlash('success','Véhicule ajouté avec succès.');
+                return $this->redirect($redirectUrl);
             }
-            
-
-            $this->addFlash('success','Véhicule ajouté avec succès.');
-            return $this->redirect($redirectUrl);
         }
 
         return $this->render('vehicle/index.html.twig',[
-    'form'=>$form->createView(),
+        'form'=>$form->createView(),
     ]);
     }
 }

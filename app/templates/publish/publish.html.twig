@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publier un trajet - EcoRide{% endblock %}
+
+{% block body %}
+<main class="flex-grow-1 pt-5 mt-5">
+    <div class="container">
+        <div class="bg-eco-green text-eco-cream p-4 rounded shadow">
+            <h1 class="text-center fw-bold mb-4">Publier votre trajet</h1>
+
+            {# Flash messages #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label == 'success' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {{ form_start(form) }}
+            <div class="row g-4">
+                <div class="col-md-6">
+                    {{ form_row(form.departure_city) }}
+                    {{ form_row(form.arrival_city) }}
+                    {{ form_row(form.departure_datetime) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.arrival_datetime) }}
+                    {{ form_row(form.price) }}
+                    <small>2 crédit sont ajouté au prix pour la plateforme</small>
+                    {{ form_row(form.seats_available) }}
+
+                    <div class="mb-3">
+                        {{ form_label(form.vehicle) }}
+                        {{ form_widget(form.vehicle, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_errors(form.vehicle) }}
+                    </div>
+                    <div class="mb-3">
+                        <a href="{{ path('app_vehicle') }}" class="btn btn-eco mt-2">
+                            Ajouter un véhicule
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-eco px-4 py-2 fw-bold">Publier</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</main>
+{% endblock %}
