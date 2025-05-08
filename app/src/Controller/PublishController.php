@@ -32,7 +32,13 @@ final class PublishController extends AbstractController
         if ($form->isSubmitted()) {
             $departure = $trip->getDepartureDatetime();
             $arrival = $trip->getArrivalDatetime();
-        
+            
+            if (!$departure || !$arrival) {
+                $form->addError(new FormError("Les deux dates doivent être renseignées."));
+            } elseif ($arrival <= $departure) {
+                $form->addError(new FormError("La date d'arrivée doit être postérieure à la date de départ."));
+            }
+            
             //vérification du nombre de place cohérence vehicule  et trip
             $vehicle =$trip->getVehicle();
             $placeDispo = $trip->getSeatsAvailable();

@@ -97,14 +97,13 @@
                         <div class="card card-eco h-100">
                             <div class="row g-0 align-items-center">
                                 <div class="col-4 d-flex flex-column align-items-center p-2">
-                                    <img src="https://via.placeholder.com/80" alt="Photo du chauffeur" class="profile-img">
-                                    <div class="fw-bold mt-1">{{ trip.driver.pseudo }}</div>
-                                    <div class="rating mt-1">
+                                    <img src="{{ trip.driver.photoUrl }}" alt="Photo du chauffeur" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover">
+                                    <div class="fw-bold mt-1">{{ trip.driver.username }}</div>
+                                    <div class=" d-inline-flex gap-1">
+                                        {% set note = trip.driver.averageRating ?? 0 %}
                                         {% for i in 1..5 %}
-                                            {% if i <= 4 %}
-                                                <span class="leaf">&#127807;</span> {# remplace 4 par ta vraie note plus tard #}
-                                            {% else %}
-                                                <span class="leaf leaf-muted">&#127807;</span>
+                                            {% if i <= note %}
+                                                <span class="leaf">&#127807;</span>
                                             {% endif %}
                                         {% endfor %}
                                     </div>
@@ -127,7 +126,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-center">
-                                <a href="{{ path('app_detail_covoiturage', {id: trip.id}) }}" class="btn btn-eco">🔍 Détail</a>
+                                <a href="{#{{ path('app_detail_covoiturage', {id: trip.id}) }}#}" class="btn btn-eco">🔍 Détail</a>
                             </div>
                         </div>
                     </div>

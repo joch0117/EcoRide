@@ -13,8 +13,15 @@ enum EnergyType: string
     case GPL = 'gpl';
 
 
-public function label():string{
-    return $this->value;
+public function label(): string
+{
+    return match($this) {
+        self::ELECTRIQUE => 'Électrique',
+        self::HYBRIDE => 'Hybride',
+        self::ESSENCE => 'Essence',
+        self::DIESEL => 'Diesel',
+        self::GPL => 'GPL',
+    };
 }
 
 }

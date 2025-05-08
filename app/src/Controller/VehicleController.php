@@ -32,8 +32,9 @@ final class VehicleController extends AbstractController
         $form=$this->createForm(VehiculeType::class , $vehicle);
         $form->handleRequest($request);
         
-        $redirectUrl = $request->headers->get('referer') ?? $this->generateUrl('app_dashboard');
-        
+        $redirectUrl = $request->query->get('from') === 'publish'
+                        ? $this->generateUrl('app_publish')
+                        : $this->generateUrl('app_dashboard');
 
         if($form->isSubmitted()&& $form->isValid()){
             $existing=$em->getRepository(Vehicle::class)->findOneBy(['plate'=>$vehicle->getPlate()]);

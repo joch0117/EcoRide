@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Enum\EnergyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -23,12 +24,12 @@ class FilterTripType extends AbstractType
         'label' => 'Type de véhicule',
         'required' => false,
         'placeholder' => 'Choisir',
-        'choices' => [
-            'Électrique' => 'electrique',
-            'Hybride' => 'hybride',
-            'Essence' => 'essence',
+        'choices' => array_combine(
+            array_map(fn(EnergyType $type)=>$type->label(),EnergyType::cases()),
+            array_map(fn(EnergyType $type)=>$type->label(),EnergyType::cases()),
+        )
         ],
-    ])
+    )
     ->add('isEcological', CheckboxType::class, [
         'label' => 'Véhicule écologique uniquement',
         'required' => false,

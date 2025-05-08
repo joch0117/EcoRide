@@ -17,6 +17,11 @@
                     </div>
                 {% endfor %}
             {% endfor %}
+            {% if form.vars.errors|length > 0 %}
+            <div class="alert alert-danger">
+            {{ form_errors(form) }}
+            </div>
+            {% endif %}
 
             {{ form_start(form) }}
             <div class="row g-4">
@@ -37,7 +42,7 @@
                         {{ form_errors(form.vehicle) }}
                     </div>
                     <div class="mb-3">
-                        <a href="{{ path('app_vehicle') }}" class="btn btn-eco mt-2">
+                        <a href="{{ path('app_vehicle',{ from:'publish' }) }}" class="btn btn-eco mt-2">
                             Ajouter un véhicule
                         </a>
                     </div>
