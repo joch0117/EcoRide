@@ -35,9 +35,12 @@ class TripRepository extends ServiceEntityRepository
                 ->setParameter('arrivalCity', '%' . $arrivalCity . '%');
         }
     
-        if ($date) {
-            $qb->andWhere('DATE(t.departure_datetime) = :departureDate')
-                ->setParameter('departureDate', $date->format('Y-m-d'));
+        if ($date instanceof \DateTimeInterface) {
+            $start = (new \DateTime())->setTimestamp($date->getTimestamp())->setTime(0, 0, 0);
+            $end = (new \DateTime())->setTimestamp($date->getTimestamp())->setTime(23, 59, 59);
+            $qb->andWhere('t.departure_datetime BETWEEN :start AND :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end);
         }
     
         if (!empty($filters['maxPrice'])) {
@@ -54,12 +57,6 @@ class TripRepository extends ServiceEntityRepository
             $qb->andWhere('t.is_ecological = true');
         }
     
-        if (!empty($filters['vehicleType'])) {
-            $qb->join('t.vehicle', 'v') // jointure sur l'entité Vehicle
-                ->andWhere('v.energy_type = :vehicleType')
-                ->setParameter('vehicleType', $filters['vehicleType']);
-        }
-    
         if (!empty($filters['minRating'])) {
             $qb->andWhere('
                 (SELECT AVG(r.rating) 
@@ -71,19 +68,7 @@ class TripRepository extends ServiceEntityRepository
             ->setParameter('validatedStatus', StatusReview::APPROVED->value);
         }
         
-    
-        // Tri des résultats
-        if (!empty($filters['sortBy'])) {
-            $field = match($filters['sortBy']) {
-                'price' => 't.price',
-                'datetime' => 't.departure_datetime',
-                'duration' => 't.duration',
-                default => 't.departure_datetime',
-            };
-            $qb->orderBy($field, 'ASC');
-        } else {
-            $qb->orderBy('t.departure_datetime', 'ASC');
-        }
+        $qb->orderBy('t.departure_datetime', 'ASC');
     
         return $qb->getQuery()->getResult();
     }

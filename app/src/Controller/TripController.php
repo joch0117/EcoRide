@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Form\FilterTripType;
 use App\Form\SearchTripType;
-use App\Repository\TripRepository;
+use App\Services\TripSearchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,47 +12,40 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class TripController extends AbstractController
 {
-    #[Route('/recherche-covoiturage', name: 'app_trip_search')]
-    public function search(TripRepository $tripRepository,Request $request): Response
-    {
-        $searchData =[
-            'departureCity'=>$request->query->get('departureCity'),
-            'arrivalCity'=>$request->query->get('arrivalCity'),
-            'date'=>$request->query->get('date'),
-        ];
+#[Route('/recherche-covoiturage', name: 'app_trip_search')]
+public function search(TripSearchService $tripSearchService, Request $request): Response
+{
+    // Formulaire principal de recherche
+    $searchForm = $this->createForm(SearchTripType::class);
+    $searchForm->handleRequest($request);
 
-        $form = $this->createForm(SearchTripType::class,$searchData);
-        $form->handleRequest($request);
-        $search=$form->getData();
+    // Formulaire secondaire pour les filtres
+    $filterForm = $this->createForm(FilterTripType::class,null,['method'=>"GET",'csrf_protection'=>false,]);
+    $filterForm->handleRequest($request);
 
-        $filterData = [
-            'maxPrice' => $request->query->get('maxPrice'),
-            'vehicleType' => $request->query->get('vehicleType'),
-            'sortBy' => $request->query->get('sortBy'),
-            'isEcological' => $request->query->getBoolean('isEcological'),
-            'minRating' => $request->query->get('minRating'),
-            'maxDuration' => $request->query->get('maxDuration'),
-        ];
+    // On affiche les données brutes pour debugger
+    dump($searchForm->getData());
+    dump($filterForm->getData());
 
-        $filterForm = $this->createForm(FilterTripType::class, $filterData, [
-            'method' => 'GET'
-        ]);
+    $trips = [];
 
-        $filterForm->handleRequest($request);
-        $filters = $filterForm->getData();
-        $trips = [];
-    
-        $trips = $tripRepository->findBySearch(
-            $search['departureCity'] ?? null,
-            $search['arrivalCity'] ?? null,
-            $search['date'] ?? null,
-            $filters
+    if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+        $searchData = $searchForm->getData();
+        $filterData = $filterForm->getData() ??[];
+
+        $trips = $tripSearchService->searchTrip(
+            $searchData['departureCity'] ?? null,
+            $searchData['arrivalCity'] ?? null,
+            $searchData['date'] ?? null, // attention ici à bien mettre 'date'
+            $filterData
         );
-    
-        return $this->render('trip/search.html.twig', [
-            'form' => $form->createView(),
-            'filterForm' => $filterForm->createView(),
-            'trips' => $trips,
-        ]);
     }
+
+    return $this->render('trip/search.html.twig', [
+        'form' => $searchForm->createView(),
+        'filterForm' => $filterForm->createView(),
+        'trips' => $trips,
+    ]);
+}
+
 }

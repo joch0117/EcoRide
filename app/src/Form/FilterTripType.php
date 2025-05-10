@@ -20,16 +20,6 @@ class FilterTripType extends AbstractType
         'required' => false,
         'attr' => ['placeholder' => 'Ex : 25']
     ])
-    ->add('vehicleType', ChoiceType::class, [
-        'label' => 'Type de véhicule',
-        'required' => false,
-        'placeholder' => 'Choisir',
-        'choices' => array_combine(
-            array_map(fn(EnergyType $type)=>$type->label(),EnergyType::cases()),
-            array_map(fn(EnergyType $type)=>$type->label(),EnergyType::cases()),
-        )
-        ],
-    )
     ->add('isEcological', CheckboxType::class, [
         'label' => 'Véhicule écologique uniquement',
         'required' => false,
@@ -39,27 +29,17 @@ class FilterTripType extends AbstractType
         'required' => false,
         'placeholder' => 'Aucune',
         'choices' => [
-            '1 étoile ou plus' => 1,
-            '2 étoiles ou plus' => 2,
-            '3 étoiles ou plus' => 3,
-            '4 étoiles ou plus' => 4,
-            '5 étoiles' => 5,
+            '1 feuille ou plus' => 1,
+            '2 feuilles ou plus' => 2,
+            '3 feuilles ou plus' => 3,
+            '4 feuilles ou plus' => 4,
+            '5 feuilles' => 5,
         ],
     ])
     ->add('maxDuration', IntegerType::class, [
         'label' => 'Durée maximale (en minutes)',
         'required' => false,
         'attr' => ['placeholder' => 'Ex : 120']
-    ])
-    ->add('sortBy', ChoiceType::class, [
-        'label' => 'Trier par',
-        'required' => false,
-        'placeholder' => 'Choisir',
-        'choices' => [
-            'Prix' => 'price',
-            'Horaire' => 'datetime',
-            'Durée' => 'duration',
-        ],
     ]);
 
         
@@ -68,7 +48,10 @@ class FilterTripType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => null, 
+            'method' => 'GET',
+            'csrf_protection' => false,
+
         ]);
     }
 }
