@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Services;
+
+use App\Entity\User;
+use App\Entity\Vehicle;
+use App\Repository\VehicleRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
+class VehicleService
+{
+    public function __construct(
+        private EntityManagerInterface $em,
+        private VehicleRepository $vehicleRepo
+    ) {}
+
+    public function isPlateAlreadyUsed(string $plate, User $user): bool
+    {
+        return $this->vehicleRepo->findOneBy(['plate' => $plate, 'user' => $user]) !== null;
+    }
+
+    public function createVehicle(User $user, Vehicle $vehicle): void
+    {
+        $vehicle->setUser($user);
+        $this->em->persist($vehicle);
+        $this->em->flush();
+    }
+}
