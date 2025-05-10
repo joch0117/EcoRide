@@ -51,7 +51,7 @@ class ProfileService
             $newFilename
         );
 
-        $user->setPhotoUrl($newFilename);
+        $user->setPhotoUrl('uploads/users/' . $newFilename);
     }
     
     //mise en place d'une image par defaut

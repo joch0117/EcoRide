@@ -25,4 +25,5 @@ class VehicleService
         $this->em->persist($vehicle);
         $this->em->flush();
     }
+
 }

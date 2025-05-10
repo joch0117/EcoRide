@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Vehicle;
-use App\Entity\User;
 use App\Form\VehiculeType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Services\VehicleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +16,7 @@ use Symfony\Component\Form\FormError;
 final class VehicleController extends AbstractController
 {
     #[Route('/vehicule/ajouter', name: 'app_vehicle')]
-    public function add( Request $request,EntityManagerInterface $em): Response
+    public function add( Request $request,VehicleService $vehicleService): Response
     {
         /** @var \App\Entity\User $user */
         $user = $this ->getUser();
@@ -37,19 +36,17 @@ final class VehicleController extends AbstractController
                         : $this->generateUrl('app_dashboard');
 
         if($form->isSubmitted()&& $form->isValid()){
-            $existing=$em->getRepository(Vehicle::class)->findOneBy(['plate'=>$vehicle->getPlate()]);
-            if($existing){
-                $form->addError(new FormError('Un véhicule avec cette plaque existe déjà.'));
+            if($vehicleService->isPlateAlreadyUsed($vehicle->getPlate(),$user)){
+                $form->get('plate')->addError(new FormError('Un vehicule avec cette plaque existe déjà.'));
             }
             if(count($form->getErrors(true))===0){
-                $em->persist($vehicle);
-                $em->flush();
+                $vehicleService->createVehicle($user,$vehicle);
                 $this->addFlash('success','Véhicule ajouté avec succès.');
                 return $this->redirect($redirectUrl);
             }
         }
 
-        return $this->render('vehicle/index.html.twig',[
+        return $this->render('vehicle/vehicule.html.twig',[
         'form'=>$form->createView(),
     ]);
     }
