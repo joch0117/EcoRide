@@ -47,6 +47,7 @@ class Booking
     #[ORM\JoinColumn(nullable: false)]
     private ?Trip $trip = null;
 
+
     public function getId(): ?int
     {
         return $this->id;

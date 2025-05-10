@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmer votre réservation - ECORIDE{% endblock %}
+
+{% block body %}
+<main class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="bg-eco-green text-eco-cream p-5 rounded shadow text-center" style="max-width: 600px; width: 100%;">
+        <h2 class="mb-4">Confirmer la réservation</h2>
+
+        <p class="mb-4">
+            Souhaitez-vous réserver <strong>1 place</strong> pour ce trajet ?
+        </p>
+
+        <ul class="list-unstyled mb-4">
+            <li><strong>Départ :</strong> {{ trip.departureCity }}</li>
+            <li><strong>Arrivée :</strong> {{ trip.arrivalCity }}</li>
+            <li><strong>Date :</strong> {{ trip.departureDatetime|date('d/m/Y') }}</li>
+            <li><strong>Heure :</strong> {{ trip.departureDatetime|date('H:i') }}</li>
+            <li><strong>Prix :</strong> {{ trip.price +2 }} crédits</li>
+            <small>Ce montant serat déduit de vos crédits .</small>
+        </ul>
+
+        <form method="post" action="{{ path('booking_create', {id: trip.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('participate' ~ trip.id) }}">
+            <div class="d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-eco px-4">✅ Confirmer</button>
+                <a href="{{ path('app_detail', {id: trip.id}) }}" class="btn btn-eco px-4">❌ Annuler</a>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+

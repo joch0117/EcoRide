@@ -251,6 +251,16 @@ class Trip
         return $this;
     }
 
+        public function isUserBooked(User $user):bool
+    {
+        foreach ($this->bookings as $booking){
+            if ($booking->getUser() === $user){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @return Collection<int, IncidentReport>
      */
@@ -347,4 +357,6 @@ class Trip
         $this->duration = $duration;
         return $this;
     }
+
+
 }

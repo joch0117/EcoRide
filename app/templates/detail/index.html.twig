@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du covoiturage{% endblock %}
+
+{% block body %}
+<main class="flex-grow-1 py-5 mt-5">
+    <div class="container-lg bg-eco-green text-eco-cream p-4 rounded shadow mx-auto">
+
+        <!-- CHAUFFEUR -->
+        <div class="row g-4 align-items-center mb-4">
+            <div class="col-md-4 text-center">
+                <img src="{{ asset(trip.driver.photoUrl) }}" class="rounded-circle mb-2" alt="Photo du chauffeur" width="100" height="100" style="object-fit: cover;">
+                <div class="fw-bold fs-5">{{ trip.driver.firstname }}</div>
+                <div class="fs-5">
+                    {#{% set total = 0 %}
+                    {% set count = trip.driver.reviewsReceived|length %}
+                    {% for review in trip.driver.reviewsReceived %}
+                        {% set total = total + review.rating %}
+                    {% endfor %}
+                    {% set average = count > 0 ? (total / count)|round(0, 'floor') : 0 %}
+                    {% for i in 1..5 %}
+                        {% if i <= average %}
+                            🌿
+                        {% else %}
+                            🌫️
+                        {% endif %}
+                    {% endfor %}#}
+                </div>
+            </div>
+
+            <!-- TRAJET -->
+            <div class="col-md-8">
+                <p><strong>Départ :</strong> {{ trip.departureCity }}</p>
+                <p><strong>Arrivée :</strong> {{ trip.arrivalCity }}</p>
+                <p><strong>Date de Départ :</strong> {{ trip.departureDatetime|date('d/m/Y') }} à {{ trip.departureDatetime|date('H:i') }}</p>
+                <p><strong>Places restantes :</strong> {{ trip.seatsAvailable }}</p>
+                <p><strong>Prix :</strong> {{ trip.price + 2 }} crédits</p>
+                <p>
+                    <span class="badge bg-light text-success me-2">
+                        {{ trip.vehicle.energyType.value == 'ELECTRIC' ? 'Écologique' : 'écologique' }}
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <!-- VÉHICULE -->
+        <div class="mb-4">
+            <h5 class="border-bottom pb-2">Véhicule</h5>
+            <ul class="mb-0">
+                <li>Marque : {{ trip.vehicle.brand }}</li>
+                <li>Modèle : {{ trip.vehicle.model }}</li>
+                <li>Couleur : {{ trip.vehicle.color }}</li>
+            </ul>
+        </div>
+
+        <!-- PRÉFÉRENCES -->
+        <div class="mb-4">
+            <h5 class="border-bottom pb-2">🔧 Préférences du chauffeur</h5>
+            <ul class="mb-0">
+                {% for pref in trip.driver.preferences %}
+                    <li>
+                    {{ pref.label }}
+                    {% if pref.value %}
+                        <span class="text-success fw-bold"> Accepté </span>
+                    {% else %}
+                        <span class="text-success fw-bold"> Refusé </span>
+                    {% endif %}
+                {% else %}
+                    <li>Aucune préférence indiquée.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- PARTICIPATION -->
+        <div class="text-center my-4">
+            <a href="{{ path('booking_confirm', {id: trip.id}) }}"
+                class="btn btn-eco rounded-pill px-4">
+                Participer
+            </a>
+            </div>
+
+        <!-- COMMENTAIRES -->
+        <div>
+            <h5 class="border-bottom pb-2">💬 Commentaires</h5>
+            {% for review in trip.reviews %}
+                <div class="bg-eco-cream text-eco-green p-3 rounded mb-3">
+                    <strong>{{ review.author.firstname }}</strong> —
+                    {% for i in 1..5 %}
+                        {% if i <= review.rating %}
+                            🌿
+                        {% else %}
+                            
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                    {{ review.comment }}
+                </div>
+            {% else %}
+                <p class="fst-italic">Aucun commentaire pour ce trajet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
+
