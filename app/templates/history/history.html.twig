@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes covoiturages - Ecoride{% endblock %}
+
+{% block body %}
+<main class="container mt-5 pt-5">
+    <h2 class="text-center mb-4">Mes covoiturages</h2>
+{% if user.isDriver %}
+    <!-- SECTION CHAUFFEUR -->
+    <section class="mb-5">
+        <h4 class="text-eco-green">En tant que chauffeur</h4>
+
+        {% if chauffeurTrips is empty %}
+            <p class="text-muted">Aucun trajet comme chauffeur pour l’instant.</p>
+        {% else %}
+            <div class="row g-3">
+                {% for trip in chauffeurTrips %}
+                {% if trip.status.value != 'cancelled' %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card card-eco h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ trip.departureCity }} → {{ trip.arrivalCity }}</h5>
+                                <p class="card-text">Départ : {{ trip.departureDatetime|date('d/m/Y H:i') }}</p>
+                                <p class="card-text">Statut : {{ trip.status.label() }}</p>
+                                <p class="card-text">Places restantes : {{ trip.seatsAvailable }}</p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                {% if trip.status.value == 'scheduled' %}
+                                    <a href="{{ path('app_trip_start', { id: trip.id }) }}" class="btn btn-eco btn-sm">Démarrer</a>
+                                    <a href="{{ path('app_trip_cancel', { id: trip.id }) }}" class="btn btn-danger btn-sm">Annuler</a>
+                                {% elseif trip.status.value == 'started' %}
+                                    <a href="{{ path('app_trip_finish', { id: trip.id }) }}" class="btn btn-eco btn-sm">Arrivée</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+{% endif %}
+    <!-- SECTION PASSAGER -->
+    <section>
+        <h4 class="text-eco-green">En tant que passager</h4>
+
+        {% if passengerTrips is empty %}
+            <p class="text-muted">Aucune réservation pour l’instant.</p>
+        {% else %}
+            <div class="row g-3">
+                {% for booking in passengerBookings %}
+                    {% set trip = booking.trip %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card card-eco h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ trip.departureCity }} → {{ trip.arrivalCity }}</h5>
+                                <p class="card-text">Départ : {{ trip.departureDatetime|date('d/m/Y H:i') }}</p>
+                                <p class="card-text">Statut : {{ trip.status.label() }}</p>
+                            </div>
+                            <div class="card-footer text-end">
+                            {% if trip.status.value == 'scheduled' %}
+                                <a href="{{ path('app_booking_cancel', { id: booking.id }) }}" class="btn btn-outline-danger btn-sm">Annuler réservation</a>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

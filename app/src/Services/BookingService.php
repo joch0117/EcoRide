@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BookingService
 {
-    public function __construct(private EntityManagerInterface $em,private UserRepository $userRepo ){}
+    public function __construct(private EntityManagerInterface $em,private UserRepository $userRepo,private CreditService $creditService ){}
 
     public function canUserBook(User $user,Trip $trip): ?string
     {
@@ -42,7 +42,7 @@ class BookingService
         $now= new \DateTimeImmutable();
 
         //déduire les crédits du passager
-        $user->setCredit($user->getCredit() - $total);
+        $user->addCredits($total);
 
         //transation
         $platformTx = new CreditTransaction();
@@ -76,5 +76,19 @@ class BookingService
         $trip->setSeatsAvailable($trip->getSeatsAvailable()-1);
 
         return $booking;
+    }
+
+    public function cancelBooking(Booking $booking, $currentUser): bool
+    {
+        if ($booking->getUser() !== $currentUser) {
+            return false; 
+        }
+
+        $this->creditService->rembourserBooking($booking);
+
+        $this->em->remove($booking);
+        $this->em->flush();
+
+        return true;
     }
 }

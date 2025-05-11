@@ -330,6 +330,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function addCredits(int $amount): void
+    {
+        $this->credit += $amount;
+    }
+
+    public function removeCredits(int $amount): void
+    {
+        $this->credit -= $amount;
+    }
+
     public function isSuspended(): ?bool
     {
         return $this->is_suspended;
