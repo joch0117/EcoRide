@@ -25,11 +25,6 @@ class MiniSearchTripType extends AbstractType
                 'label' => 'Date',
                 'widget' => 'single_text',
                 'required' => false,
-            ])
-            ->add('search', SubmitType::class, [
-                'label' => 'Rechercher',
-                'attr' => ['class' => 'btn btn-eco w-100 mt-2']
-            ])
-        ;
+            ]);
     }
 }

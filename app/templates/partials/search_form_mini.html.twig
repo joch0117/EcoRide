@@ -1,34 +1,28 @@
-
-
-{{ form_start(form, {
+{{ form_start(miniSearchForm, {
     method: 'GET',
     action: path('app_trip_search')
 }) }}
     <div class="d-grid gap-2 mt-3">
-        {{ form_widget(form.departureCity, {
+        {{ form_widget(miniSearchForm.departureCity, {
             'attr': {
                 'class': 'form-control',
                 'placeholder': 'Départ'
             }
         }) }}
 
-        {{ form_widget(form.arrivalCity, {
+        {{ form_widget(miniSearchForm.arrivalCity, {
             'attr': {
                 'class': 'form-control',
                 'placeholder': 'Arrivée'
             }
         }) }}
 
-        {{ form_widget(form.date, {
+        {{ form_widget(miniSearchForm.date, {
             'attr': {
                 'class': 'form-control'
             }
         }) }}
 
-        {{ form_widget(form.search, {
-            'attr': {
-                'class': 'btn btn-eco w-100'
-            }
-        }) }}
+        <button type="submit" class="btn btn-eco w-100">Rechercher</button>
     </div>
-{{ form_end(form) }}
+{{ form_end(miniSearchForm) }}

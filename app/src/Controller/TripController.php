@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\FilterTripType;
+use App\Form\MiniSearchTripType;
 use App\Form\SearchTripType;
 use App\Services\TripSearchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,33 +19,35 @@ public function search(TripSearchService $tripSearchService, Request $request): 
     $searchForm = $this->createForm(SearchTripType::class);
     $searchForm->handleRequest($request);
 
-    // Formulaire secondaire pour les filtres
-    $filterForm = $this->createForm(FilterTripType::class,null,['method'=>"GET",'csrf_protection'=>false,]);
-    $filterForm->handleRequest($request);
-
-    // On affiche les données brutes pour debugger
-    dump($searchForm->getData());
-    dump($filterForm->getData());
+    //formulaire de recherche du menu
+    $miniSearchForm = $this->createForm(MiniSearchTripType::class,null,[
+        'method' =>'GET'
+    ]);
+    $miniSearchForm->handleRequest($request);
 
     $trips = [];
 
-    if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+    if ($miniSearchForm->isSubmitted() && $miniSearchForm->isValid()) {
+    $searchData = $miniSearchForm->getData();
+        $trips = $tripSearchService->searchTrip(
+        $searchData['departureCity'] ?? null,
+        $searchData['arrivalCity'] ?? null,
+        $searchData['date'] ?? null
+    );
+    }elseif ($searchForm->isSubmitted() && $searchForm->isValid()) {
         $searchData = $searchForm->getData();
-        $filterData = $filterForm->getData() ??[];
 
         $trips = $tripSearchService->searchTrip(
             $searchData['departureCity'] ?? null,
             $searchData['arrivalCity'] ?? null,
-            $searchData['date'] ?? null, // attention ici à bien mettre 'date'
-            $filterData
+            $searchData['date'] ?? null, 
         );
     }
 
     return $this->render('trip/search.html.twig', [
         'form' => $searchForm->createView(),
-        'filterForm' => $filterForm->createView(),
+        'miniSearchForm' => $miniSearchForm->createView(),
         'trips' => $trips,
     ]);
-}
-
+    }
 }

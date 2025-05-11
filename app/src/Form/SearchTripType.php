@@ -36,7 +36,7 @@ class SearchTripType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => null, // ← TRÈS IMPORTANT
+            'data_class' => null, 
             'method' => 'GET',
             'csrf_protection' => false,
         ]);

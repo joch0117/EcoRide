@@ -21,7 +21,6 @@ class TripRepository extends ServiceEntityRepository
         ?string $departureCity,
         ?string $arrivalCity,
         ?\DateTimeInterface $date,
-        array $filters = []
     ): array {
         $qb = $this->createQueryBuilder('t');
     
@@ -41,31 +40,6 @@ class TripRepository extends ServiceEntityRepository
             $qb->andWhere('t.departure_datetime BETWEEN :start AND :end')
                 ->setParameter('start', $start)
                 ->setParameter('end', $end);
-        }
-    
-        if (!empty($filters['maxPrice'])) {
-            $qb->andWhere('t.price <= :maxPrice')
-                ->setParameter('maxPrice', $filters['maxPrice']);
-        }
-    
-        if (!empty($filters['maxDuration'])) {
-            $qb->andWhere('t.duration <= :maxDuration')
-                ->setParameter('maxDuration', $filters['maxDuration']);
-        }
-    
-        if (!empty($filters['isEcological'])) {
-            $qb->andWhere('t.is_ecological = true');
-        }
-    
-        if (!empty($filters['minRating'])) {
-            $qb->andWhere('
-                (SELECT AVG(r.rating) 
-                FROM App\Entity\Review r 
-                WHERE r.trip = t AND r.status = :validatedStatus
-                ) >= :minRating
-            ')
-            ->setParameter('minRating', $filters['minRating'])
-            ->setParameter('validatedStatus', StatusReview::APPROVED->value);
         }
         
         $qb->orderBy('t.departure_datetime', 'ASC');

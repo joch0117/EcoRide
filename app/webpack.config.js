@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('preference','./assets/js/userPreferences.js')
+    .addEntry('filterSearch','./assets/js/filterSearch.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

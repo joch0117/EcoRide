@@ -4,85 +4,67 @@
 
 {% block body %}
 <main class="container mt-5 pt-5">
-    <section class="p-4 rounded">
-        <h3 class="text-center">Recherchez un covoiturage</h3>
-        {{ form_start(form, { method:'GET' }) }}
-        <div class="row g-2 mt-3">
-            <div class="col-12 col-md-9">
-                <div class="row g-2">
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        {{ form_row(form.departureCity, {
-                            label_attr: {'class': 'form-label'},
-                            attr: {'class': 'form-control'}
-                        }) }}
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        {{ form_row(form.arrivalCity, {
-                            label_attr: {'class': 'form-label'},
-                            attr: {'class': 'form-control'}
-                        }) }}
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        {{ form_row(form.date, {
-                            label_attr: {'class': 'form-label'},
-                            attr: {'class': 'form-control'}
-                        }) }}
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-end">
-                        {{ form_row(form.search, {
-                            attr: {'class': 'btn btn-eco w-100'}
-                        }) }}
-                    </div>
-                </div>
+    <section class="bg-eco-green text-eco-cream p-4 rounded mb-4">
+    <h3 class="text-center mb-4">Recherchez un covoiturage</h3>
+    <div class="container">
+        {{ form_start(form, { method:'GET', attr: {'class': 'mb-3'} }) }}
+        <div class="row g-3 justify-content-center">
+            <div class="col-12 col-sm-6 col-md-3">
+                {{ form_row(form.departureCity, { label_attr: {'class': 'form-label'}, attr: {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                {{ form_row(form.arrivalCity, { label_attr: {'class': 'form-label'}, attr: {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                {{ form_row(form.date, { label_attr: {'class': 'form-label'}, attr: {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-end">
+                {{ form_row(form.search, { attr: {'class': 'btn btn-eco w-100'} }) }}
             </div>
         </div>
-{{ form_end(form) }}
+        {{ form_end(form) }}
 
-    </section>
-        <!--filtres-->
-        <section class="p-3 mt-4 rounded shadow-sm bg-eco-green text-eco-cream">
-            <h5 class="mb-3">Filtres</h5>
-    
-            {{ form_start(filterForm, {
-                method: 'get',
-                attr: { class: 'row g-2' }
-            }) }}
-                <div class="col-12 col-sm-6 col-md-3">
-                    {{ form_row(filterForm.maxPrice, {
-                        label_attr: { class: 'form-label' },
-                        attr: { class: 'form-control', placeholder: 'Ex : 20' }
-                    }) }}
+        <!-- Filtres -->
+        <form id="filters-form" class="row g-3 mt-4 justify-content-center">
+            <div class="col-12 col-sm-6 col-md-3">
+                <label for="maxPrice" class="form-label">Prix max</label>
+                <input type="number" id="maxPrice" class="form-control" placeholder="Ex : 20">
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <label for="maxDuration" class="form-label">Durée max (en minutes)</label>
+                <input type="number" id="maxDuration" class="form-control" placeholder="Ex : 120">
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <label for="minRating" class="form-label">Note minimale</label>
+                <select id="minRating" class="form-select">
+                    <option value="0">Toutes</option>
+                    <option value="1">1 feuille</option>
+                    <option value="2">2 feuilles</option>
+                    <option value="3">3 feuilles</option>
+                    <option value="4">4 feuilles</option>
+                    <option value="5">5 feuilles</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="isEcological">
+                    <label class="form-check-label ms-2" for="isEcological">Trajets écologiques</label>
                 </div>
-                <div class="col-12 col-sm-6 col-md-3">
-                    {{ form_row(filterForm.maxDuration, {
-                        label_attr: { class: 'form-label' },
-                        attr: { class: 'form-control', placeholder: 'Ex : 120' }
-                    }) }}
-                </div>
-                <div class="col-12 col-sm-6 col-md-3">
-                    {{ form_row(filterForm.minRating, {
-                        label_attr: { class: 'form-label' },
-                        attr: { class: 'form-select' }
-                    }) }}
-                </div>
-                <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center">
-                    {{ form_row(filterForm.isEcological, {
-                        label_attr: { class: 'form-check-label ms-2' },
-                        row_attr: { class: 'form-check' },
-                        attr: { class: 'form-check-input' }
-                    }) }}
-                </div>
-                <div class="col-12 col-sm-6 col-md-3 align-self-end">
-                    <button type="submit" class="btn btn-eco w-100 mt-2">Appliquer</button>
-                </div>
-            {{ form_end(filterForm) }}
-        </section>
+            </div>
+            <div class="col-12 col-md-3">
+                <button type="submit" class="btn btn-eco w-100">Appliquer</button>
+            </div>
+        </form>
+    </div>
+</section>
+
 
         <section class="mt-4">
             <div class="row g-3 justify-content-center">
                 {% for trip in trips %}
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card card-eco h-100">
+                        <div class="card card-eco h-100" data-price="{{trip.price}}"  data-duration="{{trip.duration}}" 
+                                                        data-rating="{{ trip.driver.averageRating ?? 0}}" data-eco="{{trip.isEcological ? 'oui':'non'}}">
                             <div class="row g-0 align-items-center">
                                 <div class="col-4 d-flex flex-column align-items-center p-2">
                                     <img src="{{ trip.driver.photoUrl }}" alt="Photo du chauffeur" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover">
@@ -124,4 +106,8 @@
             </div>
         </section>
 </main>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('filterSearch') }}
+{% endblock %}
 {% endblock %}

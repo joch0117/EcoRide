@@ -16,8 +16,7 @@ class TripSearchService
         ?string $departureCity,
         ?string $arrivalCity,
         ?DateTimeInterface $date,
-        array $filters = []
     ): array{
-        return $this->tripRepo->findBySearch($departureCity,$arrivalCity,$date,$filters);
+        return $this->tripRepo->findBySearch($departureCity,$arrivalCity,$date);
     }
 }

@@ -18,10 +18,13 @@ class MiniSearchFormExtension extends AbstractExtension implements GlobalsInterf
 
     public function getGlobals(): array
     {
-        $form = $this->formFactory->create(MiniSearchTripType::class);
+        $form = $this->formFactory->create(MiniSearchTripType::class,null,[
+            'method'=>'GET',
+            'csrf_protection'=>false
+        ]);
 
         return [
-            'miniForm' => $form->createView(),
+            'miniSearchForm' => $form->createView(),
         ];
     }
 }
