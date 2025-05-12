@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Service;
 
 
 use App\Entity\CreditTransaction;
@@ -42,7 +42,7 @@ class BookingService
         $now= new \DateTimeImmutable();
 
         //déduire les crédits du passager
-        $user->addCredits($total);
+        $user->removeCredits($total);
 
         //transation
         $platformTx = new CreditTransaction();
@@ -81,8 +81,11 @@ class BookingService
     public function cancelBooking(Booking $booking, $currentUser): bool
     {
         if ($booking->getUser() !== $currentUser) {
-            return false; 
+            return false;
         }
+
+        $trip = $booking->getTrip();
+        $trip->setSeatsAvailable($trip->getSeatsAvailable() + $booking->getSeats());
 
         $this->creditService->rembourserBooking($booking);
 

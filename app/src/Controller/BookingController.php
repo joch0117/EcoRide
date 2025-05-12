@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\TripRepository;
-use App\Services\BookingService;
+use App\Service\BookingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +57,7 @@ final class BookingController extends AbstractController
         }
 
         
-        // Vérif métier via service
+        // Vérif des crédits via service
         if ($error = $this->bookingService->canUserBook($user, $trip)) {
             $this->addFlash('danger', $error);
             return $this->redirectToRoute('app_detail', ['id' => $trip->getId()]);

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Vehicle;
 use App\Form\VehiculeType;
-use App\Services\VehicleService;
+use App\Service\VehicleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

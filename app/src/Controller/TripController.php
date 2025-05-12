@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Form\MiniSearchTripType;
 use App\Form\SearchTripType;
-use App\Services\TripSearchService;
+use App\Service\TripSearchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

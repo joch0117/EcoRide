@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Service;
 
 use App\Entity\Trip;
 use App\Enum\StatusTrip;
+use App\Service\MailerService;
 use App\Repository\BookingRepository;
 use App\Repository\CreditTransactionRepository;
+use App\Service\MailerService as ServiceMailerService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class HistoryService
@@ -14,13 +16,15 @@ class HistoryService
         private EntityManagerInterface $em,
         private BookingRepository $bookingRepository,
         private CreditTransactionRepository $creditTransaction,
-        private CreditService $creditService
+        private CreditService $creditService,
+        private ServiceMailerService $mailerService
     ){}
 
 
     public function cancelTrip(Trip $trip)
     {
         foreach ($trip->getBookings() as $booking) {
+            $this->mailerService->sendCancelTrip($trip , $booking->getUser());
             $this->creditService->rembourserBooking($booking);
             $this->em->remove($booking);
         }
@@ -38,6 +42,10 @@ class HistoryService
     public function arrivalTrip(Trip $trip)
     {
         $trip->setStatus(StatusTrip::FINISHED);
+
+        foreach ($trip->getBookings() as $booking) {
+        $this->mailerService->sendRatingRequest($booking->getUser(), $trip);
+        }
         $this->em->flush();
     }
 
