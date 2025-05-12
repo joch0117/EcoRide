@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use app\Enum\StatusReview;
 use App\Entity\Review;
+use App\Entity\Trip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 /**
@@ -30,6 +31,18 @@ class ReviewRepository extends ServiceEntityRepository
         ->getSingleScalarResult();
     }
 
+
+    public function hasReview(User $user, Trip $trip): bool
+    {
+        return $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->where('r.writer = :user')
+            ->andWhere('r.trip = :trip')
+            ->setParameter('user', $user)
+            ->setParameter('trip', $trip)
+            ->getQuery()
+            ->getSingleScalarResult() > 0;
+    }
 
 //    /**
 //     * @return Review[] Returns an array of Review objects

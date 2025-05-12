@@ -19,8 +19,8 @@ class MailerService
     public function sendRatingRequest(User $user, Trip $trip): void
     {
         $link = $this->urlGenerator->generate(
-            'app_rating_validate', 
-            ['tripId' => $trip->getId()],
+            'app_feedback', 
+            ['id' => $trip->getId()],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 

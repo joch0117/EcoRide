@@ -61,6 +61,11 @@
                             {% if trip.status.value == 'scheduled' %}
                                 <a href="{{ path('app_booking_cancel', { id: booking.id }) }}" class="btn btn-outline-danger btn-sm">Annuler réservation</a>
                             {% endif %}
+                            {% if trip.status.value == 'finished' and trip.id not in reviewedTripIds %}
+                                <a href="{{ path('app_feedback', { id: trip.id }) }}" class="btn btn-eco btn-sm mt-2">
+                                    Valider le trajet
+                                </a>
+                            {% endif %}
                             </div>
                         </div>
                     </div>

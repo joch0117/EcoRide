@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Booking;
 use App\Entity\Trip;
 use App\Repository\BookingRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\TripRepository;
 use App\Service\BookingService;
 use App\Service\HistoryService;
@@ -17,19 +18,30 @@ final class HistoryController extends AbstractController
 {
     #[Route('/history', name: 'app_history')]
     #[IsGranted('ROLE_USER')]
-    public function index(TripRepository $tripRepository,BookingRepository $bookingRepository): Response
+    public function index(TripRepository $tripRepository,BookingRepository $bookingRepository,ReviewRepository $reviewRepository): Response
     {
         $user =$this->getUser();
         $driverTrips = $tripRepository->findBy(['driver'=>$user]);
 
+
         $passengerBookings =$bookingRepository->findBy(['user'=>$user]);
         $passengerTrips = array_map(fn($booking)=>$booking->getTrip(),$passengerBookings);
+
+        $reviewedTripIds = [];
+
+        foreach ($passengerBookings as $booking) {
+            if ($reviewRepository->hasReview($user, $booking->getTrip())) {
+                    $reviewedTripIds[] = $booking->getTrip()->getId();
+                }
+            }
+
 
         return $this->render('history/history.html.twig',[
             'chauffeurTrips' =>$driverTrips,
             'passengerTrips'=>$passengerTrips,
             'passengerBookings'=>$passengerBookings,
             'user'=>$this->getUser(),
+            'reviewedTripIds' => $reviewedTripIds,
         ]);
     }
 

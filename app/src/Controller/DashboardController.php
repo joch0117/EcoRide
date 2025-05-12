@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditProfilUserType;
+use App\Service\AverageRatingService;
 use App\Service\ProfileService;
 use App\Service\DashboardService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,11 +20,11 @@ final class DashboardController extends AbstractController
 {
     #[Route('/espace-utilisateur', name: 'app_dashboard')]
     #[IsGranted('ROLE_USER')]
-    public function index(DashboardService $dashboardService ): Response
+    public function index(DashboardService $dashboardService ,AverageRatingService $averageRatingService): Response
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
-        $average = $user->getAverageRating();
+        $average = $averageRatingService->getAverageRating($user);
 
 
         if (!$user->isProfilComplet()) {

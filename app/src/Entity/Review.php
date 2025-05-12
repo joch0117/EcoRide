@@ -45,6 +45,11 @@ class Review
     #[ORM\ManyToOne(inversedBy: 'driver_reviews')]
     private ?User $driver = null;
 
+    public function __construct()
+    {
+    $this->created_at = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

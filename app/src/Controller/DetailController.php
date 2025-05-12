@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\TripRepository;
+use App\Service\AverageRatingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,10 +11,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class DetailController extends AbstractController
 {
     #[Route('/detail/{id}', name: 'app_detail')]
-    public function show(int $id,TripRepository $tripRepository): Response
+    public function show(int $id,TripRepository $tripRepository,AverageRatingService $averageRatingService): Response
     {
 
         $trip=$tripRepository->find($id);
+        //$user= $trip->getDriver();
+        //$average = $averageRatingService->getAverageRating($user);
 
         if(!$trip){
             throw $this->createNotFoundException('trajet introuvable');

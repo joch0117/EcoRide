@@ -601,21 +601,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         && !empty($this->phone);
     }
 
-    /** Retourne la moyenne des notes validées reçues par chauffeur */
-    public function getAverageRating(): ?float
-    {
-    $notes = [];
-
-    foreach ($this->getDriverReviews() as $review) {          
-        if ($review->getStatus()?->value === 'VALIDATED') {   
-            $rating = $review->getRating();                  
-            if ($rating !== null) {
-                $notes[] = $rating;
-            }
-        }
-    }
-
-        return $notes ? array_sum($notes) / count($notes) : null;
-    }
-
 }

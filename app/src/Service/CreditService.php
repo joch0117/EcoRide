@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Entity\Booking;
 use App\Entity\CreditTransaction;
+use App\Entity\Trip;
+use App\Entity\User;
 use App\Enum\CreditTransactionType;
 use App\Repository\CreditTransactionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,6 +55,22 @@ class CreditService
 
         return true;
 
+        
+    }
 
+    public function creditDriver(User $chauffeur,Trip $trip, int $montant){
+        $chauffeur->addCredits($montant);
+
+        $transaction = new CreditTransaction();
+        $transaction->setUser($chauffeur);
+        $transaction->setTrip($trip);
+        $transaction->setAmount($montant);
+        $transaction->setDescription('Crédits suite à la validation d’un trajet');
+        $transaction->setType(CreditTransactionType::CREDIT);
+        $transaction->setCreatedAt(new \DateTimeImmutable());
+
+        $this->em->persist($transaction);
+        $this->em->persist($chauffeur);
+        $this->em->flush();
     }
 }
