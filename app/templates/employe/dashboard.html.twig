@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employe - EcoRide{% endblock %}
+
+{% block body %}
+<main class="container my-5 pt-5">
+    <div class="card card-eco p-4 mx-auto" style="max-width: 900px;">
+        <h1 class="text-center mb-4 fw-bold">Espace Employé</h1>
+
+        <div class="row text-center">
+            <div class="col-md-6 mb-3">
+                <div class="bg-eco-cream text-eco-green p-3 rounded">
+                    <h5 class="fw-bold">📝 Avis à valider</h5>
+                    <p class="display-6">{{ pending_reviews }}</p>
+                    <a href="{{ path('employe_avis') }}" class="btn btn-eco btn-sm">Voir les avis</a>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="bg-eco-cream text-eco-green p-3 rounded">
+                    <h5 class="fw-bold">🚨 Incidents signalés</h5>
+                    <p class="display-6">{{ pending_incidents }}</p>
+                    <a href="{{ path('employe_incidents') }}" class="btn btn-eco btn-sm">Voir les incidents</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail de l'incident - EcoRide{% endblock %}
+
+{% block body %}
+<main class="container my-5 pt-5">
+    <div class="card card-eco p-4 mx-auto" style="max-width: 1000px;">
+        <h1 class="text-center mb-4 fw-bold">Détail de l'incident</h1>
+
+        <div class="mb-4">
+            <h5 class="text-eco-cream">Trajet concerné</h5>
+            <p><strong>Itinéraire :</strong> {{ incidents.trip.departureCity }} → {{ incidents.trip.arrivalCity }}</p>
+            <p><strong>Date :</strong> {{ incidents.trip.departureDatetime|date('d/m/Y H:i') }}</p>
+            <p><strong>Trajet n° :</strong> {{ incidents.trip.id }}</p>
+        </div>
+        <div class="mb-4">
+            <h5 class="text-eco-cream">Incident signalé</h5>
+            <p><strong>Description :</strong> {{ incidents.description }}</p>
+            <p><strong>Date de signalement :</strong> {{ incidents.createdAt|date('d/m/Y H:i') }}</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="text-eco-cream">Passager</h6>
+                <p><strong>Pseudo :</strong> {{ incidents.reporter.username }}</p>
+                <p><strong>Nom :</strong> {{ incidents.reporter.surname }}</p>
+                <p><strong>Prénom :</strong> {{ incidents.reporter.firstname }}</p>
+                <p><strong>Téléphone :</strong> {{ incidents.reporter.phone }}</p>
+                <p><strong>Email :</strong> {{ incidents.reporter.email }}</p>
+            </div>
+            <div class="col-md-6">
+                <h6 class="text-eco-cream">Chauffeur</h6>
+                <p><strong>Pseudo :</strong> {{ incidents.trip.driver.username }}</p>
+                <p><strong>Nom :</strong> {{ incidents.trip.driver.surname }}</p>
+                <p><strong>Prénom :</strong> {{ incidents.trip.driver.firstname }}</p>
+                <p><strong>Téléphone :</strong> {{ incidents.trip.driver.phone }}</p>
+                <p><strong>Email :</strong> {{ incidents.trip.driver.email }}</p>
+            </div>
+        </div>
+    <div class="m-4">
+        <form method="post" action="{{ path('employe_incident_checked', { id: incidents.id }) }}" class="d-inline">
+            <input type="hidden" name="_token" value="{{ csrf_token('checked-incident' ~ incidents.id)}}"
+            <button class="btn btn-eco btn-sm rounded-pill">Valider</button>
+        </form>
+    </div>
+    </div>
+</main>
+{% endblock %}

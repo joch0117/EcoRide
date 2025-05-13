@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suivi des incidents - EcoRide{% endblock %}
+
+{% block body %}
+<main class="container my-5 pt-5">
+    <div class="card card-eco p-4 mx-auto" style="max-width: 900px;">
+        <h1 class="text-center mb-4 fw-bold">Incidents signalés</h1>
+
+        {% for incident in incidents %}
+            <div class="card bg-eco-cream text-eco-green mb-3 p-3 rounded">
+                <p><strong>Signalé par :</strong> {{ incident.reporter.username }} – {{ incident.reporter.email }}</p>
+                <p><strong>Signalé contre :</strong> {{ incident.trip.driver.username }} – {{ incident.trip.driver.email }}</p>
+                <p><strong>Trajet :</strong> {{ incident.trip.departureCity }} → {{ incident.trip.arrivalCity }}</p>
+                <p><strong>Date :</strong> {{ incident.trip.departureDateTime|date('d/m/Y H:i') }}</p>
+                <p><strong>Description :</strong> {{ incident.description }}</p>
+
+                <div class="text-end">
+                    <a href="{{ path('employe_incident_detail', { id: incident.id }) }}" class="btn btn-eco btn-sm rounded-pill">Détail</a>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center">Aucun incident à traiter.</p>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
+

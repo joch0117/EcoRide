@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modération des avis - EcoRide{% endblock %}
+
+{% block body %}
+<main class="container my-5 pt-5">
+    <div class="card card-eco p-4 mx-auto" style="max-width: 900px;">
+        <h1 class="text-center mb-4 fw-bold">Modération des avis</h1>
+        {% for review in pending_reviews %}
+            <div class="card bg-eco-cream text-eco-green mb-3 p-3 rounded">
+                <p><strong>Participant :</strong> {{ review.writer.username }}</p>
+                <p><strong>Note :</strong> {% for i in 1..review.rating %}🌿{% endfor %}</p>
+                <p><strong>Avis :</strong> {{ review.comment }}</p>
+                <p><strong>Covoiturage n° :</strong> {{ review.trip.id }} </p>
+                <p><strong>Trajet :</strong> {{ review.trip.departureCity }} → {{ review.trip.arrivalCity }}</p>
+                <div class="text-end">
+                    <form method="post" action="{{ path('employe_avis_valider', { id: review.id }) }}" class="d-inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('validate-review-' ~ review.id)}}">
+                        <button class="btn btn-success btn-sm rounded-pill">Valider</button>
+                    </form>
+                    <form method="post" action="{{ path('employe_avis_rejeter', { id: review.id }) }}" class="d-inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('reject-review-' ~ review.id)}}">
+                        <button class="btn btn-danger btn-sm rounded-pill">Rejeter</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center">Aucun avis à modérer pour le moment.</p>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
