@@ -262,14 +262,14 @@ VALUES
 
 INSERT INTO `incident_report` (id, trip_id, reporter_id, description, incident_status, created_at)
 VALUES
-(1, 4, 3, 'Le conducteur est arrivé en retard.', 'pending', '2025-07-10 00:00:00'),
-(2, 5, 7, 'Annulation sans prévenir.', 'pending', '2025-07-11 00:00:00'),
-(3, 8, 4, 'Comportement inadapté durant le trajet.', 'validated', '2025-07-12 00:00:00'),
-(4, 9, 7, 'Véhicule sale et inconfortable.', 'rejected', '2025-07-13 00:00:00'),
-(5, 6, 8, 'Non-respect du code de la route.', 'validated', '2025-07-14 00:00:00'),
-(6, 4, 4, 'Mauvais itinéraire pris volontairement.', 'rejected', '2025-07-15 00:00:00'),
-(7, 7, 1, 'Absence de communication avant le trajet.', 'pending', '2025-07-16 00:00:00'),
-(8, 5, 5, 'Refus d''un arrêt demandé.', 'pending', '2025-07-17 00:00:00'),
-(9, 1, 1, 'Problème de ponctualité récurrent.', 'validated', '2025-07-18 00:00:00'),
-(10, 5, 1, 'Conduite agressive constatée.', 'pending', '2025-07-19 00:00:00');
+(1, 4, 3, 'Le conducteur est arrivé en retard.', 'nochecked', '2025-07-10 00:00:00'),
+(2, 5, 7, 'Annulation sans prévenir.', 'nochecked', '2025-07-11 00:00:00'),
+(3, 8, 4, 'Comportement inadapté durant le trajet.', 'nochecked', '2025-07-12 00:00:00'),
+(4, 9, 7, 'Véhicule sale et inconfortable.', 'nochecked', '2025-07-13 00:00:00'),
+(5, 6, 8, 'Non-respect du code de la route.', 'nochecked', '2025-07-14 00:00:00'),
+(6, 4, 4, 'Mauvais itinéraire pris volontairement.', 'nochecked', '2025-07-15 00:00:00'),
+(7, 7, 1, 'Absence de communication avant le trajet.', 'nochecked', '2025-07-16 00:00:00'),
+(8, 5, 5, 'Refus d''un arrêt demandé.', 'nochecked', '2025-07-17 00:00:00'),
+(9, 1, 1, 'Problème de ponctualité récurrent.', 'nochecked', '2025-07-18 00:00:00'),
+(10, 5, 1, 'Conduite agressive constatée.', 'nochecked', '2025-07-19 00:00:00');
 
