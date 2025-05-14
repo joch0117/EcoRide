@@ -48,8 +48,8 @@ class RegisterType extends AbstractType
                         new Assert\NotBlank(['message' => 'Le mot de passe est requis.']),
                         new Assert\Length(['min' => 8]),
                         new Assert\Regex([
-                            'pattern' => '/(?=.*[A-Z])(?=.*\d)/',
-                            'message' => 'Le mot de passe doit contenir au moins une majuscule et un chiffre.'
+                            'pattern'=>'/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:\'",.<>\/?\\|`~€£¤§°²])(?=.{8,}).*$/',
+                            'message'=> 'Le mot de passe doit contenir 8 caractéres, une majuscule, un chiffre et un caractère spécial.'
                         ])
                     ]
                 ],

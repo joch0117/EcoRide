@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un employé - Admin | EcoRide{% endblock %}
+
+{% block body %}
+<main class="pt-5 mt-5 flex-grow-1">
+    <div class="container">
+        <h1 class="text-center text-eco-green fw-bold mb-4">Créer un compte employé</h1>
+
+        <div class="card card-eco mx-auto" style="max-width: 700px;">
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                <div class="mb-3">
+                    {{ form_label(form.firstname) }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.firstname) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.surname) }}
+                    {{ form_widget(form.surname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.surname) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.username) }}
+                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.username) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.plainPassword) }}
+                    {{ form_widget(form.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                    <small class="text-eco-cream">Minimum 8 caractères, 1 majuscule, 1 chiffre, 1 caractère spécial.</small>
+                    {{ form_errors(form.plainPassword) }}
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-eco btn-responsive fw-bold" type="submit">Créer le compte</button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
