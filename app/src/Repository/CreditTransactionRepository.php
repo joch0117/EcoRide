@@ -16,6 +16,31 @@ class CreditTransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, CreditTransaction::class);
     }
 
+    public function sumPlatformWin(): int
+    {
+    $qb = $this->createQueryBuilder('ct');
+
+    // 1. Total des platform_fee
+    $totalFees = (int) $qb
+        ->select('SUM(ct.amount)')
+        ->where('ct.type = :fee')
+        ->setParameter('fee', 'platform_fee')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+    // 2. Nombre de refunds
+    $refundCount = (int) $this->createQueryBuilder('ct')
+        ->select('COUNT(ct.id)')
+        ->where('ct.type = :refund')
+        ->setParameter('refund', 'refund')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+    // 3. Montant total à soustraire
+    $totalRefund = $refundCount * 2;
+
+    return $totalFees - $totalRefund;
+    }
 //    /**
 //     * @return CreditTransaction[] Returns an array of CreditTransaction objects
 //     */

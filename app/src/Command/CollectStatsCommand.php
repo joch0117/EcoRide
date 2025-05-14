@@ -30,7 +30,7 @@ class CollectStatsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $nbTrajets = $this->tripRepository->count([]);
-        $totalCredits = $this->transactionRepository->sumPlatformCommission();
+        $totalCredits = $this->transactionRepository->sumPlatformWin();
         $nbUsers = $this->userRepository->count([]);
 
         $stat = new SiteStat();

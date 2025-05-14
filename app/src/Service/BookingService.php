@@ -48,7 +48,7 @@ class BookingService
         $platformTx = new CreditTransaction();
         $platformTx->setUser($user);
         $platformTx->setTrip($trip);
-        $platformTx->setAmount(-2);
+        $platformTx->setAmount(2);
         $platformTx->setDescription('Commission plateforme');
         $platformTx->setCreatedAt($now);
         $platformTx->setType(CreditTransactionType::PLATFORM_FEE);
