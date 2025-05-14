@@ -41,6 +41,24 @@ class CreditTransactionRepository extends ServiceEntityRepository
 
     return $totalFees - $totalRefund;
     }
+
+    public function creditsByDay(): array
+    {
+    $conn = $this->getEntityManager()->getConnection();
+
+    $sql = "
+        SELECT DATE(created_at) AS jour,
+            SUM(CASE WHEN type = 'platform_fee' THEN amount ELSE 0 END) -
+               (COUNT(CASE WHEN type = 'refund' THEN 1 ELSE NULL END) * 2) AS total
+        FROM credit_transaction
+        GROUP BY jour
+        ORDER BY jour ASC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    return $stmt->executeQuery()->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return CreditTransaction[] Returns an array of CreditTransaction objects
 //     */

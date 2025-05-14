@@ -46,4 +46,5 @@ class TripRepository extends ServiceEntityRepository
     
         return $qb->getQuery()->getResult();
     }
+
 }

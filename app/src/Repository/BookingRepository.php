@@ -16,6 +16,22 @@ class BookingRepository extends ServiceEntityRepository
         parent::__construct($registry, Booking::class);
     }
 
+    public function countRealizedByDay(): array
+{
+    $conn = $this->getEntityManager()->getConnection();
+
+    $sql = "
+        SELECT DATE(created_at) AS jour, COUNT(*) AS total
+        FROM booking
+        WHERE feedback_status IN ('validated', 'rejected')
+        GROUP BY jour
+        ORDER BY jour ASC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    return $stmt->executeQuery()->fetchAllAssociative();
+}
+
 //    /**
 //     * @return Booking[] Returns an array of Booking objects
 //     */

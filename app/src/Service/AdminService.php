@@ -2,7 +2,11 @@
 
 namespace App\Service;
 
+use App\Document\SiteStat;
 use App\Entity\User;
+use App\Repository\BookingRepository;
+use App\Repository\CreditTransactionRepository;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -10,7 +14,10 @@ class AdminService
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private UserPasswordHasherInterface $hasher
+        private UserPasswordHasherInterface $hasher,
+        private BookingRepository $bookingRepository,
+        private CreditTransactionRepository $creditTransactionRepository,
+        private DocumentManager $dm
     ){}
 
 
@@ -78,4 +85,53 @@ class AdminService
 
     }
 
+
+    //stat
+
+    public function getTrajetsRealisesParJour(): array
+    {
+    $rows = $this->bookingRepository->countRealizedByDay();
+
+    $labels = [];
+    $values = [];
+
+    foreach ($rows as $row) {
+        $labels[] = $row['jour'];
+        $values[] = (int) $row['total'];
+    }
+
+    return [
+        'labels' => $labels,
+        'values' => $values
+    ];
+    }
+
+    public function getCreditsGagnesParJour(): array
+    {
+    $rows = $this->creditTransactionRepository->creditsByDay();
+
+    $labels = [];
+    $values = [];
+
+    foreach ($rows as $row) {
+        $labels[] = $row['jour'];
+        $values[] = (int) $row['total'];
+    }
+
+    return [
+        'labels' => $labels,
+        'values' => $values
+    ];
+    }
+
+
+    public function getLastSnapshot(): ?SiteStat
+    {
+        return $this->dm->getRepository(SiteStat::class)
+            ->createQueryBuilder()
+            ->sort('date', 'desc')
+            ->limit(1)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

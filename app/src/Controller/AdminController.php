@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\CreateEmployeType;
 use App\Service\AdminService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,9 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AdminController extends AbstractController
 {
     #[Route('', name: 'admin')]
-    public function dashboard(): Response
+    public function dashboard(AdminService $adminService): Response
     {
-        return $this->render('admin/dashboard.html.twig');
+
+        return $this->render('admin/dashboard.html.twig',[
+            'lastSnapshot'=> $adminService->getLastSnapshot()
+        ]);
     }
 
 
@@ -77,6 +81,15 @@ final class AdminController extends AbstractController
             throw $this->createAccessDeniedException('Token CSRF invalide');
         }
         $adminService->deleteUser($user);
-        return $this->redirectToRoute('admin_admin_users');
+        return $this->redirectToRoute('admin_users');
+    }
+
+    #[Route('/stats/data', name: 'stats_data')]
+    public function statsData(AdminService $adminService): JsonResponse
+    {
+        return new JsonResponse([
+            'trajets' => $adminService->getTrajetsRealisesParJour(),
+            'credits' => $adminService->getCreditsGagnesParJour()
+        ]);
     }
 }
