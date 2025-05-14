@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs | EcoRide{% endblock %}
+
+{% block body %}
+<main class="pt-5 mt-5 flex-grow-1">
+    <div class="container">
+        <h1 class="text-center text-eco-green fw-bold mb-5">Gestion des comptes</h1>
+
+        <form method="get" class="row g-3 mb-4">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher par pseudo ou email" value="{{ search }}">
+            </div>
+            <div class="col-md-3">
+                <select class="form-select" id="filter" onchange="filterUsers()">
+                    <option value="">Tous les comptes</option>
+                    <option value="actif">Actifs uniquement</option>
+                    <option value="suspendu">Suspendus uniquement</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-eco w-100">Rechercher</button>
+            </div>
+        </form>
+
+        <section class="mb-5">
+            <h2 class="h5 text-eco-green mb-3">Employés</h2>
+
+            <div class="row g-3">
+                {% for user in employees %}
+                    <div class="col-md-6 col-lg-4 user-card" data-status="{{ user.isSuspended ? 'suspendu' : 'actif' }}">
+                        <div class="card card-eco h-100">
+                            <div class="card-body">
+                                <p><strong>Pseudo :</strong> {{ user.username }}</p>
+                                <p><strong>Email :</strong> {{ user.email }}</p>
+                                <p>
+                                    <strong>Statut :</strong>
+                                    {{ user.isSuspended ? ' Suspendu' : ' Actif' }}
+                                </p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+
+                                <form method="post" action="{{ path('admin_admin_toggle_user', {'id': user.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('toggle-user-' ~ user.id) }}">
+                                    <button type="submit" class="btn btn-sm {{ user.isSuspended ? 'btn-success' : 'btn-warning' }}">
+                                        {{ user.isSuspended ? 'Autoriser' : 'Suspendre' }}
+                                    </button>
+                                </form>
+
+                                <form method="post" action="{{ path('admin_admin_delete_user', {'id': user.id}) }}" onsubmit="return confirm('Supprimer ce compte ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Aucun employé trouvé.</p>
+                {% endfor %}
+            </div>
+        </section>
+        <section>
+            <h2 class="h5 text-eco-green mb-3">Utilisateurs</h2>
+
+            <div class="row g-3">
+                {% for user in users %}
+                    <div class="col-md-6 col-lg-4 user-card" data-status="{{ user.isSuspended ? 'suspendu' : 'actif' }}">
+                        <div class="card card-eco h-100">
+                            <div class="card-body">
+                                <p><strong>Pseudo :</strong> {{ user.username }}</p>
+                                <p><strong>Email :</strong> {{ user.email }}</p>
+                                <p>
+                                    <strong>Statut :</strong>
+                                    {{ user.isSuspended ? ' Suspendu' : ' Actif' }}
+                                </p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <form method="post" action="{{ path('admin_admin_toggle_user', {'id': user.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('toggle-user-' ~ user.id) }}">
+                                    <button type="submit" class="btn btn-sm {{ user.isSuspended ? 'btn-success' : 'btn-warning' }}">
+                                        {{ user.isSuspended ? 'Autoriser' : 'Suspendre' }}
+                                    </button>
+                                </form>
+                                <form method="post" action="{{ path('admin_admin_delete_user', {'id': user.id}) }}" onsubmit="return confirm('Supprimer ce compte ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Aucun utilisateur trouvé.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</main>
+
+<script>
+    function filterUsers() {
+        const select = document.getElementById("filter");
+        const value = select.value;
+        const cards = document.querySelectorAll(".user-card");
+
+        cards.forEach(card => {
+            const status = card.getAttribute("data-status");
+            if (!value || value === status) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+</script>
+{% endblock %}

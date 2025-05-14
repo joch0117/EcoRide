@@ -14,22 +14,57 @@ class AdminService
     ){}
 
 
-    public function suspendUser()
+    public function toggleSuspension(User $user)
     {
-
-    }
-    public function autoriseUser()
-    {
-
+        $user->setIsSuspended(!$user->isSuspended());
+        $this->em->flush();
     }
 
-    public function searchUser()
+    public function getUserGrouped()
     {
+        $allUsers=$this->em->getRepository(User::class)->findAll();
+        $employees=[];
+        $users =[];
 
+        foreach($allUsers as $user){
+            if(in_array('ROLE_EMPLOYEE',$user->getRoles())){
+                $employees[] = $user;
+            } elseif (in_array('ROLE_USER', $user->getRoles())){
+                $users[]=$user;
+            }
+        }
+        return[
+            'employees'=>$employees,
+            'users'=>$users
+        ];
     }
-    public function deleteUser()
-    {
 
+    public function searchusers(string $term): array
+    {
+        $users = $this->em->getRepository(User::class)->findAll();
+
+        $filtered=array_filter($users, function(User $user) use ($term){
+            return str_contains(strtolower($user->getEmail()),strtolower($term)) ||
+                    str_contains(strtolower($user->getUsername()),strtolower($term));
+        });
+
+        $employeed = [];
+        $regularUsers = [];
+
+        foreach ($filtered as $user){
+            if(in_array('ROLE_EMPLOYEE', $user->getRoles())){
+                $employees[] = $user;
+            }elseif (in_array('ROLE_USER',$user->getRoles())){
+                $regularUsers[] = $user;
+            }
+        }
+            return ['employees' => $employees,'users'=>$regularUsers];
+    }
+    public function deleteUser(User $user): bool
+    {
+        $this->em->remove($user);
+        $this->em->flush();
+        return true;
     }
     public function createEmploye(string $plainPassword,User $user)
     {

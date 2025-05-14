@@ -10,17 +10,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin', name: 'app_admin')]
+#[Route('/admin', name: 'admin_')]
 final class AdminController extends AbstractController
 {
-    #[Route('', name: 'app_admin')]
+    #[Route('', name: 'admin')]
     public function dashboard(): Response
     {
         return $this->render('admin/dashboard.html.twig');
     }
 
 
-    #[Route('/employe', name: 'app_admin_create')]
+    #[Route('/create', name: 'admin_create')]
     public function createEmploye(Request $request, AdminService $adminService): Response
     {
         $user = new User();
@@ -32,16 +32,51 @@ final class AdminController extends AbstractController
             $adminService->createEmploye($plainPassword,$user);
 
             $this->addFlash('succes','Employé créé avec succès');
-            return $this->redirectToRoute('admin_dashboard');
+            return $this->redirectToRoute('admin');
         }
-        return $this->render('admin/create.html.twig');
+        return $this->render('admin/create.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
 
 
-    #[Route('/gestion', name: 'app_admin')]
-    public function gestionUser(): Response
+    #[Route('/gestion', name: 'admin_users')]
+    public function gestionUser(Request $request,AdminService $adminService): Response
     {
-        return $this->render('admin/gestion.html.twig');
+        $search = $request->query->get('search');
+
+        $groupedUsers= $search 
+        ? $adminService->searchUsers($search)
+        : $adminService->getUserGrouped();
+
+
+        
+        return $this->render('admin/gestion.html.twig',[
+            'employees'=> $groupedUsers['employees'],
+            'users'=> $groupedUsers['users'],
+            'search'=> $search
+        ]);
     }
 
+    #[Route('/user/{id}/toggle', name: 'admin_toggle_user', methods: ['POST'])]
+    public function toggleUser(User $user, AdminService $adminService,Request $request): Response
+    {
+        $token = $request->request->get('_token');
+        if (!$this->isCsrfTokenValid('toggle-user-' . $user->getId(), $token)) {
+        throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+        $adminService->toggleSuspension($user);
+        return $this->redirectToRoute('admin_admin_users');
+    }
+
+    #[Route('/user/{id}/delete', name: 'admin_delete_user', methods: ['POST'])]
+    public function deleteUser(User $user, AdminService $adminService,Request $request): Response
+    {
+        $token = $request->request->get('_token');
+        if (!$this->isCsrfTokenValid('delete-user-' . $user->getId(), $token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+        $adminService->deleteUser($user);
+        return $this->redirectToRoute('admin_admin_users');
+    }
 }

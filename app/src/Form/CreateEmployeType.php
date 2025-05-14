@@ -23,7 +23,7 @@ class CreateEmployeType extends AbstractType
                     new Assert\Email()
                 ]
             ])
-            ->add('password',PasswordType::class,[
+            ->add('plainPassword',PasswordType::class,[
                 'label' => 'Mot de passe',
                 'mapped'=> false,
                 'constraints'=>[
