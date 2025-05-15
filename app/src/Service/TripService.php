@@ -30,7 +30,6 @@ class TripService
             throw new \Exception('Les dates du trajet ne sont pas valides.');
         }
         
-
         //calcul durée
         $duration = $this->calculateDuration($trip);
         $trip->setDuration($duration);

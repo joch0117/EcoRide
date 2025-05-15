@@ -34,15 +34,18 @@
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item"><a class="nav-link" href="{{ path('app_home') }}">Accueil</a></li>
                             {% if app.user %}
+                            <!-- menu admin -->
                                 {% if is_granted('ROLE_ADMIN') %}
                                         <li class="nav-item"><a class="nav-link" href="{{ path('admin') }}">Dashboard admin</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{{ path('admin_admin_create') }}">Créer un compte employé</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{{ path('admin_admin_users') }}">Gestion des compte</a></li>
+                                <!-- menu employe -->
                                 {% elseif is_granted('ROLE_EMPLOYE') %}
                                         <li class="nav-item"><a class="nav-link" href="{{ path('employe_dashboard') }}">Dashboard employé</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{{ path('employe_avis') }}">Gestion des avis</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{{ path('employe_incidents') }}">Gestion des incidents</a></li>
                                 {% else %}
+                                <!-- menu user -->
                                         <li class="nav-item"><a class="nav-link" href="{{ path('app_dashboard') }}">Mon compte</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{{ path('app_trip_search') }}">Covoiturage</a></li>
                                 {% endif %}
@@ -54,6 +57,7 @@
                             {% endif %}
                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                         </ul>
+                        <!-- recherche de trajet accéssible user uniquement -->
                         {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_EMPLOYE') %}
                         {% include 'partials/search_form_mini.html.twig' with { form: miniSearchForm } %}
                         {% endif %}

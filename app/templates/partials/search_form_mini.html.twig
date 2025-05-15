@@ -1,7 +1,4 @@
-{{ form_start(miniSearchForm, {
-    method: 'GET',
-    action: path('app_trip_search')
-}) }}
+{{ form_start(miniSearchForm) }}
     <div class="d-grid gap-2 mt-3">
         {{ form_widget(miniSearchForm.departureCity, {
             'attr': {

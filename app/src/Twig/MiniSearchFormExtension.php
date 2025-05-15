@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Form\MiniSearchTripType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 
@@ -11,7 +12,7 @@ class MiniSearchFormExtension extends AbstractExtension implements GlobalsInterf
 {
     private FormFactoryInterface $formFactory;
 
-    public function __construct(FormFactoryInterface $formFactory)
+    public function __construct(FormFactoryInterface $formFactory,private RouterInterface $router)
     {
         $this->formFactory = $formFactory;
     }
@@ -20,6 +21,7 @@ class MiniSearchFormExtension extends AbstractExtension implements GlobalsInterf
     {
         $form = $this->formFactory->create(MiniSearchTripType::class,null,[
             'method'=>'GET',
+            'action'=>$this->router->generate('app_trip_search'),
             'csrf_protection'=>false
         ]);
 

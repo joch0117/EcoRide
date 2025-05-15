@@ -27,9 +27,10 @@ public function search(TripSearchService $tripSearchService, Request $request): 
 
     $trips = [];
 
-    if ($miniSearchForm->isSubmitted() && $miniSearchForm->isValid()) {
+    if ($request->query->has('mini_search_trip')) {
     $searchData = $miniSearchForm->getData();
-        $trips = $tripSearchService->searchTrip(
+
+    $trips = $tripSearchService->searchTrip(
         $searchData['departureCity'] ?? null,
         $searchData['arrivalCity'] ?? null,
         $searchData['date'] ?? null

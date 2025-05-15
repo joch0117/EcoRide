@@ -27,4 +27,9 @@ class MiniSearchTripType extends AbstractType
                 'required' => false,
             ]);
     }
+
+    public function getBlockPrefix(): string
+    {
+    return 'mini_search_trip';
+    }
 }
