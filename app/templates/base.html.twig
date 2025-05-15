@@ -55,7 +55,6 @@
                             <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ path('app_registration') }}">Créer un compte</a></li>
                             {% endif %}
-                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                         </ul>
                         <!-- recherche de trajet accéssible user uniquement -->
                         {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_EMPLOYE') %}
@@ -71,7 +70,10 @@
         {% block body %}{% endblock %}
     
         <footer class="footer mt-auto bg-eco-green text-eco-cream text-light text-center">
-            <p>© 2025 EcoRide - <a href="#" class="text-light">Mentions légales</a></p>
+            <p>© 2025 EcoRide -
+                <a href="{{ path('app_mentions') }}" class="text-light">Mentions légales</a> -
+                <a href="{{ path('app_cgu') }}" class="text-light">CGU</a>
+            </p>
         </footer>
 
     {{ encore_entry_script_tags('app') }}
