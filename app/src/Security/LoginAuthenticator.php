@@ -2,9 +2,11 @@
 
 namespace App\Security;
 
+
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -24,7 +26,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator,private UserRepository $userRepository)
+    public function __construct(private UrlGeneratorInterface $urlGenerator,private UserRepository $userRepository,private RequestStack $requestStack)
     {
     }
 
@@ -42,8 +44,18 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
         return new Passport(
             new UserBadge($email, function(string $userIdentifier){
-                return $this->userRepository->findoneBy(['email'=>$userIdentifier]);
-            }),
+                        $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
+
+                        if (!$user) {
+                            throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
+                        }
+
+                        if ($user->isSuspended()) {
+                            throw new CustomUserMessageAuthenticationException('Votre compte a été suspendu.');
+                        }
+
+                    return $user;
+                }),
             new PasswordCredentials($password),
             [
                 new CsrfTokenBadge('authenticate', $csrfToken),
@@ -54,6 +66,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }

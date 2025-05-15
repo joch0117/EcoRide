@@ -80,8 +80,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $credit = null;
 
 
-    #[ORM\Column]
-    private ?bool $is_suspended = null;
+    #[ORM\Column (type: 'boolean')]
+    private ?bool $is_suspended = false;
 
     /**
      * @var Collection<int, Vehicle>
@@ -355,7 +355,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isSuspended(): ?bool
     {
-        return $this->is_suspended;
+        return $this->is_suspended ;
     }
 
     public function setIsSuspended(bool $is_suspended): static
