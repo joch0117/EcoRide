@@ -8,7 +8,10 @@
 
         <h1 class="text-eco-green fw-bold text-center mb-5">Dashboard Administrateur</h1>
 
-        {% if lastSnapshot %}
+            <form method="post" action="{{ path('admin_admin_stats_generate') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('generate_stats') }}">
+                <button type="submit" class="btn btn-eco mb-4">Générer les stats du jour</button>
+            </form>
             <div class="row text-center mb-4">
                 <div class="col-md-4">
                     <div class="card card-eco">
@@ -29,9 +32,6 @@
                     </div>
                 </div>
             </div>
-        {% else %}
-            <p class="text-center text-muted">Aucune statistique disponible (exécute la commande <code>app:collect-stats</code>).</p>
-        {% endif %}
 
         <div class="row mt-5">
             <div class="col-md-6 mb-4">
@@ -47,35 +47,9 @@
     </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-fetch("{{ path('admin_stats_data') }}")
-    .then(res => res.json())
-    .then(data => {
-        new Chart(document.getElementById('chartTrajets'), {
-            type: 'line',
-            data: {
-                labels: data.trajets.labels,
-                datasets: [{
-                    label: 'Trajets réalisés',
-                    data: data.trajets.values,
-                    borderWidth: 2
-                }]
-            }
-        });
-
-        new Chart(document.getElementById('chartCredits'), {
-            type: 'line',
-            data: {
-                labels: data.credits.labels,
-                datasets: [{
-                    label: 'Crédits gagnés',
-                    data: data.credits.values,
-                    borderWidth: 2
-                }]
-            }
-        });
-    });
-</script>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('admin-dashboard') }}
+{% endblock %}
 {% endblock %}
 

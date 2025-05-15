@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\CreateEmployeType;
 use App\Service\AdminService;
+use App\Service\StatCollectorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,6 +23,18 @@ final class AdminController extends AbstractController
         return $this->render('admin/dashboard.html.twig',[
             'lastSnapshot'=> $adminService->getLastSnapshot()
         ]);
+    }
+
+    #[Route('/stats/generate', name: 'admin_stats_generate', methods: ['POST'])]
+    public function generateStats(Request $request, StatCollectorService $statCollector): RedirectResponse
+    {
+    if (!$this->isCsrfTokenValid('generate_stats', $request->request->get('_token'))) {
+        throw $this->createAccessDeniedException('CSRF token invalide.');
+    }
+
+    $statCollector->collect();
+    $this->addFlash('success', 'Statistiques du jour générées avec succès.');
+    return $this->redirectToRoute('admin_admin');
     }
 
 

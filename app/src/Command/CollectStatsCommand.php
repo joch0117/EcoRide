@@ -6,6 +6,7 @@ use App\Document\SiteStat;
 use App\Repository\TripRepository;
 use App\Repository\UserRepository;
 use App\Repository\CreditTransactionRepository;
+use App\Service\StatCollectorService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -22,29 +23,18 @@ class CollectStatsCommand extends Command
         private TripRepository $tripRepository,
         private CreditTransactionRepository $transactionRepository,
         private UserRepository $userRepository,
-        private DocumentManager $documentManager
+        private DocumentManager $documentManager,
+        private StatCollectorService $statCollector
     ) {
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $nbTrajets = $this->tripRepository->count([]);
-        $totalCredits = $this->transactionRepository->sumPlatformWin();
-        $nbUsers = $this->userRepository->count([]);
-
-        $stat = new SiteStat();
-        $stat->setDate(new \DateTime());
-        $stat->setNbTrajets($nbTrajets);
-        $stat->setCreditsGagnes($totalCredits);
-        $stat->setNbUtilisateurs($nbUsers);
-
-        $this->documentManager->persist($stat);
-        $this->documentManager->flush();
-
-        $output->writeln('<info>Statistiques enregistrées avec succès.</info>');
-
-        return Command::SUCCESS;
+    $this->statCollector->collect();
+    $output->writeln('<info>Statistiques enregistrées avec succès.</info>');
+    return Command::SUCCESS;
     }
+
 }
 

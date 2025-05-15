@@ -24,6 +24,7 @@ Encore
     .addEntry('preference','./assets/js/userPreferences.js')
     .addEntry('filterSearch','./assets/js/filterSearch.js')
     .addEntry('filterUser','./assets/js/filterUser.js')
+    .addEntry('admin-dashboard', './assets/js/admin-dashboard.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
