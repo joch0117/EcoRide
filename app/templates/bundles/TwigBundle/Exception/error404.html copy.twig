@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable - EcoRide{% endblock %}
+
+{% block body %}
+<div class="container my-5 text-center">
+    <h1 class="display-1 text-danger fw-bold">404</h1>
+    <p class="lead">Oups… cette page n’existe pas ou a été déplacée.</p>
+    <p>Peut-être que vous cherchiez un trajet déjà terminé ou un lien invalide.</p>
+    <a href="{{ path('app_home') }}" class="btn btn-eco mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}

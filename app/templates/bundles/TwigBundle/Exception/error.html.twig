@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Une erreur est survenue - EcoRide{% endblock %}
+
+{% block body %}
+<div class="container my-5 text-center">
+    <h1 class="display-1 text-muted fw-bold">{{ status_code }}</h1>
+    <p class="lead">{{ status_text|default('Erreur inconnue') }}</p>
+    <a href="{{ path('app_home') }}" class="btn btn-eco mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}

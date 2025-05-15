@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur serveur - EcoRide{% endblock %}
+
+{% block body %}
+<div class="container my-5 text-center">
+    <h1 class="display-1 text-warning fw-bold">500</h1>
+    <p class="lead">Une erreur interne est survenue.</p>
+    <p>Nos écoconducteurs sont en route pour régler ça 🚗💨</p>
+    <a href="{{ path('app_home') }}" class="btn btn-eco mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}
