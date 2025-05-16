@@ -42,6 +42,8 @@ final class RegistrationController extends AbstractController
                     $pService->createUserWithDefaultPreferences($user);
                     $em->flush();
 
+                    $this->addFlash('success', 'Bienvenue ! Votre compte a bien été créé ');
+
                     $security->login($user, LoginAuthenticator::class);
 
                     return $this->redirectToRoute('app_home');

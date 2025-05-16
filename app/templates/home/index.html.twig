@@ -4,6 +4,13 @@
 
 {% block body %}
 <main class="flex-grow-1">
+{% for message in app.flashes('success') %}
+    <div class="position-absolute top-0 start-50 translate-middle-x z-3 mt-5">
+        <div class="alert alert-success shadow-lg rounded-pill px-4 py-2 text-center">
+            {{ message }}
+        </div>
+    </div>
+{% endfor %}
         <!--  Carrousel -->
     <section id="carousel-section" class="vh-100">
     <div id="ecoRideCarousel" class="carousel slide vh-100" data-bs-ride="carousel" data-bs-wrap="true">

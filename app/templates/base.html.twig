@@ -65,14 +65,18 @@
             </div>
         </nav>
     </header>
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show text-center m-3" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
-                    </div>
+            {# base.html.twig — messages par défaut pour toutes les pages #}
+            {% if app.request.attributes.get('_route') != 'app_home' %}
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }} alert-dismissible fade show text-center m-3" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            {% endif %}
+
     
         {% block body %}
         {% endblock %}
