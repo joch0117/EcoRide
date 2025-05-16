@@ -12,19 +12,11 @@
                 <img src="{{ asset(trip.driver.photoUrl) }}" class="rounded-circle mb-2" alt="Photo du chauffeur" width="100" height="100" style="object-fit: cover;">
                 <div class="fw-bold fs-5">{{ trip.driver.firstname }}</div>
                 <div class="fs-5">
-                    {#{% set total = 0 %}
-                    {% set count = trip.driver.reviewsReceived|length %}
-                    {% for review in trip.driver.reviewsReceived %}
-                        {% set total = total + review.rating %}
-                    {% endfor %}
-                    {% set average = count > 0 ? (total / count)|round(0, 'floor') : 0 %}
-                    {% for i in 1..5 %}
-                        {% if i <= average %}
-                            🌿
-                        {% else %}
-                            🌫️
-                        {% endif %}
-                    {% endfor %}#}
+                        {% for i in 1..5 %}
+                            {% if i <= trip.driver.averageRating %}
+                                🌿
+                            {% endif %}
+                        {% endfor %}
                 </div>
             </div>
 
@@ -37,7 +29,7 @@
                 <p><strong>Prix :</strong> {{ trip.price + 2 }} crédits</p>
                 <p>
                     <span class="badge bg-light text-success me-2">
-                        {{ trip.vehicle.energyType.value == 'ELECTRIC' ? 'Écologique' : 'écologique' }}
+                        {{ trip.vehicle.energyType.value == 'ELECTRIC' ? 'Écologique' : 'Non écologique' }}
                     </span>
                 </p>
             </div>
@@ -84,12 +76,10 @@
             <h5 class="border-bottom pb-2">💬 Commentaires</h5>
             {% for review in trip.reviews %}
                 <div class="bg-eco-cream text-eco-green p-3 rounded mb-3">
-                    <strong>{{ review.author.firstname }}</strong> —
+                    <strong>{{ review.writer.firstname }}</strong> —
                     {% for i in 1..5 %}
                         {% if i <= review.rating %}
                             🌿
-                        {% else %}
-                            
                         {% endif %}
                     {% endfor %}
                     <br>

@@ -19,6 +19,7 @@ final class DetailController extends AbstractController
         $trip=$tripRepository->find($id);
         $user= $trip->getDriver();
         $average = $averageRatingService->getAverageRating($user);
+        $user->setAverageRating($average);
 
         if(!$trip){
             throw $this->createNotFoundException('trajet introuvable');
