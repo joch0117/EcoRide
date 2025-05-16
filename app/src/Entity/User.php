@@ -83,6 +83,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column (type: 'boolean')]
     private ?bool $is_suspended = false;
 
+
+    private ?int $averageRating = null;
     /**
      * @var Collection<int, Vehicle>
      */
@@ -612,6 +614,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         && !empty($this->firstname)
         && !empty($this->date_birth)
         && !empty($this->phone);
+    }
+
+    public function getAverageRating(): ?int
+    {
+    return $this->averageRating;
+    }
+
+    public function setAverageRating(?int $averageRating): void
+    {
+    $this->averageRating = $averageRating;
     }
 
 }

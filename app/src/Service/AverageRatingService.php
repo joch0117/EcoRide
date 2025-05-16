@@ -19,7 +19,9 @@ class AverageRatingService
             $count++;
         }
     }
-
-    return $count > 0 ? round($sum / $count, 2) : null;
+    
+    $note= $count > 0 ? (int) floor($sum / $count) : null;
+    
+    return $note;
     }
 }

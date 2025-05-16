@@ -71,11 +71,11 @@
                                     <div class="fw-bold mt-1">{{ trip.driver.username }}</div>
                                     <div class=" d-inline-flex gap-1">
                                         {% set note = trip.driver.averageRating ?? 0 %}
-                                        {% for i in 1..5 %}
-                                            {% if i <= note %}
-                                                <span class="leaf">&#127807;</span>
-                                            {% endif %}
-                                        {% endfor %}
+                                            {% for i in 1..5 %}
+                                                {% if i <= note %}
+                                                    <span class="leaf">&#127807;</span>
+                                                {% endif %}
+                                            {% endfor %}
                                     </div>
                                 </div>
                                 <div class="col-8">

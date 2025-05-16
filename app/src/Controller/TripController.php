@@ -5,15 +5,17 @@ namespace App\Controller;
 use App\Form\MiniSearchTripType;
 use App\Form\SearchTripType;
 use App\Service\TripSearchService;
+use App\Service\AverageRatingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 final class TripController extends AbstractController
 {
 #[Route('/recherche-covoiturage', name: 'app_trip_search')]
-public function search(TripSearchService $tripSearchService, Request $request): Response
+public function search(TripSearchService $tripSearchService, Request $request, AverageRatingService $averageRatingService): Response
 {
     // Formulaire principal de recherche
     $searchForm = $this->createForm(SearchTripType::class);
@@ -43,6 +45,12 @@ public function search(TripSearchService $tripSearchService, Request $request): 
             $searchData['arrivalCity'] ?? null,
             $searchData['date'] ?? null, 
         );
+    }
+
+    foreach ($trips as $trip) {
+    $driver = $trip->getDriver();
+    $note = $averageRatingService->getAverageRating($driver);
+    $driver->setAverageRating( $note); 
     }
 
     return $this->render('trip/search.html.twig', [

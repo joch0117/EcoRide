@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_USER')]
+
 final class DetailController extends AbstractController
 {
     #[Route('/detail/{id}', name: 'app_detail')]
@@ -17,8 +17,8 @@ final class DetailController extends AbstractController
     {
 
         $trip=$tripRepository->find($id);
-        //$user= $trip->getDriver();
-        //$average = $averageRatingService->getAverageRating($user);
+        $user= $trip->getDriver();
+        $average = $averageRatingService->getAverageRating($user);
 
         if(!$trip){
             throw $this->createNotFoundException('trajet introuvable');
@@ -26,6 +26,8 @@ final class DetailController extends AbstractController
 
         return $this->render('detail/index.html.twig',[
             'trip'=>$trip,
+            'user'=>$user,
+            'average'=>$average
         ]);
     }
 }
