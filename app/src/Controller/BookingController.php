@@ -21,7 +21,7 @@ final class BookingController extends AbstractController
         private EntityManagerInterface $em,
     ){}
 
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/booking/{id}/confirmer', name: 'booking_confirm')]
     public function confirm(int $id, TripRepository $tripRepo,Request $request): Response
     {
@@ -36,7 +36,7 @@ final class BookingController extends AbstractController
         ]);
     }
 
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/booking/{id}/participer', name: 'booking_create', methods: ['POST'])]
     public function create(int $id, TripRepository $tripRepo, Request $request): Response
     {
@@ -71,7 +71,7 @@ final class BookingController extends AbstractController
         $booking = $this->bookingService->createBooking($user, $trip);
     
         $this->em->flush();
-        $this->addFlash('succes','Réservation enregistré avec succès.');
+        $this->addFlash('success','Réservation enregistrée avec succès.');
 
         }catch(\DomainException $e){
             $this->addFlash('danger',$e->getMessage());
@@ -79,7 +79,7 @@ final class BookingController extends AbstractController
             $this->addFlash('danger','Erreur lots de la réservation : ' . $e->getMessage());
         }
     
-
+        
         return $this->redirectToRoute('app_detail', ['id' => $trip->getId()]);
     }
 

@@ -65,9 +65,17 @@
             </div>
         </nav>
     </header>
-
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show text-center m-3" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
     
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
     
         <footer class="footer mt-auto bg-eco-green text-eco-cream text-light text-center">
             <p>© 2025 EcoRide -
