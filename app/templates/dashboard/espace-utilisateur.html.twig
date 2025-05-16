@@ -15,18 +15,15 @@
                         alt="Photo de profil"
                         class="rounded-circle mb-2"
                         style="width: 100px; height: 100px; object-fit: cover;">
-
-                {% set average = average ?? 0 %}
-                {% set fullLeaves = average|round(0, 'floor') %}
                 <div class="leaf-rating mb-2" style="font-size: 1.2rem;">
-                    {% if fullLeaves > 0 %}
-                    {% for i in 1..fullLeaves %}
-                    🌿
-                    {% endfor %}
-                    {% for i in 1..(5 - fullLeaves) %}
-                    <span class="text-muted">🌿</span>
-                    {% endfor %}
-                    {% endif %}
+                {% set average = average ?? 0 %}
+                        {% for i in 1..5 %}
+                            {% if i <= average %}
+                                🌿
+                            {% else %}
+
+                            {% endif %}
+                        {% endfor %}
                 </div>
 
                 <div class="d-flex flex-column align-items-center gap-2 mt-3">
@@ -44,7 +41,7 @@
                 </a>
                 <a href="{{ path('app_vehicle') }}"
                         class="btn btn-eco px-4 py-2 rounded-pill fw-bold btn-responsive w-100 text-center">
-                        Ajouter un vehicule
+                        Ajouter un véhicule
                 </a>
                 {% endif %}
                 </div>
@@ -69,7 +66,7 @@
                     <span>{{ user.email }}</span>
                 </div>
                 <div class="section-user-box">
-                    <span>n°téléphone</span>
+                    <span>N° téléphone</span>
                     <span>{{ user.phone }}</span>
                 </div>
                 <div class="section-user-box">

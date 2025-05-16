@@ -85,7 +85,7 @@ final class DashboardController extends AbstractController
 
             if ($user->isDriver() && count($user->getVehicles()) === 0) {
                     $this->addFlash('warning', 'Ajoutez un véhicule pour pouvoir proposer un trajet.');
-                    return $this->redirectToRoute('app_vehicle_add');
+                    return $this->redirectToRoute('app_vehicle');
             }
 
 

@@ -66,6 +66,7 @@
         </nav>
     </header>
             {# base.html.twig — messages par défaut pour toutes les pages #}
+            <div class="flash-wrapper position-relative mt-5 pt-3">
             {% if app.request.attributes.get('_route') != 'app_home' %}
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
@@ -76,7 +77,7 @@
                     {% endfor %}
                 {% endfor %}
             {% endif %}
-
+            </div>
     
         {% block body %}
         {% endblock %}
