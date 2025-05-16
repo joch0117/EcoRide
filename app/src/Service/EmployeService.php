@@ -25,9 +25,9 @@ class EmployeService
     return $this->reviewRepo->count(['status' => 'pending']);
     }
 
-    public function getPendingIncidentsCount(): int
+    public function getNocheckedIncidentsCount(): int
     {
-    return $this->incidentRepo->count(['incident_status' => 'pending']);
+    return $this->incidentRepo->count(['incident_status' => 'nochecked']);
     }
 
     public function getPendingReviews(): array

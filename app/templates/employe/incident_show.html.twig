@@ -38,7 +38,7 @@
         </div>
     <div class="m-4">
         <form method="post" action="{{ path('employe_incident_checked', { id: incidents.id }) }}" class="d-inline">
-            <input type="hidden" name="_token" value="{{ csrf_token('checked-incident' ~ incidents.id)}}"
+            <input type="hidden" name="_token" value="{{ csrf_token('checked-incident' ~ incidents.id)}}">
             <button class="btn btn-eco btn-sm rounded-pill">Valider</button>
         </form>
     </div>

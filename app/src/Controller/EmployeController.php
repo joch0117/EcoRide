@@ -20,7 +20,7 @@ final class EmployeController extends AbstractController
     public function dashboard(EmployeService $employeService): Response
     {
         $pendingReviews = $employeService->getPendingReviewsCount();
-        $pendingIncidents =$employeService->getPendingIncidentsCount();
+        $pendingIncidents =$employeService->getNocheckedIncidentsCount();
 
         return $this->render('employe/dashboard.html.twig',[
             'pending_reviews'=> $pendingReviews,
