@@ -39,6 +39,20 @@ class CreditService
             return false; 
         }
 
+        $lostPlateform = new CreditTransaction();
+        $lostPlateform->setUser($user);
+        $lostPlateform->setTrip($trip);
+        $lostPlateform->setAmount(-2);
+        $lostPlateform->setType(CreditTransactionType::PLATFORM_FEE);
+        $lostPlateform->setDescription('Remboursement plateform');
+        $lostPlateform->setCreatedAt(new \DateTimeImmutable());
+
+        $this->em->persist($lostPlateform);
+
+        $this->em->flush();
+
+
+
         $refund = new CreditTransaction();
         $refund->setUser($user);
         $refund->setTrip($trip);

@@ -20,26 +20,15 @@ class CreditTransactionRepository extends ServiceEntityRepository
     {
     $qb = $this->createQueryBuilder('ct');
 
-    // 1. Total des platform_fee
     $totalFees = (int) $qb
         ->select('SUM(ct.amount)')
         ->where('ct.type = :fee')
-        ->setParameter('fee', 'platform_fee')
+        ->setParameter('fee', 'plateform_fee')
         ->getQuery()
         ->getSingleScalarResult();
 
-    // 2. Nombre de refunds
-    $refundCount = (int) $this->createQueryBuilder('ct')
-        ->select('COUNT(ct.id)')
-        ->where('ct.type = :refund')
-        ->setParameter('refund', 'refund')
-        ->getQuery()
-        ->getSingleScalarResult();
 
-    // 3. Montant total à soustraire
-    $totalRefund = $refundCount * 2;
-
-    return $totalFees - $totalRefund;
+    return $totalFees;
     }
 
     public function creditsByDay(): array
@@ -48,8 +37,7 @@ class CreditTransactionRepository extends ServiceEntityRepository
 
     $sql = "
         SELECT DATE(created_at) AS jour,
-            SUM(CASE WHEN type = 'platform_fee' THEN amount ELSE 0 END) -
-               (COUNT(CASE WHEN type = 'refund' THEN 1 ELSE NULL END) * 2) AS total
+            SUM(CASE WHEN type = 'plateform_fee' THEN amount ELSE 0 END) AS total
         FROM credit_transaction
         GROUP BY jour
         ORDER BY jour ASC
