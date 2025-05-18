@@ -32,11 +32,12 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function supports(Request $request): bool
     {
-    return $request->attributes->get('app_login') === self::LOGIN_ROUTE
+    return $request->attributes->get('_route') === self::LOGIN_ROUTE
         && $request->isMethod('POST');
     }
     public function authenticate(Request $request): Passport
     {
+        file_put_contents('/tmp/supports.log', "SUPPORTS ACTIF - route = " . $request->attributes->get('_route') . "\n", FILE_APPEND);
         $email = $request->request->get('email','');
         $password = $request->request->get('password','');
         $csrfToken = $request->request->get('_csrf_token','');
@@ -50,15 +51,9 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
         return new Passport(
-            new UserBadge($email, function(string $userIdentifier) use ($password){
+            new UserBadge($email, function(string $userIdentifier) {
                         $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
                         
-                        file_put_contents('/tmp/user-debug.log', "Tentative avec email : $userIdentifier\n", FILE_APPEND);
-
-                        if (!$user) {
-                        file_put_contents('/tmp/user-debug.log', "❌ Utilisateur NON trouvé : $userIdentifier\n", FILE_APPEND);
-                        throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
-                        }
                         
                         if (!$user) {
                             throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
@@ -67,15 +62,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
                         if ($user->isSuspended()) {
                             throw new CustomUserMessageAuthenticationException('Votre compte a été suspendu.');
                         }
-
-                            if (!password_verify($password, $user->getPassword())) {
-                            file_put_contents('/tmp/password-check.log', "❌ ECHEC password_verify pour {$user->getEmail()}\n", FILE_APPEND);
-                            throw new CustomUserMessageAuthenticationException('Mot de passe incorrect');
-                            }
-
-                            file_put_contents('/tmp/password-check.log', "✅ SUCCÈS password_verify pour {$user->getEmail()}\n", FILE_APPEND);
-
-
                     return $user;
                 }),
             new PasswordCredentials($password),
