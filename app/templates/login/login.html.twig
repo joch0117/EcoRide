@@ -13,7 +13,7 @@
             Identifiants incorrects.
             </div>
             {% endif %}
-            {{ form_start(form)}}
+            {{ form_start(form,{'action':path('app_login')})}}
                 <div class="mb-3">
                     {{ form_label(form.email, 'Adresse e-mail', {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre e-mail'}}) }}
