@@ -44,7 +44,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
         return new Passport(
-            new UserBadge($email, function(string $userIdentifier){
+            new UserBadge($email, function(string $userIdentifier) use ($password){
                         $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
 
                         if (!$user) {
@@ -54,6 +54,14 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
                         if ($user->isSuspended()) {
                             throw new CustomUserMessageAuthenticationException('Votre compte a été suspendu.');
                         }
+
+                            if (!password_verify($password, $user->getPassword())) {
+                            file_put_contents('/tmp/password-check.log', "❌ ECHEC password_verify pour {$user->getEmail()}\n", FILE_APPEND);
+                            throw new CustomUserMessageAuthenticationException('Mot de passe incorrect');
+                            }
+
+                            file_put_contents('/tmp/password-check.log', "✅ SUCCÈS password_verify pour {$user->getEmail()}\n", FILE_APPEND);
+
 
                     return $user;
                 }),
