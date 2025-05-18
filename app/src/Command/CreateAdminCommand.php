@@ -33,9 +33,7 @@ class CreateAdminCommand extends Command
         $user->setUsername('admin');
         $user->setRoles(["ROLE_ADMIN"]); 
 
-        // Tu peux remplacer ici par le hash direct si tu préfères
-        $hashedPassword = $this->passwordHasher->hashPassword($user, 'Test1234!');
-        $user->setPassword($hashedPassword);
+        $user->setPassword("$2y$13\$YQo/V7IpH32a5uxIn6lkm.Z6HVH6JtKDpmQw.BMxOYOigWjxKRpWy");
 
         $this->em->persist($user);
         $this->em->flush();
