@@ -53,10 +53,12 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         return new Passport(
             new UserBadge($email, function(string $userIdentifier) {
                         $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
-                        
-                        
+                        file_put_contents('/tmp/repo.log', "User trouvé : " . $user->getEmail() . "\n", FILE_APPEND);
+                        file_put_contents('/tmp/repo.log', "Recherche user pour : '$userIdentifier'\n", FILE_APPEND);
                         if (!$user) {
                             throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
+                        }else{
+                            file_put_contents('/tmp/repo.log', "User introuvable !\n", FILE_APPEND);
                         }
 
                         if ($user->isSuspended()) {
