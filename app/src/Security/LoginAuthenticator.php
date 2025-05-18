@@ -46,7 +46,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         return new Passport(
             new UserBadge($email, function(string $userIdentifier){
                         $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
-                        dd($user);
+
                         if (!$user) {
                             throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
                         }
@@ -67,6 +67,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        file_put_contents('/tmp/auth-success.log', "Connexion OK pour : " . $token->getUser()->getUserIdentifier() . "\n", FILE_APPEND);
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
