@@ -35,7 +35,8 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $email = $request->request->get('email','');
         $password = $request->request->get('password','');
         $csrfToken = $request->request->get('_csrf_token','');
-
+    
+        
 
         if (empty($email) || empty($password)) {
             throw new CustomUserMessageAuthenticationException('Identifiant incorrects.');
@@ -46,7 +47,14 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         return new Passport(
             new UserBadge($email, function(string $userIdentifier) use ($password){
                         $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
+                        
+                        file_put_contents('/tmp/user-debug.log', "Tentative avec email : $userIdentifier\n", FILE_APPEND);
 
+                        if (!$user) {
+                        file_put_contents('/tmp/user-debug.log', "❌ Utilisateur NON trouvé : $userIdentifier\n", FILE_APPEND);
+                        throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
+                        }
+                        
                         if (!$user) {
                             throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
                         }
