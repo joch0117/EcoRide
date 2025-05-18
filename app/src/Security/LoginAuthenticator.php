@@ -49,24 +49,9 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
-        $userRepository = $this->userRepository;
+
         return new Passport(
-            new UserBadge($email, function(string $userIdentifier) use ($userRepository) {
-                        $user =$userRepository->findOneBy(['email' => $userIdentifier]);
-
-                        file_put_contents('/tmp/repo.log', "Recherche user pour : '$userIdentifier'\n", FILE_APPEND);
-                        if ($user) {
-                            file_put_contents('/tmp/repo.log', "User trouvé : " . $user->getEmail() . "\n", FILE_APPEND);
-                        }else{
-                            file_put_contents('/tmp/repo.log', "User introuvable !\n", FILE_APPEND);
-                            throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
-                        }
-
-                        if ($user->isSuspended()) {
-                            throw new CustomUserMessageAuthenticationException('Votre compte a été suspendu.');
-                        }
-                    return $user;
-                }),
+            new UserBadge($email),
             new PasswordCredentials($password),
             [
                 new CsrfTokenBadge('authenticate', $csrfToken),
