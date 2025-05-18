@@ -67,7 +67,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        file_put_contents('/tmp/auth-success.log', "Connexion OK pour : " . $token->getUser()->getUserIdentifier() . "\n", FILE_APPEND);
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
