@@ -1,25 +1,41 @@
-# fly.toml app configuration file generated for ecoride-white-moon-1925 on 2025-05-17T21:49:09+02:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
-app = 'ecoride-white-moon-1925'
-primary_region = 'cdg'
+# fly.toml
+app = "ecoride-white-moon-1925"
+primary_region = "cdg"
 
 [build]
-   dockerfile = 'docker/php/Dockerfile'
+  dockerfile = "docker/php/Dockerfile"
 
 [env]
-  APP_DEBUG = '0'
-  APP_ENV = 'prod'
+  APP_ENV   = "prod"
+  APP_DEBUG = "0"
 
-[http_service]
+[deploy]
+  release_command = "php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --env=prod"
+
+[[services]]
   internal_port = 80
-  force_https = true
-  auto_stop_machines = 'stop'
-  auto_start_machines = true
+  protocol      = "tcp"
+  processes     = ["app"]
+
+  [[services.ports]]
+    port     = 443
+    handlers = ["tls", "http"]
+
+  [[services.ports]]
+    port     = 80
+    handlers = ["http"]
+
+[[checks]]
+  type          = "http"
+  name          = "http-check"
+  interval      = "15s"
+  timeout       = "2s"
+  grace_period  = "10s"
+  method        = "get"
+  path          = "/"
+  protocol      = "http"
 
 [[vm]]
-  memory = '1gb'
-  cpu_kind = 'shared'
-  cpus = 1
+  memory    = "1gb"
+  cpu_kind  = "shared"
+  cpus      = 1
