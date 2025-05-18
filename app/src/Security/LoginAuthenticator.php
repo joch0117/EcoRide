@@ -36,6 +36,12 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $password = $request->request->get('password','');
         $csrfToken = $request->request->get('_csrf_token','');
 
+            dump('=== DEBUG AUTH ===');
+            dump('Email reçu : ' . $email);
+            dump('Password reçu : ' . $password);
+            dump('CSRF reçu : ' . $csrfToken);
+            dd('Fin du dump : authentification interrompue');
+
         if (empty($email) || empty($password)) {
             throw new CustomUserMessageAuthenticationException('Identifiant incorrects.');
         }
