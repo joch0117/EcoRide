@@ -1,0 +1,59 @@
+# flyctl launch added from app/.gitignore
+!docker/
+!docker/php/
+!docker/php/entrypoint.sh
+
+###> symfony/framework-bundle ###
+app/.env.local
+app/.env.local.php
+app/.env.*.local
+app/config/secrets/prod/prod.decrypt.private.php
+app/public/bundles
+app/var
+app/vendor
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+app/phpunit.xml
+app/**/.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+app/**/.phpunit.result.cache
+app/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/asset-mapper ###
+app/public/assets
+app/assets/vendor
+###< symfony/asset-mapper ###
+
+###> symfony/webpack-encore-bundle ###
+app/node_modules
+app/**/npm-debug.log
+app/**/yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+# flyctl launch added from app/vendor/psr/container/.gitignore
+app/vendor/psr/container/**/composer.lock
+app/vendor/psr/container/**/composer.phar
+app/vendor/psr/container/vendor
+
+# flyctl launch added from app/vendor/psr/event-dispatcher/.gitignore
+app/vendor/psr/event-dispatcher/vendor
+app/vendor/psr/event-dispatcher/**/composer.lock
+
+# flyctl launch added from app/vendor/sebastian/version/.gitignore
+app/vendor/sebastian/version/.php_cs.cache
+app/vendor/sebastian/version/.idea
+
+# flyctl launch added from app/vendor/twig/extra-bundle/.gitignore
+app/vendor/twig/extra-bundle/**/vendor
+app/vendor/twig/extra-bundle/**/var
+app/vendor/twig/extra-bundle/**/composer.lock
+app/vendor/twig/extra-bundle/**/phpunit.xml
+app/vendor/twig/extra-bundle/**/.phpunit.result.cache
+fly.toml
+
+app/vendor/
+

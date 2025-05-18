@@ -1,16 +1,25 @@
-app = "ecoride"  # Nom que Fly.io te proposera ou que tu choisis
+# fly.toml app configuration file generated for ecoride-white-moon-1925 on 2025-05-17T21:49:09+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-primary_region = "cdg"  # Paris
+app = 'ecoride-white-moon-1925'
+primary_region = 'cdg'
 
 [build]
-  dockerfile = "docker/php/Dockerfile"
+   dockerfile = 'docker/php/Dockerfile'
 
 [env]
-  APP_ENV = "prod"
-  APP_DEBUG = "0"
+  APP_DEBUG = '0'
+  APP_ENV = 'prod'
 
 [http_service]
   internal_port = 80
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
