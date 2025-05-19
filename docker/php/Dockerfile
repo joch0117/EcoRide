@@ -19,6 +19,8 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del .build-deps \
     && rm -rf /var/cache/apk/*
 
+RUN echo "upload_max_filesize=10M\npost_max_size=12M" > /usr/local/etc/php/conf.d/uploads.ini
+
 # ---------- Composer ----------
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
