@@ -75,14 +75,15 @@ class EditProfilUserType extends AbstractType
                 'label'=>'Photo de profil',
                 'mapped'=>false,
                 'required'=>false,
-                'constraints'=>[
-                    new File([
-                        'maxSize'=>'2M',
-                        'mimeTypes'=>['image/jpeg','image/png'],
-                        'mimeTypesMessage'=>'Formats autorisés : JPG, PNG',
-                    ])
+                //'constraints'=>[
+                    //new File([
+                        //'maxSize'=>'2M',
+                        //'mimeTypes'=>['image/jpeg','image/png'],
+                        //'mimeTypesMessage'=>'Formats autorisés : JPG, PNG',
+                    //])
                 ]
-            ])
+            //]//
+            )
             ->add('is_driver',CheckboxType::class,[
                 'label'=>'Je suis chauffeur',
                 'required'=>false,
