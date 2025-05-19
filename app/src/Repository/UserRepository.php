@@ -16,6 +16,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 {
     public function __construct(ManagerRegistry $registry)
     {
+        file_put_contents('/tmp/YOLO.log', "UserRepository instancié !\n", FILE_APPEND);
         parent::__construct($registry, User::class);
     }
 
