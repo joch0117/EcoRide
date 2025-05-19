@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\FormError;
 
-#[IsGranted('ROLE_USER')]
+//#[IsGranted('ROLE_USER')]
 final class VehicleController extends AbstractController
 {
     #[Route('/vehicule/ajouter', name: 'app_vehicle')]
