@@ -625,5 +625,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
     $this->averageRating = $averageRating;
     }
-
+    
+    public static function debugStaticCall()
+{
+    file_put_contents('/tmp/user-class.log', "User::debugStaticCall appelé\n", FILE_APPEND);
+}
 }

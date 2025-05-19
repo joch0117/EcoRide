@@ -34,8 +34,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function loadUserByIdentifierZZZ(string $identifier): ?User
+    public function loadUserByIdentifier(string $identifier): ?User
     {
+        User::debugStaticCall();
+        throw new \Exception("ON APPELLE loadUserByIdentifier !!");
     file_put_contents('/tmp/repo.log', "Recherche user pour : '$identifier'\n", FILE_APPEND);
     $user = $this->findOneBy(['email' => $identifier]);
     if ($user) {
@@ -45,6 +47,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
     return $user;
     }
+
+    
 
 
     //    /**
