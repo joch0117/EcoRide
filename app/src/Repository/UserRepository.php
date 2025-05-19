@@ -34,7 +34,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function loadUserByIdentifier(string $identifier): ?User
+    public function loadUserByIdentifierZZZ(string $identifier): ?User
     {
     file_put_contents('/tmp/repo.log', "Recherche user pour : '$identifier'\n", FILE_APPEND);
     $user = $this->findOneBy(['email' => $identifier]);
