@@ -35,6 +35,7 @@ security:
     access_control:
             #Pages public
             - { path: ^/login, roles: PUBLIC_ACCESS }
+            - { path: ^/vehicule, roles: PUBLIC_ACCESS }
             - { path: ^/register, roles: PUBLIC_ACCESS }
             - { path: ^/cgu, roles: PUBLIC_ACCESS }
             - { path: ^/mentions-legales, roles: PUBLIC_ACCESS }
@@ -48,7 +49,7 @@ security:
             - { path: ^/espace-utilisateur, roles: ROLE_USER }
             - { path: ^/publier, roles: ROLE_USER }
             - { path: ^/booking, roles: ROLE_USER }
-            - { path: ^/vehicule, roles: ROLE_USER }
+            
             - { path: ^/feedback, roles: ROLE_USER }
             - { path: ^/preferences, roles: ROLE_USER }
             - { path: ^/profile, roles: ROLE_USER }
