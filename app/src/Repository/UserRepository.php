@@ -16,7 +16,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 {
     public function __construct(ManagerRegistry $registry)
     {
-        file_put_contents('/tmp/YOLO.log', "UserRepository instancié !\n", FILE_APPEND);
         parent::__construct($registry, User::class);
     }
 
@@ -36,16 +35,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function loadUserByIdentifier(string $identifier): ?User
     {
-        User::debugStaticCall();
-        throw new \Exception("ON APPELLE loadUserByIdentifier !!");
-    file_put_contents('/tmp/repo.log', "Recherche user pour : '$identifier'\n", FILE_APPEND);
-    $user = $this->findOneBy(['email' => $identifier]);
-    if ($user) {
-        file_put_contents('/tmp/repo.log', "User trouvé : " . $user->getEmail() . "\n", FILE_APPEND);
-    } else {
-        file_put_contents('/tmp/repo.log', "User introuvable !\n", FILE_APPEND);
-    }
-    return $user;
+        $user = $this->findOneBy(['email' => $identifier]);
+        return $user;
     }
 
     

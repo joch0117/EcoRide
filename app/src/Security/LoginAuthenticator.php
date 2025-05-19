@@ -28,7 +28,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function __construct(private UrlGeneratorInterface $urlGenerator,private UserRepository $userRepository,private RequestStack $requestStack)
     {
-        file_put_contents('/tmp/authenticator.log', "LoginAuthenticator instancié !\n", FILE_APPEND);
+
     }
 
     public function supports(Request $request): bool
@@ -38,7 +38,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     }
     public function authenticate(Request $request): Passport
     {
-        file_put_contents('/tmp/supports.log', "SUPPORTS ACTIF - route = " . $request->attributes->get('_route') . "\n", FILE_APPEND);
         $email = $request->request->get('email','');
         $password = $request->request->get('password','');
         $csrfToken = $request->request->get('_csrf_token','');
