@@ -10,9 +10,8 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(LoggerInterface $logger): Response
+    public function index(): Response
     {
-        $logger->error('Test log erreur!');
         return $this->render('home/index.html.twig');
     }
 }

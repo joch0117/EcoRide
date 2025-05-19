@@ -3,7 +3,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
-file_put_contents('/tmp/request_headers.log', json_encode($_SERVER)."\n", FILE_APPEND);
+
 Request::setTrustedProxies(
     ['0.0.0.0/0', '::/0'],
     Request::HEADER_X_FORWARDED_FOR |
