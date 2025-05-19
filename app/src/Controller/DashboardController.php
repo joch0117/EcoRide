@@ -72,7 +72,7 @@ final class DashboardController extends AbstractController
                 try{
                     $profileService->handleProfilePhoto($file,$user,$slugger);
                 }catch(\Exception $e){
-                    $form->get('photo')->addError(new FormError($e->getMessage()));
+                    $form->get('photo_url')->addError(new FormError($e->getMessage()));
                     return $this->render('dashboard/profil.html.twig',[
                         'form'=>$form->createView(),
                     ]);
