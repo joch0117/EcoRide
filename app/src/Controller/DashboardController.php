@@ -57,7 +57,10 @@ final class DashboardController extends AbstractController
         
         $form =$this->createForm(EditProfilUserType::class, $user);
         $form->handleRequest($request);
-
+            if ($form->isSubmitted()) {
+                foreach ($form->getErrors(true) as $error) {
+                file_put_contents('/tmp/photo_form_errors.log', $error->getMessage()."\n", FILE_APPEND);
+                }}
         if($form->isSubmitted()&& $form->isValid()){
             if(!$profileService->validateDriverAge($user,$form)){
                 $form->get('is_driver')->addError(new FormError('Vous devez avoir au moins 18 ans pour être chauffeur.'));
