@@ -28,6 +28,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function __construct(private UrlGeneratorInterface $urlGenerator,private UserRepository $userRepository,private RequestStack $requestStack)
     {
+        file_put_contents('/tmp/authenticator.log', "LoginAuthenticator instancié !\n", FILE_APPEND);
     }
 
     public function supports(Request $request): bool
