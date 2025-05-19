@@ -38,6 +38,10 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 
 COPY app/ .
 
+RUN rm -rf var/cache/* var/log/* \
+    && php bin/console cache:clear --env=prod \
+    && chown -R www-data:www-data var
+
 
 # ---------- Nginx & Entrypoint ----------
 COPY docker/nginx/nginx.conf /etc/nginx/http.d/default.conf
