@@ -58,7 +58,7 @@ class ProfileService
     public function setDefaultPhoto(User $user):void
     {
         if (!$user->getPhotoUrl()){
-            $user->setPhotoUrl('default_profil.png');
+            $user->setPhotoUrl('default-profile.png');
         }
     }
 
