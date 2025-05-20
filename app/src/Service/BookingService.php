@@ -27,6 +27,10 @@ class BookingService
             return " Vous êtes déjà inscrit sur ce trajet.";
         }
 
+        if ($trip->getDriver() && $trip->getDriver()->getId() === $user->getId()) {
+        return "Vous ne pouvez pas réserver votre propre trajet en tant que passager.";
+        }
+
         $total=$trip->getPrice()+2;
         if($user->getCredit()<$total){
             return "Vous n'avez pas assez de crédits.";
