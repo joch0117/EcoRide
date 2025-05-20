@@ -47,6 +47,8 @@ RUN rm -rf var/cache/* var/log/* \
 RUN mkdir -p /var/www/html/public/uploads/users \
     && chown -R www-data:www-data /var/www/html/public/uploads
 
+RUN find /var/www/html/public/uploads -type d -exec chmod 775 {} \;
+
 # ---------- Nginx & Entrypoint ----------
 COPY docker/nginx/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
