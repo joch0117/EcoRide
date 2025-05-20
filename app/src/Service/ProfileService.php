@@ -11,7 +11,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfileService
 {
     public function __construct(
-        private string $uploadDir = 'uploads/users'
+        private string $uploadDir = 'public/uploads/users'
     ){}
     //vérif age conducteur
     public function validateDriverAge(User $user, FormInterface $form):bool{

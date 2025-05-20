@@ -43,7 +43,9 @@ COPY app/ .
 
 RUN rm -rf var/cache/* var/log/* \
     && chown -R www-data:www-data var
-
+#----- dossier enregistrement photo de profil ----------
+RUN mkdir -p /var/www/html/public/uploads/users \
+    && chown -R www-data:www-data /var/www/html/public/uploads
 
 # ---------- Nginx & Entrypoint ----------
 COPY docker/nginx/nginx.conf /etc/nginx/http.d/default.conf
