@@ -5,7 +5,7 @@ use App\Kernel;
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 Request::setTrustedProxies(
-    ['0.0.0.0/0', '::/0'],
+    [$_SERVER['REMOTE_ADDR']],
     Request::HEADER_X_FORWARDED_FOR |
                         Request::HEADER_X_FORWARDED_HOST |
                         Request::HEADER_X_FORWARDED_PROTO |
