@@ -45,6 +45,17 @@ class ProfileService
         $safeFilename = $slugger->slug($originalFileName);
         $extension=$file->guessExtension();
         $newFilename =$safeFilename . '-' . uniqid() . '.'.$extension;
+        
+        if (!is_dir($this->uploadDir)) {
+    file_put_contents('/tmp/profile_service.log', "DOSSIER MANQUANT : $this->uploadDir\n", FILE_APPEND);
+    } else {
+    file_put_contents('/tmp/profile_service.log', "DOSSIER OK : $this->uploadDir\n", FILE_APPEND);
+    }
+
+    
+
+
+
 
         $file->move(
             $this->uploadDir,
