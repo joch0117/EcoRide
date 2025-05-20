@@ -5,6 +5,7 @@ RUN apk add --no-cache \
         nginx \
         libpng libjpeg-turbo freetype \
         icu-libs libzip zlib \
+        openssl-dev\
         bash curl shadow git unzip
 
 # Paquets BUILD (supprimés ensuite) + compilation des extensions
