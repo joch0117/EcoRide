@@ -95,17 +95,6 @@ final class AdminController extends AbstractController
         return $this->redirectToRoute('admin_admin_users');
     }
 
-    #[Route('/user/{id}/delete', name: 'admin_delete_user', methods: ['POST'])]
-    public function deleteUser(User $user, AdminService $adminService,Request $request): Response
-    {
-        $token = $request->request->get('_token');
-        if (!$this->isCsrfTokenValid('delete-user-' . $user->getId(), $token)) {
-            throw $this->createAccessDeniedException('Token CSRF invalide');
-        }
-        $adminService->deleteUser($user);
-        return $this->redirectToRoute('admin_users');
-    }
-
     #[Route('/stats/data', name: 'stats_data')]
     public function statsData(AdminService $adminService): JsonResponse
     {

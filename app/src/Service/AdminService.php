@@ -72,12 +72,13 @@ class AdminService
         }
             return ['employees' => $employees,'users'=>$regularUsers];
     }
-    public function deleteUser(User $user): bool
-    {
-        $this->em->remove($user);
-        $this->em->flush();
-        return true;
-    }
+    //futur fonctionnalité supression de compte
+    //public function deleteUser(User $user): bool 
+    //{
+        //$this->em->remove($user);
+        //$this->em->flush();
+        //return true;
+    //}
     public function createEmploye(string $plainPassword,User $user)
     {
         $hashedPassword= $this->hasher->hashPassword($user,$plainPassword);
