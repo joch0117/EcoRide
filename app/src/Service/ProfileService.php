@@ -52,6 +52,11 @@ class ProfileService
     file_put_contents('/tmp/profile_service.log', "DOSSIER OK : $this->uploadDir\n", FILE_APPEND);
     }
 
+    if (!is_dir($this->uploadDir)) {
+    mkdir($this->uploadDir, 0775, true);
+    file_put_contents('/tmp/profile_service.log', "Dossier créé par PHP : $this->uploadDir\n", FILE_APPEND);
+}
+
     file_put_contents('/tmp/profile_service.log', "IS_DIR: " . (is_dir($this->uploadDir) ? 'OK' : 'KO') . "\n", FILE_APPEND);
     file_put_contents('/tmp/profile_service.log', "PERMS: " . substr(sprintf('%o', fileperms($this->uploadDir)), -4) . "\n", FILE_APPEND);
     file_put_contents('/tmp/profile_service.log', "WHOAMI: " . get_current_user() . "\n", FILE_APPEND);
