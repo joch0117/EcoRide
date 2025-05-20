@@ -11,7 +11,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfileService
 {
     public function __construct(
-        private string $uploadDir =  'public/uploads/users'
+        private string $uploadDir =  '/var/www/html/public/uploads/users'
     ){}
     //vérif age conducteur
     public function validateDriverAge(User $user, FormInterface $form):bool{
@@ -51,7 +51,7 @@ class ProfileService
             $newFilename
         );
 
-        $user->setPhotoUrl('/uploads/users/' . $newFilename);
+        $user->setPhotoUrl( $newFilename);
     }
     
     //mise en place d'une image par defaut
