@@ -6,6 +6,8 @@ use App\Document\SiteStat;
 use App\Entity\User;
 use App\Repository\BookingRepository;
 use App\Repository\CreditTransactionRepository;
+use App\Repository\TripRepository;
+use App\Repository\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -17,7 +19,10 @@ class AdminService
         private UserPasswordHasherInterface $hasher,
         private BookingRepository $bookingRepository,
         private CreditTransactionRepository $creditTransactionRepository,
-        private DocumentManager $dm
+        private DocumentManager $dm,
+        private TripRepository $tripRepository,
+        private CreditTransactionRepository $creditTransaction,
+        private UserRepository $userRepository
     ){}
 
 
@@ -125,6 +130,20 @@ class AdminService
     }
 
 
+
+    public function dataPlateform(){
+        $nbTrajets = $this->tripRepository->count([]);
+        $totalCredits = $this->creditTransactionRepository->sumPlatformWin();
+        $nbUsers = $this->userRepository->count([]);
+
+        return[
+            'nbTrajets'=>$nbTrajets,
+            'creditsGagnes'=>$totalCredits,
+            'nbUtilisateurs'=>$nbUsers,
+        ];
+    }
+
+    ///fonction mongodb
     public function getLastSnapshot(): ?SiteStat
     {
         return $this->dm->getRepository(SiteStat::class)

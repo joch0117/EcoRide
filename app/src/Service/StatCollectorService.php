@@ -16,7 +16,7 @@ class StatCollectorService
         private UserRepository $userRepository,
         private DocumentManager $documentManager
     ) {}
-
+    
     public function collect(): SiteStat
     {
         $nbTrajets = $this->tripRepository->count([]);
