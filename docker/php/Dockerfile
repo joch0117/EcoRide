@@ -45,9 +45,9 @@ RUN rm -rf var/cache/* var/log/* \
     && chown -R www-data:www-data var
 #----- dossier enregistrement photo de profil ----------
 RUN mkdir -p /var/www/html/public/uploads/users \
-    && chown -R www-data:www-data /var/www/html/public/uploads
-
-RUN find /var/www/html/public/uploads -type d -exec chmod 775 {} \;
+    && chmod 755 /var/www/html/public \
+    && chown -R www-data:www-data /var/www/html/public/uploads \
+    && chmod -R 775 /var/www/html/public/uploads
 
 # ---------- Nginx & Entrypoint ----------
 COPY docker/nginx/nginx.conf /etc/nginx/http.d/default.conf

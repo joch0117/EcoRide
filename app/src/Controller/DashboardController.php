@@ -67,14 +67,15 @@ final class DashboardController extends AbstractController
             }
 
             $file =$form->get('photo_url')->getData();
-            file_put_contents('/tmp/photo_file_debug.log', var_export($file, true), FILE_APPEND);
+
             if($file){
                 try{
                     $profileService->handleProfilePhoto($file,$user,$slugger);
                 }catch(\Exception $e){
-                    file_put_contents('/tmp/profile_service.log', "ERREUR MOVE : " . $e->getMessage() . "\n", FILE_APPEND);
-                    throw $e;
-                    
+                    $form->get('photo_url')->addError(new FormError($e->getMessage()));
+                    return $this->render('dashboard/profil.html.twig',[
+                        'form'=>$form->createView(),
+                    ]);
                 }
             }else{
                 $profileService->setDefaultPhoto($user);
