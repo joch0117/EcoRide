@@ -67,7 +67,7 @@ final class DashboardController extends AbstractController
             }
 
             $file =$form->get('photo_url')->getData();
-
+            file_put_contents('/tmp/photo_file_debug.log', var_export($file, true), FILE_APPEND);
             if($file){
                 try{
                     $profileService->handleProfilePhoto($file,$user,$slugger);
