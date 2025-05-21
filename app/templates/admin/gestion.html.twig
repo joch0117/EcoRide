@@ -76,10 +76,6 @@
                                         {{ user.isSuspended ? 'Autoriser' : 'Suspendre' }}
                                     </button>
                                 </form>
-                                <form method="post" action="{{ path('admin_admin_delete_user', {'id': user.id}) }}" onsubmit="return confirm('Supprimer ce compte ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
-                                </form>
                             </div>
                         </div>
                     </div>

@@ -38,7 +38,7 @@
                                 {% if is_granted('ROLE_ADMIN') %}
                                         <li class="nav-item"><a class="nav-link" href="{{ path('admin_admin') }}">Dashboard admin</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{{ path('admin_admin_create') }}">Créer un compte employé</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{{ path('admin_admin_users') }}">Gestion des compte</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{ path('admin_admin_users') }}">Gestion des comptes</a></li>
                                 <!-- menu employe -->
                                 {% elseif is_granted('ROLE_EMPLOYE') %}
                                         <li class="nav-item"><a class="nav-link" href="{{ path('employe_dashboard') }}">Dashboard employé</a></li>
@@ -47,11 +47,11 @@
                                 {% else %}
                                 <!-- menu user -->
                                         <li class="nav-item"><a class="nav-link" href="{{ path('app_dashboard') }}">Mon compte</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{{ path('app_trip_search') }}">Covoiturage</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{ path('app_trip_search') }}">Covoiturages</a></li>
                                 {% endif %}
                                         <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a></li>
                             {% else %}
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_trip_search') }}">Covoiturage</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_trip_search') }}">Covoiturages</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ path('app_registration') }}">Créer un compte</a></li>
                             {% endif %}
