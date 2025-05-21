@@ -58,7 +58,7 @@ final class AdminController extends AbstractController
             $adminService->createEmploye($plainPassword,$user);
 
             $this->addFlash('succes','Employé créé avec succès');
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('admin_admin');
         }
         return $this->render('admin/create.html.twig',[
             'form' => $form->createView()
