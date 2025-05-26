@@ -17,6 +17,7 @@ class BookingService
 {
     public function __construct(private EntityManagerInterface $em,private UserRepository $userRepo,private CreditService $creditService ){}
 
+    //fonction de vérification de condition pour la reservation
     public function canUserBook(User $user,Trip $trip): ?string
     {
         if ($trip->getSeatsAvailable()<=0){
@@ -39,6 +40,7 @@ class BookingService
         return null;
     }
 
+    //création d'une réservation :table booking +table crédit transaction +table trip mis à jour
     public function createBooking(User $user, Trip $trip):Booking
     {
         $user = $this->userRepo->find($user->getId());
@@ -82,6 +84,7 @@ class BookingService
         return $booking;
     }
 
+    //anulation d'une reservation
     public function cancelBooking(Booking $booking, $currentUser): bool
     {
         if ($booking->getUser() !== $currentUser) {

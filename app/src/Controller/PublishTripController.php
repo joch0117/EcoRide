@@ -14,6 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 final class PublishTripController extends AbstractController
 {
+    //publication de trajet
     #[Route('/publier', name: 'app_publish')]
     public function publish(Request $request, TripService $tripService): Response
     {

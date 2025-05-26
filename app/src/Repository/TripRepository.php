@@ -17,6 +17,7 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
+    //recheche d'un trajet
     public function findBySearch(
         ?string $departureCity,
         ?string $arrivalCity,

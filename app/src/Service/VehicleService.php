@@ -14,11 +14,13 @@ class VehicleService
         private VehicleRepository $vehicleRepo
     ) {}
 
+    //vérification double immatriculation
     public function isPlateAlreadyUsed(string $plate, User $user): bool
     {
         return $this->vehicleRepo->findOneBy(['plate' => $plate, 'user' => $user]) !== null;
     }
 
+    //créer un vehicules
     public function createVehicle(User $user, Vehicle $vehicle): void
     {
         $vehicle->setUser($user);

@@ -29,6 +29,7 @@ app/assets/vendor
 ###< symfony/asset-mapper ###
 
 ###> symfony/webpack-encore-bundle ###
+node_modules
 app/node_modules
 app/**/npm-debug.log
 app/**/yarn-error.log

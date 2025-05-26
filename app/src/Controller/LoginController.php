@@ -10,6 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
+    //page de connexion 
     #[Route(path: '/login', name: 'app_login')]
     public function login( AuthenticationUtils $authenticationUtils): Response
     {

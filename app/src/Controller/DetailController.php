@@ -12,6 +12,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class DetailController extends AbstractController
 {
+    //détails d'un trajet
     #[Route('/detail/{id}', name: 'app_detail')]
     public function show(int $id,TripRepository $tripRepository,AverageRatingService $averageRatingService): Response
     {

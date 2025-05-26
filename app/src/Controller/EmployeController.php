@@ -16,6 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/employe')]
 final class EmployeController extends AbstractController
 {
+    // vue du tableau de bord enployé
     #[Route('', name: 'employe_dashboard')]
     public function dashboard(EmployeService $employeService): Response
     {
@@ -28,6 +29,7 @@ final class EmployeController extends AbstractController
         ]);
     }
 
+    //modération des avis
     #[Route('/avis', name: 'employe_avis')]
     public function avis(EmployeService $employeService): Response
     {
@@ -39,6 +41,7 @@ final class EmployeController extends AbstractController
     }
 
 
+    //validation des avis
     #[Route('/avis/{id}/valider', name: 'employe_avis_valider', methods: ['POST'])]
     public function validerAvis(Request $request , Review $review, EmployeService $service): Response
     {
@@ -52,6 +55,7 @@ final class EmployeController extends AbstractController
         return $this->redirectToRoute('employe_avis');
     }
 
+    //rejet d'un avis
     #[Route('/avis/{id}/rejeter', name: 'employe_avis_rejeter', methods: ['POST'])]
     public function rejeterAvis(Request $request ,Review $review, EmployeService $service): Response
     {
@@ -65,6 +69,7 @@ final class EmployeController extends AbstractController
         return $this->redirectToRoute('employe_avis');
     }
 
+    //mosération incident
     #[Route('/incidents', name: 'employe_incidents')]
     public function incidents(EmployeService $employeService): Response
     {
@@ -76,6 +81,7 @@ final class EmployeController extends AbstractController
         ]);
     }
 
+    //vue détails de l'incidant
     #[Route('/incidents/{id}', name: 'employe_incident_detail')]
     public function incidentDetail(IncidentReport $incidents): Response
     {
@@ -85,6 +91,7 @@ final class EmployeController extends AbstractController
     }
 
 
+    //validation traitement incidents
     #[Route('/incidents/{id}/checked', name: 'employe_incident_checked',methods:['POST'])]
     public function checkIncident(EmployeService $service , IncidentReport $incidents,Request $request): Response
     {

@@ -16,6 +16,7 @@ class MailerService
         private UrlGeneratorInterface $urlGenerator
     ) {}
 
+    //notification d'avis à implémenter dans l'espace utilisateur à la fin d'un trajet
     public function sendRatingRequest(User $user, Trip $trip): void
     {
         $link = $this->urlGenerator->generate(
@@ -38,6 +39,7 @@ class MailerService
         $this->mailer->send($email);
     }
 
+    //mail annulation de trajet
     public function sendCancelTrip(Trip $trip, User $user){
         
 

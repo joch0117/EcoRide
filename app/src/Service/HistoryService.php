@@ -21,6 +21,7 @@ class HistoryService
     ){}
 
 
+    //annuler un trajet
     public function cancelTrip(Trip $trip)
     {
         foreach ($trip->getBookings() as $booking) {
@@ -34,11 +35,13 @@ class HistoryService
         $this->em->flush();
     }
 
+    //démarrer un trajet
     public function startTrip(Trip $trip)
     {
         $trip->setStatus(StatusTrip::STARTED);
         $this->em->flush();
     }
+    //un trajet est terminé
     public function arrivalTrip(Trip $trip)
     {
         $trip->setStatus(StatusTrip::FINISHED);
@@ -49,6 +52,7 @@ class HistoryService
         $this->em->flush();
     }
 
+    //supression automatique des trajets dont la date est dépassé
     public function autoRefoundIfExpired(Trip $trip)
     {
         $now = new \DateTimeImmutable();
