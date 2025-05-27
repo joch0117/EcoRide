@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for ecoride-white-moon-1925 on 2025-05-27T10:31:25+02:00
+# fly.toml app configuration file generated for ecoride-white-moon-1925 on 2025-05-27T18:11:27+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'ecoride-white-moon-1925'
+app = 'ecoride'
 primary_region = 'cdg'
 
 [build]
