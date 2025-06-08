@@ -40,11 +40,6 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  adminer:
-    image: adminer
-    container_name: ecoride_adminer
-    ports:
-      - "8081:8080"
 
 volumes:
   db_data:
