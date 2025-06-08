@@ -20,6 +20,11 @@ if [ ! -f /var/www/html/public/uploads/users/default-profile.png ]; then
     fi
 fi
 
+tailscaled --tun=userspace-networking --socks5-server=localhost:1055 &
+
+tailscale up --authkey=${TAILSCALE_AUTHKEY} --hostname=fly-symfony
+
+sleep 5
 
 php-fpm &
 exec nginx -g "daemon off;"

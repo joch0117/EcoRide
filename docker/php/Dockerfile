@@ -55,6 +55,13 @@ COPY docker/nginx/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+# ----------- Tailscale -----------
+RUN apk add --no-cache iptables ip6tables \
+    && wget -qO- https://pkgs.tailscale.com/stable/tailscale_1.66.4_amd64.tgz | tar xz -C /tmp \
+    && mv /tmp/tailscale_*/tailscale /usr/local/bin/ \
+    && mv /tmp/tailscale_*/tailscaled /usr/local/bin/ \
+    && chmod +x /usr/local/bin/tailscale /usr/local/bin/tailscaled
+
 EXPOSE 80
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
