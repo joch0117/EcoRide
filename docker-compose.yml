@@ -32,13 +32,13 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
-  mongo:
-    image: mongo:7
-    container_name: ecoride_mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
+  #mongo:
+    #image: mongo:7
+    #container_name: ecoride_mongodb
+    #ports:
+      #- "27017:27017"
+    #volumes:
+      #- mongo_data:/data/db
 
 volumes:
   db_data:
