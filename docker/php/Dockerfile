@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     libtool \
     pkgconfig \
     libxml2-dev \
+    openssl-dev \
     && pecl install mongodb \
     && docker-php-ext-enable mongodb \
     && docker-php-ext-install intl pdo_mysql opcache zip
