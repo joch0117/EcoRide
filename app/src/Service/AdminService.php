@@ -51,7 +51,7 @@ class AdminService
         ];
     }
 
-    public function searchusers(string $term): array
+    public function searchUsers(string $term): array
     {
         $users = $this->em->getRepository(User::class)->findAll();
 
@@ -60,7 +60,7 @@ class AdminService
                     str_contains(strtolower($user->getUsername()),strtolower($term));
         });
 
-        $employeed = [];
+        $employed = [];
         $regularUsers = [];
 
         foreach ($filtered as $user){
@@ -131,7 +131,7 @@ class AdminService
     }
 
 
-
+/*
     public function dataPlateform(){
         $nbTrajets = $this->tripRepository->count([]);
         $totalCredits = $this->creditTransactionRepository->sumPlatformWin();
@@ -143,6 +143,7 @@ class AdminService
             'nbUtilisateurs'=>$nbUsers,
         ];
     }
+        */
 
     ///fonction mongodb
     public function getLastSnapshot(): ?SiteStat

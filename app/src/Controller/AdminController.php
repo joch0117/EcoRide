@@ -21,16 +21,12 @@ final class AdminController extends AbstractController
     #[Route('', name: 'admin')]
     public function dashboard(AdminService $adminService): Response
     {
-        $directData= $adminService->dataPlateform();
 
         return $this->render('admin/dashboard.html.twig',
     [
-            'directData'=>$directData,
+            'lastSnapshot'=> $adminService->getLastSnapshot(),
     ]
     );
-        //methode mongodb,[
-         //   'lastSnapshot'=> $adminService->getLastSnapshot()
-        //]);
     }
 
     #[Route('/stats/generate', name: 'admin_stats_generate', methods: ['POST'])]
