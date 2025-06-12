@@ -1,14 +1,11 @@
 FROM php:8.3-fpm-alpine
 
-# Paquets RUNTIME (conservés dans l'image)
 RUN apk add --no-cache \
-        nginx \
         libpng libjpeg-turbo freetype \
         icu-libs libzip zlib \
-        openssl-dev\
+        openssl-dev \
         bash curl shadow git unzip
 
-# Paquets BUILD (supprimés ensuite) + compilation des extensions
 RUN apk add --no-cache --virtual .build-deps \
         autoconf g++ make pkgconf \
         libpng-dev libjpeg-turbo-dev freetype-dev \
@@ -23,13 +20,10 @@ RUN apk add --no-cache --virtual .build-deps \
 RUN echo "upload_max_filesize=10M" > /usr/local/etc/php/conf.d/zzz-uploads.ini \
     && echo "post_max_size=12M" >> /usr/local/etc/php/conf.d/zzz-uploads.ini
 
-# ---------- Composer ----------
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# ---------- Racine de l’appli ----------
 WORKDIR /var/www/html
 
-#-- optimise le cache -------
 COPY app/composer.json app/composer.lock ./
 
 ENV SYMFONY_SKIP_AUTO_SCRIPTS=1 \
@@ -40,29 +34,17 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
     && mkdir -p var/cache var/log \
     && chown -R www-data:www-data /var/www/html
 
-COPY app/ .
+COPY app/ ./
 
 RUN rm -rf var/cache/* var/log/* \
     && chown -R www-data:www-data var
-#----- dossier enregistrement photo de profil ----------
+
 RUN mkdir -p /var/www/html/public/uploads/users \
-    && chmod 755 /var/www/html/public \
     && chown -R www-data:www-data /var/www/html/public/uploads \
     && chmod -R 775 /var/www/html/public/uploads
 
-# ---------- Nginx & Entrypoint ----------
-COPY docker/nginx/nginx.conf /etc/nginx/http.d/default.conf
-COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+EXPOSE 9000
+CMD ["php-fpm"]
 
-# ----------- Tailscale -----------
-RUN apk add --no-cache iptables ip6tables \
-    && wget -qO- https://pkgs.tailscale.com/stable/tailscale_1.66.4_amd64.tgz | tar xz -C /tmp \
-    && mv /tmp/tailscale_*/tailscale /usr/local/bin/ \
-    && mv /tmp/tailscale_*/tailscaled /usr/local/bin/ \
-    && chmod +x /usr/local/bin/tailscale /usr/local/bin/tailscaled
-
-EXPOSE 80
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 
