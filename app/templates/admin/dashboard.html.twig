@@ -8,12 +8,10 @@
 
         <h1 class="text-eco-green fw-bold text-center mb-5">Dashboard Administrateur</h1>
 
-            {# bouton génération de stat pour mongodb
             <form method="post" action="{{ path('admin_admin_stats_generate') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token('generate_stats') }}">
                 <button type="submit" class="btn btn-eco mb-4">Générer les stats du jour</button>
             </form>
-            #}
             <div class="row text-center mb-4">
                 <div class="col-md-4">
                     <div class="card card-eco">

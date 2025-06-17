@@ -2,19 +2,27 @@ version: "3.8"
 
 services:
   app:
-    image: php:8.3-fpm-alpine
-    container_name: ecoride_app
+    build: .
+    image: ecoride
+    container_name: php
 
     volumes:
       - uploads_data:/var/www/html/public/uploads
+      - ./app/public/build:/var/www/html/public/build:ro
+      - ./php-conf/zzz-listen-tcp.conf:/usr/local/etc/php-fpm.d/zzz-listen-tcp.conf:ro
+
     networks:
-      - proxy
+      proxy:
+        aliases:
+          - php              
+
     environment:
       APP_ENV: prod
       APP_DEBUG: "0"
-      DATABASE_URL: "mysql://ecoride:tonmdp@mariadb:3306/ecoride"
-      MONGODB_URL: "mongodb://root:Azote355538@mongo:27017"
-      APP_SECRET: "ta_clé_ultra_secrète_prod"
+      APP_SECRET: "b5870d2c5e..."
+      DATABASE_URL: "mysql://root:Azote355538@mariadb:3306/ecoride?serverVersion=11.0.2-MariaDB&charset=utf8mb4"
+      MONGODB_URL: "mongodb://root:Azote355538@mongo:27017/?authSource=admin&tls=false"
+
     restart: unless-stopped
 
 volumes:
@@ -23,3 +31,4 @@ volumes:
 networks:
   proxy:
     external: true
+

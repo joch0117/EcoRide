@@ -3,7 +3,7 @@ doctrine_mongodb:
         default:
             server: '%env(resolve:MONGODB_URL)%'
             options: 
-                tls: true
+                tls: false
 
     default_database: ecoride
     document_managers:

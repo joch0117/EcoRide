@@ -1,16 +1,12 @@
-# flyctl launch added from app/.gitignore
-!docker/
-!docker/php/
-!docker/php/entrypoint.sh
 
 ###> symfony/framework-bundle ###
-app/.env.local
-app/.env.local.php
-app/.env.*.local
+#app/.env.local
+#app/.env.local.php
+#app/.env.*.local
 app/config/secrets/prod/prod.decrypt.private.php
 app/public/bundles
-app/var
-app/vendor
+#app/var
+#app/vendor
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -54,7 +50,7 @@ app/vendor/twig/extra-bundle/**/var
 app/vendor/twig/extra-bundle/**/composer.lock
 app/vendor/twig/extra-bundle/**/phpunit.xml
 app/vendor/twig/extra-bundle/**/.phpunit.result.cache
-fly.toml
+
 
 app/vendor/
 
