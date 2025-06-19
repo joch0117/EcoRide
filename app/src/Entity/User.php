@@ -141,7 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->is_passenger = true;
         $this->is_driver = false;
         $this->is_suspended = false;
-        $this->photo_url = '/uploads/users/default-profile.png';
+        $this->photo_url = 'default.png';
         $this->vehicles = new ArrayCollection();
         $this->driver_trips = new ArrayCollection();
         $this->bookings = new ArrayCollection();

@@ -6,7 +6,7 @@
 parameters:
     env(MONGODB_URL): ''
     env(MONGODB_DB): ''
-    photo_directory: '%kernel.project_dir%/public/uploads/users'
+    photo_directory: '%kernel.project_dir%/uploads'
 
 services:
     # default configuration for services in *this* file
@@ -28,5 +28,9 @@ services:
         arguments:
             $router: '@router'
 
+
+    App\Service\ProfileService:
+        arguments:
+            $photo_directory: '%photo_directory%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
