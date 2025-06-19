@@ -37,8 +37,11 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 
 # ───────── Build front (Encore/Vite) ─────────
 RUN apk add --no-cache nodejs npm \
-  && npm install --omit dev \
-  && npm run build           # crée public/build/
+  && npm install \
+  && ls -al node_modules/.bin \
+  && npm run build \
+  && cat package.json \
+  && ls -al node_modules/.bin         
 
 # ───────── Permissions finales ─────────
 RUN rm -rf var/cache/* var/log/* \
