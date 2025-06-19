@@ -31,7 +31,7 @@ final class DashboardController extends AbstractController
         if (!$user->isProfilComplet()) {
             return $this->redirectToRoute('app_dashboard_profil');
         }
-
+        
         $data = $dashboardService->getDashboardData($user);
         
         return $this->render('dashboard/espace-utilisateur.html.twig',

@@ -36,7 +36,7 @@ class PublishType extends AbstractType
                 'attr'=> ['class'=>'bg-eco-cream text-eco-green form-control']
             ])
             ->add('arrival_datetime', DateTimeType::class, [
-                'label'=>'Date et heure de départ',
+                'label'=>'Date et heure de d\'arrivée',
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'attr'=> ['class'=>'bg-eco-cream text-eco-green form-control']

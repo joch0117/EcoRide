@@ -26,7 +26,7 @@ class MailerService
         );
 
         $email = (new Email())
-            ->from('noreply@ecoride.fr')
+            ->from('noreply@ecoride-eco.fr')
             ->to($user->getEmail())
             ->subject('Notez votre trajet sur EcoRide')
             ->html("
@@ -44,7 +44,7 @@ class MailerService
         
 
         $email =(new Email())
-            ->from('noreply@ecoride.fr')
+            ->from('noreply@ecoride-eco.fr')
             ->to($user->getEmail())
             ->subject('annulation de trajet sur EcoRide')
             ->html("<p>Bonjour {$user->getUsername()},</p>
