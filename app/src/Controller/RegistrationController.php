@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class RegistrationController extends AbstractController
 {
+    //enregistrement d'un nouvelle utilisateur plus authentification 
     #[Route('/register', name: 'app_registration')]
     public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security,PreferenceService $pService): Response
     {

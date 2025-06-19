@@ -6,6 +6,8 @@ use App\Document\SiteStat;
 use App\Entity\User;
 use App\Repository\BookingRepository;
 use App\Repository\CreditTransactionRepository;
+use App\Repository\TripRepository;
+use App\Repository\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -17,7 +19,10 @@ class AdminService
         private UserPasswordHasherInterface $hasher,
         private BookingRepository $bookingRepository,
         private CreditTransactionRepository $creditTransactionRepository,
-        private DocumentManager $dm
+        private DocumentManager $dm,
+        private TripRepository $tripRepository,
+        private CreditTransactionRepository $creditTransaction,
+        private UserRepository $userRepository
     ){}
 
 
@@ -46,7 +51,7 @@ class AdminService
         ];
     }
 
-    public function searchusers(string $term): array
+    public function searchUsers(string $term): array
     {
         $users = $this->em->getRepository(User::class)->findAll();
 
@@ -55,7 +60,7 @@ class AdminService
                     str_contains(strtolower($user->getUsername()),strtolower($term));
         });
 
-        $employeed = [];
+        $employed = [];
         $regularUsers = [];
 
         foreach ($filtered as $user){
@@ -67,12 +72,13 @@ class AdminService
         }
             return ['employees' => $employees,'users'=>$regularUsers];
     }
-    public function deleteUser(User $user): bool
-    {
-        $this->em->remove($user);
-        $this->em->flush();
-        return true;
-    }
+    //futur fonctionnalité supression de compte
+    //public function deleteUser(User $user): bool 
+    //{
+        //$this->em->remove($user);
+        //$this->em->flush();
+        //return true;
+    //}
     public function createEmploye(string $plainPassword,User $user)
     {
         $hashedPassword= $this->hasher->hashPassword($user,$plainPassword);
@@ -125,6 +131,21 @@ class AdminService
     }
 
 
+/*
+    public function dataPlateform(){
+        $nbTrajets = $this->tripRepository->count([]);
+        $totalCredits = $this->creditTransactionRepository->sumPlatformWin();
+        $nbUsers = $this->userRepository->count([]);
+
+        return[
+            'nbTrajets'=>$nbTrajets,
+            'creditsGagnes'=>$totalCredits,
+            'nbUtilisateurs'=>$nbUsers,
+        ];
+    }
+        */
+
+    ///fonction mongodb
     public function getLastSnapshot(): ?SiteStat
     {
         return $this->dm->getRepository(SiteStat::class)

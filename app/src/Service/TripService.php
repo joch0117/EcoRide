@@ -58,6 +58,7 @@ class TripService
                 $departure < $arrival;
     }
 
+    //calcul de la durée du trajet
     public function calculateDuration(Trip $trip):int {
         $departure = $trip->getDepartureDateTime();
         $arrival = $trip->getArrivalDatetime();

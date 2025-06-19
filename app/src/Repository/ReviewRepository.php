@@ -18,7 +18,7 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
-    // src/Repository/ReviewRepository.php
+    //récupération de la moyenne du chauffeur en fonction du retour des passagers
     public function getAverageForDriver(User $driver): ?float
     {
     return (float) $this->createQueryBuilder('r')

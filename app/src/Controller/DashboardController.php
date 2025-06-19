@@ -18,6 +18,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 final class DashboardController extends AbstractController
 {
+    //controller de la page espace-utilisateur
     #[Route('/espace-utilisateur', name: 'app_dashboard')]
     #[IsGranted('ROLE_USER')]
     public function index(DashboardService $dashboardService ,AverageRatingService $averageRatingService): Response
@@ -26,11 +27,11 @@ final class DashboardController extends AbstractController
         $user = $this->getUser();
         $average = $averageRatingService->getAverageRating($user);
 
-
+        //redirection si profil pas complet
         if (!$user->isProfilComplet()) {
             return $this->redirectToRoute('app_dashboard_profil');
         }
-
+        
         $data = $dashboardService->getDashboardData($user);
         
         return $this->render('dashboard/espace-utilisateur.html.twig',
@@ -41,6 +42,7 @@ final class DashboardController extends AbstractController
     ]);
     }
 
+    //controller de complétion du profil
     #[IsGranted('ROLE_USER')]
     #[Route('/espace-utilisateur/profil', name:'app_dashboard_profil')]
     public function editProfile(
@@ -59,6 +61,7 @@ final class DashboardController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()&& $form->isValid()){
+            //vérif de l'age pour être chauffeur
             if(!$profileService->validateDriverAge($user,$form)){
                 $form->get('is_driver')->addError(new FormError('Vous devez avoir au moins 18 ans pour être chauffeur.'));
                 return $this->render('dashboard/profil.html.twig',[
@@ -72,7 +75,7 @@ final class DashboardController extends AbstractController
                 try{
                     $profileService->handleProfilePhoto($file,$user,$slugger);
                 }catch(\Exception $e){
-                    $form->get('photo')->addError(new FormError($e->getMessage()));
+                    $form->get('photo_url')->addError(new FormError($e->getMessage()));
                     return $this->render('dashboard/profil.html.twig',[
                         'form'=>$form->createView(),
                     ]);
@@ -82,7 +85,7 @@ final class DashboardController extends AbstractController
             }
 
             $em->flush();
-
+            //logique chauffeur = vehicules obligatoire
             if ($user->isDriver() && count($user->getVehicles()) === 0) {
                     $this->addFlash('warning', 'Ajoutez un véhicule pour pouvoir proposer un trajet.');
                     return $this->redirectToRoute('app_vehicle');

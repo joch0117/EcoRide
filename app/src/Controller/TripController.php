@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class TripController extends AbstractController
 {
+    //recheche d'un trajet
 #[Route('/recherche-covoiturage', name: 'app_trip_search')]
 public function search(TripSearchService $tripSearchService, Request $request, AverageRatingService $averageRatingService): Response
 {

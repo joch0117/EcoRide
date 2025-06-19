@@ -15,20 +15,20 @@
             <div class="row text-center mb-4">
                 <div class="col-md-4">
                     <div class="card card-eco">
-                        <p class="mb-1"> Total trajets réalisés</p>
-                        <h4>{{ lastSnapshot.nbTrajets }}</h4>
+                        <p class="mb-1"> Total trajets postés</p>
+                        <h4>{{ lastSnapshot.nbTrajets ?? 0 }}</h4>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card card-eco">
                         <p class="mb-1"> Crédits gagnés</p>
-                        <h4>{{ lastSnapshot.creditsGagnes }}</h4>
+                        <h4>{{ lastSnapshot.creditsGagnes ?? 0 }}</h4>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card card-eco">
                         <p class="mb-1">Nombre d’utilisateurs</p>
-                        <h4>{{ lastSnapshot.nbUtilisateurs }}</h4>
+                        <h4>{{ lastSnapshot.nbUtilisateurs ?? 0 }}</h4>
                     </div>
                 </div>
             </div>

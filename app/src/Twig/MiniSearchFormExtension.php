@@ -12,6 +12,7 @@ class MiniSearchFormExtension extends AbstractExtension implements GlobalsInterf
 {
     private FormFactoryInterface $formFactory;
 
+    //formulaire de recheche présent dans le menu
     public function __construct(FormFactoryInterface $formFactory,private RouterInterface $router)
     {
         $this->formFactory = $formFactory;

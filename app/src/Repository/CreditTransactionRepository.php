@@ -16,6 +16,7 @@ class CreditTransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, CreditTransaction::class);
     }
 
+    //quantité de crédit gagné par la plateforme
     public function sumPlatformWin(): int
     {
     $qb = $this->createQueryBuilder('ct');
@@ -31,6 +32,7 @@ class CreditTransactionRepository extends ServiceEntityRepository
     return $totalFees;
     }
 
+    //montant des crédit gagné par jour
     public function creditsByDay(): array
     {
     $conn = $this->getEntityManager()->getConnection();

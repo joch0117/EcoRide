@@ -13,24 +13,24 @@
             Identifiants incorrects.
             </div>
             {% endif %}
-            {{ form_start(loginForm)}}
+            {{ form_start(form,{'action':path('app_login')})}}
                 <div class="mb-3">
-                    {{ form_label(loginForm.email, 'Adresse e-mail', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(loginForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre e-mail'}}) }}
-                    {{ form_errors(loginForm.email) }}
+                    {{ form_label(form.email, 'Adresse e-mail', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre e-mail'}}) }}
+                    {{ form_errors(form.email) }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form_label(loginForm.password, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(loginForm.password, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre mot de passe'}}) }}
-                    {{ form_errors(loginForm.password) }}
+                    {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre mot de passe'}}) }}
+                    {{ form_errors(form.password) }}
                 </div>
 
                 <div class="mb-3 text-center">
                     <small><a href="{{ path('app_registration') }}">Créer votre compte</a></small>
                 </div>
                 <button type="submit" class="btn btn-eco btn-success w-100">Se connecter</button>
-            {{ form_end(loginForm) }}
+            {{ form_end(form) }}
         </div>
     </div>
 </main>

@@ -17,6 +17,7 @@ class BookingService
 {
     public function __construct(private EntityManagerInterface $em,private UserRepository $userRepo,private CreditService $creditService ){}
 
+    //fonction de vérification de condition pour la reservation
     public function canUserBook(User $user,Trip $trip): ?string
     {
         if ($trip->getSeatsAvailable()<=0){
@@ -27,6 +28,10 @@ class BookingService
             return " Vous êtes déjà inscrit sur ce trajet.";
         }
 
+        if ($trip->getDriver() && $trip->getDriver()->getId() === $user->getId()) {
+        return "Vous ne pouvez pas réserver votre propre trajet en tant que passager.";
+        }
+
         $total=$trip->getPrice()+2;
         if($user->getCredit()<$total){
             return "Vous n'avez pas assez de crédits.";
@@ -35,6 +40,7 @@ class BookingService
         return null;
     }
 
+    //création d'une réservation :table booking +table crédit transaction +table trip mis à jour
     public function createBooking(User $user, Trip $trip):Booking
     {
         $user = $this->userRepo->find($user->getId());
@@ -78,6 +84,7 @@ class BookingService
         return $booking;
     }
 
+    //anulation d'une reservation
     public function cancelBooking(Booking $booking, $currentUser): bool
     {
         if ($booking->getUser() !== $currentUser) {

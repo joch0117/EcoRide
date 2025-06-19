@@ -10,6 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
+    //page de connexion 
     #[Route(path: '/login', name: 'app_login')]
     public function login( AuthenticationUtils $authenticationUtils): Response
     {
@@ -20,7 +21,7 @@ class LoginController extends AbstractController
         $form = $this->createForm(LoginFormType::class);
 
         return $this->render('login/login.html.twig', [
-            'loginForm' => $form->createView(),
+            'form' => $form->createView(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'last_username'=> $authenticationUtils->getLastUsername(),
         ]);

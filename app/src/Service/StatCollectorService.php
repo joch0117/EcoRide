@@ -16,7 +16,8 @@ class StatCollectorService
         private UserRepository $userRepository,
         private DocumentManager $documentManager
     ) {}
-
+    
+    //collecte de statistique pour la partie admin et mongodb
     public function collect(): SiteStat
     {
         $nbTrajets = $this->tripRepository->count([]);

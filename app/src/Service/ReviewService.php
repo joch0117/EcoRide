@@ -21,6 +21,7 @@ class ReviewService
         private CreditService $creditService
         ){}
 
+        //à la validation du trajet le status de l'avis passe en attente tant qu'il n'a pas été validé ou rejetté par les passagers
     public function validateTrip(Review $review,Trip $trip,User $user){
         
         $driver= $trip->getDriver();
@@ -38,6 +39,7 @@ class ReviewService
 
         $this->em->flush();
     }
+    //implementation d'un incident table incident report
     public function problemSignaled(Trip $trip,Review $review , User $user){
         
         $driver = $trip->getDriver();

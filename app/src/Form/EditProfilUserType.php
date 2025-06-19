@@ -82,7 +82,8 @@ class EditProfilUserType extends AbstractType
                         'mimeTypesMessage'=>'Formats autorisés : JPG, PNG',
                     ])
                 ]
-            ])
+            ]
+            )
             ->add('is_driver',CheckboxType::class,[
                 'label'=>'Je suis chauffeur',
                 'required'=>false,

@@ -16,6 +16,7 @@ class MailerService
         private UrlGeneratorInterface $urlGenerator
     ) {}
 
+    //notification d'avis à implémenter dans l'espace utilisateur à la fin d'un trajet
     public function sendRatingRequest(User $user, Trip $trip): void
     {
         $link = $this->urlGenerator->generate(
@@ -25,7 +26,7 @@ class MailerService
         );
 
         $email = (new Email())
-            ->from('noreply@ecoride.fr')
+            ->from('noreply@ecoride-eco.fr')
             ->to($user->getEmail())
             ->subject('Notez votre trajet sur EcoRide')
             ->html("
@@ -38,11 +39,12 @@ class MailerService
         $this->mailer->send($email);
     }
 
+    //mail annulation de trajet
     public function sendCancelTrip(Trip $trip, User $user){
         
 
         $email =(new Email())
-            ->from('noreply@ecoride.fr')
+            ->from('noreply@ecoride-eco.fr')
             ->to($user->getEmail())
             ->subject('annulation de trajet sur EcoRide')
             ->html("<p>Bonjour {$user->getUsername()},</p>

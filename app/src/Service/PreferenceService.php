@@ -12,6 +12,7 @@ class PreferenceService
     {
     }
 
+    //créer les préférences par defaut
     public function createUserWithDefaultPreferences(User $user): void
     {
         // Préférences par défaut

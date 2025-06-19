@@ -17,6 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 final class HistoryController extends AbstractController
 {
+    //affichage des trip en tant que passagers et en tant que chauffeur
     #[Route('/history', name: 'app_history')]
     public function index(TripRepository $tripRepository,BookingRepository $bookingRepository,ReviewRepository $reviewRepository): Response
     {
@@ -45,6 +46,7 @@ final class HistoryController extends AbstractController
         ]);
     }
 
+    //démarre un trajet
     #[Route('/history/start/{id}', name: 'app_trip_start')]
     public function startTrip(Trip $trip, HistoryService $historyService): Response
     {
@@ -53,6 +55,7 @@ final class HistoryController extends AbstractController
         return $this->redirectToRoute('app_history');
     }
 
+    //annul un trajet
     #[Route('/history/cancel/{id}', name: 'app_trip_cancel')]
     public function cancelTrip(Trip $trip, HistoryService $historyService): Response
     {
@@ -61,6 +64,7 @@ final class HistoryController extends AbstractController
         return $this->redirectToRoute('app_history');
     }
 
+    //termine un trajet
     #[Route('/history/finish/{id}', name: 'app_trip_finish')]
     public function arriveTrip(Trip $trip, HistoryService $historyService): Response
     {
@@ -69,6 +73,7 @@ final class HistoryController extends AbstractController
         return $this->redirectToRoute('app_history');
     }
 
+    //annuler une réservation
     #[Route('/history/cancel-booking/{id}', name: 'app_booking_cancel')]
     public function cancelBooking(Booking $booking, BookingService $bookingService): Response
 {

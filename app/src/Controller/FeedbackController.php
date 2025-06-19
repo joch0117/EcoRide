@@ -16,6 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 final class FeedbackController extends AbstractController
 {
+    //retour de trajet validation ou rejte du trajet mise a jour table trip et table review
     #[Route('/feedback/{id}', name: 'app_feedback')]
     public function index(Request $request, Trip $trip, ReviewService $reviewService): Response
     {

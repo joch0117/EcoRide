@@ -16,6 +16,7 @@ class BookingRepository extends ServiceEntityRepository
         parent::__construct($registry, Booking::class);
     }
 
+    //requéte préparé pour compter le nombre de covoiturage réalisé . réservation ou le status est validé ou rejeté
     public function countRealizedByDay(): array
 {
     $conn = $this->getEntityManager()->getConnection();

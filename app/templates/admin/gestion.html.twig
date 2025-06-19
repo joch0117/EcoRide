@@ -12,13 +12,6 @@
                 <input type="text" name="search" class="form-control" placeholder="Rechercher par pseudo ou email" value="{{ search }}">
             </div>
             <div class="col-md-3">
-                <select class="form-select" id="filter" onchange="filterUsers()">
-                    <option value="">Tous les comptes</option>
-                    <option value="actif">Actifs uniquement</option>
-                    <option value="suspendu">Suspendus uniquement</option>
-                </select>
-            </div>
-            <div class="col-md-3">
                 <button type="submit" class="btn btn-eco w-100">Rechercher</button>
             </div>
         </form>
@@ -45,11 +38,6 @@
                                     <button type="submit" class="btn btn-sm {{ user.isSuspended ? 'btn-success' : 'btn-warning' }}">
                                         {{ user.isSuspended ? 'Autoriser' : 'Suspendre' }}
                                     </button>
-                                </form>
-
-                                <form method="post" action="{{ path('admin_admin_delete_user', {'id': user.id}) }}" onsubmit="return confirm('Supprimer ce compte ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
                                 </form>
                             </div>
                         </div>
@@ -80,10 +68,6 @@
                                     <button type="submit" class="btn btn-sm {{ user.isSuspended ? 'btn-success' : 'btn-warning' }}">
                                         {{ user.isSuspended ? 'Autoriser' : 'Suspendre' }}
                                     </button>
-                                </form>
-                                <form method="post" action="{{ path('admin_admin_delete_user', {'id': user.id}) }}" onsubmit="return confirm('Supprimer ce compte ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
                                 </form>
                             </div>
                         </div>

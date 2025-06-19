@@ -28,13 +28,21 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function __construct(private UrlGeneratorInterface $urlGenerator,private UserRepository $userRepository,private RequestStack $requestStack)
     {
+
     }
 
+    public function supports(Request $request): bool
+    {
+    return $request->attributes->get('_route') === self::LOGIN_ROUTE
+        && $request->isMethod('POST');
+    }
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email','');
         $password = $request->request->get('password','');
         $csrfToken = $request->request->get('_csrf_token','');
+    
+        
 
         if (empty($email) || empty($password)) {
             throw new CustomUserMessageAuthenticationException('Identifiant incorrects.');
@@ -43,19 +51,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
         return new Passport(
-            new UserBadge($email, function(string $userIdentifier){
-                        $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
-
-                        if (!$user) {
-                            throw new CustomUserMessageAuthenticationException('Utilisateur introuvable.');
-                        }
-
-                        if ($user->isSuspended()) {
-                            throw new CustomUserMessageAuthenticationException('Votre compte a été suspendu.');
-                        }
-
-                    return $user;
-                }),
+            new UserBadge($email),
             new PasswordCredentials($password),
             [
                 new CsrfTokenBadge('authenticate', $csrfToken),
@@ -71,7 +67,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 

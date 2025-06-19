@@ -22,9 +22,11 @@ final class AdminController extends AbstractController
     public function dashboard(AdminService $adminService): Response
     {
 
-        return $this->render('admin/dashboard.html.twig',[
-            'lastSnapshot'=> $adminService->getLastSnapshot()
-        ]);
+        return $this->render('admin/dashboard.html.twig',
+    [
+            'lastSnapshot'=> $adminService->getLastSnapshot(),
+    ]
+    );
     }
 
     #[Route('/stats/generate', name: 'admin_stats_generate', methods: ['POST'])]
@@ -52,7 +54,7 @@ final class AdminController extends AbstractController
             $adminService->createEmploye($plainPassword,$user);
 
             $this->addFlash('succes','Employé créé avec succès');
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('admin_admin');
         }
         return $this->render('admin/create.html.twig',[
             'form' => $form->createView()
@@ -87,17 +89,6 @@ final class AdminController extends AbstractController
         }
         $adminService->toggleSuspension($user);
         return $this->redirectToRoute('admin_admin_users');
-    }
-
-    #[Route('/user/{id}/delete', name: 'admin_delete_user', methods: ['POST'])]
-    public function deleteUser(User $user, AdminService $adminService,Request $request): Response
-    {
-        $token = $request->request->get('_token');
-        if (!$this->isCsrfTokenValid('delete-user-' . $user->getId(), $token)) {
-            throw $this->createAccessDeniedException('Token CSRF invalide');
-        }
-        $adminService->deleteUser($user);
-        return $this->redirectToRoute('admin_users');
     }
 
     #[Route('/stats/data', name: 'stats_data')]

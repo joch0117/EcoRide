@@ -14,6 +14,7 @@ class TripSearchService
         private EntityManagerInterface $em
     ){}
 
+    //recherche de trajet si trajet pas trouver élargir la recheche à deux jour avant ou deux jours aprés
     public function searchTrip(
         ?string $departureCity,
         ?string $arrivalCity,

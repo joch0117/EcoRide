@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormError;
 #[IsGranted('ROLE_USER')]
 final class VehicleController extends AbstractController
 {
+    //ajout d'un vehicule controlle de doublons deux vehicules ne peuvent pas avoir la même plaque
     #[Route('/vehicule/ajouter', name: 'app_vehicle')]
     public function add( Request $request,VehicleService $vehicleService): Response
     {

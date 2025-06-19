@@ -17,6 +17,7 @@ class CreditService
         private CreditTransactionRepository $creditTransaction
     ){}
 
+    //anulation de trajet = remboursement reservation
     public function rembourserBooking(Booking $booking)
     {
         $user =$booking->getUser();
@@ -72,6 +73,7 @@ class CreditService
         
     }
 
+    //validation d'un trajet mise à jour crédit 
     public function creditDriver(User $chauffeur,Trip $trip, int $montant){
         $chauffeur->addCredits($montant);
 
