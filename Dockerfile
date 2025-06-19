@@ -42,9 +42,9 @@ RUN apk add --no-cache nodejs npm \
 
 # ───────── Permissions finales ─────────
 RUN rm -rf var/cache/* var/log/* \
-  && mkdir -p var/cache/prod var/log \
-  && chown -R www-data:www-data var public/uploads \
-  && chmod -R u+rwX,g+rwX var public/uploads
+  && mkdir -p var/cache/prod var/log app/uploads \
+  && chown -R www-data:www-data var app/uploads \
+  && chmod -R u+rwX,g+rwX var app/uploads
 
 EXPOSE 9000
 CMD ["php-fpm"]

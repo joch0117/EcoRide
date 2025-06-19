@@ -40,12 +40,14 @@ class EditProfilUserType extends AbstractType
                 ]
                 ])
             ->add('surname',TextType::class,[
+                'label' => 'Nom',
                 'required'=> false,
                 'constraints'=>[
                     new Assert\Length(['max'=>50]),
                 ]
                 ])
             ->add('firstname',TextType::class,[
+                'label' => 'Prénom',
                 'required'=>false,
                 'constraints'=>[
                     new Assert\Length(['max'=>50]),
@@ -62,6 +64,7 @@ class EditProfilUserType extends AbstractType
                 ]
             ])
             ->add('dateBirth', DateType::class, [
+                'label' => 'Date de naissance',
                 'widget' => 'single_text',
                 'required'=>false,
                 'constraints'=>[
