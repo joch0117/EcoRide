@@ -49,13 +49,12 @@
                 <div class="mb-3">
                     {{ form_label(form.photo_url, 'Photo de profil') }}
                     {{ form_widget(form.photo_url, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.photo_url) }}
                 </div>
-
                 <div class="mb-3 form-check">
                     {{ form_widget(form.is_driver, {'attr': {'class': 'form-check-input'}}) }}
                     {{ form_label(form.is_driver, 'Je souhaite devenir chauffeur', {'label_attr': {'class': 'form-check-label'}}) }}
                 </div>
-
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-eco btn-lg rounded-pill px-5">
                         Enregistrer

@@ -14,7 +14,7 @@ final class PhotoController extends AbstractController
     {
         $filename = $user->getPhotoUrl() ?? 'default.png';
         $uploadDir = $this->getParameter('photo_directory');
-        $path = rtrim($uploadDir . '/' ). $filename;
+        $path = rtrim($uploadDir . '/' ). '/' . $filename;
 
         if (!file_exists($path)) {
             $path = $this->getParameter('kernel.project_dir') . '/public/images/default.png';

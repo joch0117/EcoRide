@@ -40,12 +40,14 @@ class EditProfilUserType extends AbstractType
                 ]
                 ])
             ->add('surname',TextType::class,[
+                'label' => 'Nom',
                 'required'=> false,
                 'constraints'=>[
                     new Assert\Length(['max'=>50]),
                 ]
                 ])
             ->add('firstname',TextType::class,[
+                'label' => 'Prénom',
                 'required'=>false,
                 'constraints'=>[
                     new Assert\Length(['max'=>50]),
@@ -78,9 +80,10 @@ class EditProfilUserType extends AbstractType
                 'constraints'=>[
                     new File([
                         'maxSize'=>'2M',
-                        'mimeTypes'=>['image/jpeg','image/png'],
-                        'mimeTypesMessage'=>'Formats autorisés : JPG, PNG',
-                    ])
+                        'mimeTypes'=>['image/jpeg','image/png','images/webp'],
+                        'mimeTypesMessage' => 'Le format du fichier doit être une image (jpeg, png, gif, webp).',
+                        'maxSizeMessage' => 'L\'image ne doit pas dépasser 2 Mo.',
+                    ],)
                 ]
             ]
             )
