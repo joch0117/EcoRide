@@ -97,8 +97,8 @@ composants
     color: var(--eco-cream);
 }
 .btn-responsive {
-    width: 100%; /* par défaut : mobile */
-    max-width: 300px; /* limite en desktop */
+    width: 100%; 
+    max-width: 300px; 
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -176,7 +176,7 @@ RESPONSIVE DESIGN
 =================================== */
 
 @media (min-width: 768px) {
-    /* tablette */
+    
 }
 
 @media (min-width: 1024px) {

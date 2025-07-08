@@ -69,7 +69,7 @@ final class EmployeController extends AbstractController
         return $this->redirectToRoute('employe_avis');
     }
 
-    //mosération incident
+    //modération incident
     #[Route('/incidents', name: 'employe_incidents')]
     public function incidents(EmployeService $employeService): Response
     {

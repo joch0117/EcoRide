@@ -50,7 +50,7 @@ class BookingService
         //déduire les crédits du passager
         $user->removeCredits($total);
 
-        //transation
+        //transaction
         $platformTx = new CreditTransaction();
         $platformTx->setUser($user);
         $platformTx->setTrip($trip);
@@ -84,7 +84,7 @@ class BookingService
         return $booking;
     }
 
-    //anulation d'une reservation
+    //annulation d'une reservation
     public function cancelBooking(Booking $booking, $currentUser): bool
     {
         if ($booking->getUser() !== $currentUser) {

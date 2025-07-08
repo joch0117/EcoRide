@@ -76,7 +76,7 @@ final class BookingController extends AbstractController
         }catch(\DomainException $e){
             $this->addFlash('danger',$e->getMessage());
         }catch(\Throwable $e){
-            $this->addFlash('danger','Erreur lots de la réservation : ' . $e->getMessage());
+            $this->addFlash('danger','Erreur lors de la réservation : ' . $e->getMessage());
         }
     
         

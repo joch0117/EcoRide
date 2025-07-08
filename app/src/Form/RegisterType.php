@@ -26,7 +26,7 @@ class RegisterType extends AbstractType
                         'maxMessage' => 'Maximum {{ limit }} caractères.'
                     ]),
                     new Assert\Regex([
-                        // autorise lettres, chiffres, tirets, espaces, accents légers, mais pas < > { }
+                        // autorise lettres, chiffres, tirets, espaces, accents légers
                         'pattern' => '/^[\p{L}\p{N}\s\-_\'éèêàùçœ]+$/u',
                         'message' => 'Le pseudo contient des caractères non autorisés.'
                     ])
