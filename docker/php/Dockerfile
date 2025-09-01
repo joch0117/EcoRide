@@ -1,5 +1,6 @@
-FROM php:8.3-fpm-alpine
-
+FROM php:8.3-fpm-alpine 
+# image alpine légére
+# installation des paquets nécessaire
 RUN apk add --no-cache \
     git \
     unzip \
