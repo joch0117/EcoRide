@@ -4,16 +4,16 @@
 /*table utilisateur données*/
 
 INSERT INTO `user` (id, email, roles, password, username, surname, firstname, phone, date_birth, photo_url, is_passenger, is_driver, credit, is_suspended)
-VALUES  (2, 'user1@ecoride.com', '["ROLE_ADMIN"]', '$2y$13$goHdjF8613xVCr.U1MElAeFr1ek9RuMwic/5L4.P5mLkF7mgICV3O', 'user1', 'Martin', 'Alice', '0600000001', '1992-09-27', 'default.png', true, false, 23, false),
-        (3, 'user2@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user2', 'Durand', 'Bob', '0600000002', '1995-06-24', 'default.png', true, false, 26, false),
-        (4, 'user3@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user3', 'Lemoine', 'Clara', '0600000003', '1998-03-20', 'default.png', true, true, 29, false),
-        (5, 'user4@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user4', 'Dubois', 'David', '0600000004', '2000-12-14', 'default.png', true, false, 32, false),
-        (6, 'user5@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user5', 'Fontaine', 'Emma', '0600000005', '2003-09-10', 'default.png', true, false, 35, false),
-        (7, 'user6@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user6', 'Petit', 'Florian', '0600000006', '2006-06-06', 'default.png', true, true, 38, false),
-        (8, 'user7@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user7', 'Moreau', 'Gwen', '0600000007', '2009-03-02', 'default.png', true, false, 41, false),
-        (9, 'user8@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user8', 'Leroy', 'Hugo', '0600000008', '2011-11-27', 'default.png', true, false, 44, false),
-        (10, 'user9@ecoride.com', '["ROLE_USER"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user9', 'Benoit', 'Iris', '0600000009', '2014-08-23', 'default.png', true, true, 47, false),
-        (11, 'user10@ecoride.com', '["ROLE_EMPLOYE"]', '$2y$13$79Wf/eOinl4PwIJtjHa4Z.BgYrf7j4t1yswO0XVsY/1Z01gWTb6Fq', 'user10', 'Renard', 'Julien', '06000000010', '2017-05-19', 'default.png', true, false, 50, false);
+VALUES  (2, 'user1@ecoride.com', '["ROLE_ADMIN"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user1', 'Martin', 'Alice', '0600000001', '1992-09-27', 'default.png', true, false, 23, false),
+        (3, 'user2@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user2', 'Durand', 'Bob', '0600000002', '1995-06-24', 'default.png', true, false, 26, false),
+        (4, 'user3@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user3', 'Lemoine', 'Clara', '0600000003', '1998-03-20', 'default.png', true, true, 29, false),
+        (5, 'user4@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user4', 'Dubois', 'David', '0600000004', '2000-12-14', 'default.png', true, false, 32, false),
+        (6, 'user5@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user5', 'Fontaine', 'Emma', '0600000005', '2003-09-10', 'default.png', true, false, 35, false),
+        (7, 'user6@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user6', 'Petit', 'Florian', '0600000006', '2006-06-06', 'default.png', true, true, 38, false),
+        (8, 'user7@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user7', 'Moreau', 'Gwen', '0600000007', '2009-03-02', 'default.png', true, false, 41, false),
+        (9, 'user8@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user8', 'Leroy', 'Hugo', '0600000008', '2011-11-27', 'default.png', true, false, 44, false),
+        (10, 'user9@ecoride.com', '["ROLE_USER"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user9', 'Benoit', 'Iris', '0600000009', '2014-08-23', 'default.png', true, true, 47, false),
+        (11, 'user10@ecoride.com', '["ROLE_EMPLOYE"]', '$2y$13$6gtBp3eVSRd7dA9LK0r.Zu1ciz0WJXHafr/E8QHC3Uu5sgR9aaSY6', 'user10', 'Renard', 'Julien', '06000000010', '2017-05-19', 'default.png', true, false, 50, false);
 
 
 INSERT INTO `preference` (id, user_id, label, value)
@@ -59,16 +59,16 @@ VALUES (1, 'Peugeot', '208', 'Bleu', 'AB-10CD', 'diesel', '2011-01-15', 7, 5),
 /* table trip */
 
 INSERT INTO `trip` (id, driver_id, vehicle_id, departure_city, arrival_city, departure_datetime, arrival_datetime, duration, price, seats_available, is_ecological, status)
-VALUES(1, 3, 1, 'Marseille', 'Nice', '2025-08-01 08:00:00', '2025-08-01 13:00:00', 300, 29, 1, false, 'started'),
-(2, 2, 2, 'Lyon', 'Toulouse', '2025-08-02 09:00:00', '2025-08-02 11:00:00', 120, 22, 1, false, 'scheduled'),
-(3, 3, 3, 'Bordeaux', 'Nantes', '2025-08-03 10:00:00', '2025-08-03 15:00:00', 300, 9, 1, true, 'finished'),
-(4, 4, 4, 'Paris', 'Nantes', '2025-08-04 11:00:00', '2025-08-04 16:00:00', 300, 17, 3, false, 'started'),
-(5, 5, 5, 'Lyon', 'Toulouse', '2025-08-05 12:00:00', '2025-08-05 15:00:00', 180, 29, 4, true, 'cancelled'),
-(6, 6, 6, 'Lyon', 'Grenoble', '2025-08-06 13:00:00', '2025-08-06 16:00:00', 180, 11, 4, true, 'cancelled'),
-(7, 7, 7, 'Paris', 'Nice', '2025-08-07 14:00:00', '2025-08-07 19:00:00', 300, 16, 1, false, 'scheduled'),
-(8, 8, 8, 'Paris', 'Nantes', '2025-08-08 15:00:00', '2025-08-08 18:00:00', 180, 24, 3, false, 'cancelled'),
-(9, 5, 9, 'Paris', 'Nantes', '2025-08-09 16:00:00', '2025-08-09 21:00:00', 300, 24, 3, false, 'started'),
-(10, 2, 10, 'Paris', 'Toulouse', '2025-08-10 17:00:00', '2025-08-10 21:00:00', 240, 28, 2, false, 'finished');
+VALUES(1, 3, 1, 'Marseille', 'Nice', '2025-10-13 08:00:00', '2025-10-13 13:00:00', 300, 29, 1, false, 'started'),
+(2, 2, 2, 'Lyon', 'Toulouse', '2025-10-13 09:00:00', '2025-10-13 11:00:00', 120, 22, 1, false, 'scheduled'),
+(3, 3, 3, 'Bordeaux', 'Nantes', '2025-10-13 10:00:00', '2025-10-13 15:00:00', 300, 9, 1, true, 'finished'),
+(4, 4, 4, 'Paris', 'Nantes', '2025-10-13 11:00:00', '2025-10-13 16:00:00', 300, 17, 3, false, 'started'),
+(5, 5, 5, 'Lyon', 'Toulouse', '2025-10-13 12:00:00', '2025-10-13 15:00:00', 180, 29, 4, true, 'cancelled'),
+(6, 6, 6, 'Lyon', 'Grenoble', '2025-10-13 13:00:00', '2025-10-13 16:00:00', 180, 11, 4, true, 'cancelled'),
+(7, 7, 7, 'Paris', 'Nice', '2025-10-13 14:00:00', '2025-10-13 19:00:00', 300, 16, 1, false, 'scheduled'),
+(8, 8, 8, 'Paris', 'Nantes', '2025-10-13 15:00:00', '2025-10-13 18:00:00', 180, 24, 3, false, 'cancelled'),
+(9, 5, 9, 'Paris', 'Nantes', '2025-10-13 16:00:00', '2025-10-13 21:00:00', 300, 24, 3, false, 'started'),
+(10, 2, 10, 'Paris', 'Toulouse', '2025-10-13 17:00:00', '2025-10-13 21:00:00', 240, 28, 2, false, 'finished');
 
 
 /* table booking */
