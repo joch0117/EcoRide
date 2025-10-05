@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Tests\Service;
+
 use PHPUnit\Framework\TestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
@@ -16,8 +18,11 @@ class BookingServiceTest extends TestCase
 
     protected function setUp(): void
     {
+        /** @var EntityManagerInterface&\PHPUnit\Framework\MockObject\MockObject */
         $mockEm = $this->createMock(EntityManagerInterface::class);
+        /** @var UserRepository&\PHPUnit\Framework\MockObject\MockObject */
         $mockUserRepo = $this->createMock(UserRepository::class);
+        /** @var CreditService&\PHPUnit\Framework\MockObject\MockObject */
         $mockCreditService = $this->createMock(CreditService::class);
 
         $this->bookingService = new BookingService($mockEm, $mockUserRepo, $mockCreditService);

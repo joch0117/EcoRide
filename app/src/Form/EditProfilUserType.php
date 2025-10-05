@@ -81,7 +81,7 @@ class EditProfilUserType extends AbstractType
                     new File([
                         'maxSize'=>'2M',
                         'mimeTypes'=>['image/jpeg','image/png','images/webp'],
-                        'mimeTypesMessage' => 'Le format du fichier doit être une image (jpeg, png, gif, webp).',
+                        'mimeTypesMessage' => 'Le format du fichier doit être une image (jpeg, png, webp).',
                         'maxSizeMessage' => 'L\'image ne doit pas dépasser 2 Mo.',
                     ],)
                 ]
