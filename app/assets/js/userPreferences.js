@@ -16,7 +16,7 @@ data.forEach(pref => {
             // mise à jour 
             select.value = pref.value ? 'Accepté' : 'Refusé';
             select.disabled = false;
-            //ajout d'un ecouteur
+            //ajout d'un evnt listener
             select.addEventListener('change', () => {
             fetch(`/api/preferences/${pref.id}`, {
             method: 'PATCH',

@@ -35,7 +35,7 @@ class ProfileService
     public function handleProfilePhoto(UploadedFile $file , User $user , SluggerInterface $slugger):void
     {
         $mime = $file->getMimeType();
-        $allowed = ['image/jpeg','image/png','image/webp'];
+        $allowed = ['image/jpeg','image/png'];
 
         if (!in_array($mime,$allowed)){
             throw new \Exception('Format de fichier non autorisé .Format acceptés : jpg , png , webp.');

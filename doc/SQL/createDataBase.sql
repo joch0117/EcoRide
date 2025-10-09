@@ -16,7 +16,7 @@ create TAble user(
     photo_url VARCHAR(255),
     is_passenger TINYINT(1) DEFAULT 0,
     is_driver TINYINT(1) DEFAULT 0,
-    credit INT DEFAULT 0,
+    credit INT DEFAULT 20,
     is_suspended TINYINT(1) DEFAULT 0
 )
 

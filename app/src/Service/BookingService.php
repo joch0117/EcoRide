@@ -50,7 +50,7 @@ class BookingService
         //déduire les crédits du passager
         $user->removeCredits($total);
 
-        //transation
+        //transaction
         $platformTx = new CreditTransaction();
         $platformTx->setUser($user);
         $platformTx->setTrip($trip);
