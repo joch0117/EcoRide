@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\TripRepository;
 use App\Service\BookingService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,6 +20,7 @@ final class BookingController extends AbstractController
     public function __construct(
         private BookingService $bookingService,
         private EntityManagerInterface $em,
+        private LoggerInterface $logger
     ){}
 
     #[IsGranted('ROLE_USER')]
@@ -76,7 +78,13 @@ final class BookingController extends AbstractController
         }catch(\DomainException $e){
             $this->addFlash('danger',$e->getMessage());
         }catch(\Throwable $e){
-            $this->addFlash('danger','Erreur lors de la réservation : ' . $e->getMessage());
+            $this->addFlash('danger','Erreur lors de la réservation : ' );
+
+            $this->logger->error('Erreur lors de la réservation',[
+                'exception'=>$e,
+                'user' => $user->getId(),
+                'trip'=>$trip->getId()
+            ]);
         }
     
         
