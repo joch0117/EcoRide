@@ -1,154 +1,170 @@
-# EcoRide
+# **EcoRide**
 
-**Projet réalisé dans le cadre du Titre Professionnel Développeur Web & Web Mobile (DWWM), Septembre 2025**  
-**Auteur : Chaigneau Johan**
-
----
-
-##  Présentation du projet
-L’application EcoRide est une plateforme de covoiturage à vocation écologique, favorisant l’utilisation des véhicules électriques.
-Chaque utilisateur peut :
-Créer un compte,
-Publier des trajets,
-Participer à des trajets,
-Ajouter des véhicules,
-Commenter et noter les trajets auxquels il a participé.
-Un compte administrateur permet la création de comptes employé et la suspension des utilisateurs.
-Un compte employé est dédié à la modération des avis.
-
-Le projet met l’accent sur la simplicité d’utilisation, la sécurité des données et la promotion d’une mobilité plus responsable.
-
-
-## Stack technique utilisée
-
-### Frontend
-
-- **HTML5, CSS3, JavaScript, Bootstrap 5**
-- Stack accessible, compatible tous navigateurs, facile à personnaliser pour un rendu moderne et responsive.
-- Bootstrap permet un prototypage rapide et un affichage cohérent sur tous supports.
-- Intégration simple et sécurisée à Symfony via Twig et Webpack Encore.
-
-### Backend
-
-- **PHP 8.3 avec Symfony 7**
-- Symfony gère nativement la sécurité (utilisateurs, rôles, validation, CSRF) et offre une organisation claire (séparation logique métier/fonctionnelle).
-
-### Serveur web
-
-- **Nginx**
-- Performant, simple à configurer en Docker, recommandé officiellement par Symfony pour le déploiement.
-- [Voir la documentation Symfony](https://symfony.com/doc/current/setup/web_server_configuration.html)
-
-### Conteneurisation
-
-- **Docker et Docker Compose**
-- Isolation de l’environnement, configuration personnalisée, simplification du déploiement et orchestration multi-services.
-
-### Gestion de version
-
-- **Git (dépôt GitHub public)**
-- Branches structurées (`main`, `developpement`, `fonctionnalités`), méthode Gitflow.
-
-### Déploiement / Production
-
-- Déployé sur **Fly.io** (application) et **Railway** (base MariaDB).
-- Architecture pensée pour :  
-  - Un déploiement rapide et reproductible (Docker)  
-  - Séparation claire application/base  
-  - Accès sécurisé (variables d’environnement, connexions chiffrées)
-
+**Application de covoiturage écologique — Projet réalisé dans le cadre du Titre Professionnel DWWM (2025)**
+**Auteur : Johan Chaigneau**
 
 ---
 
-##  Liens utiles
+## **Présentation**
 
-- **Démo en ligne (Fly.io) :** https://ecoride-white-moon-1925.fly.dev/
-- **Dépôt GitHub :** https://github.com/joch0117/EcoRide.git
-- **Kanban gestion de projet (Notion) :** 
-- **Identifiants de test :**
-    - **Admin :** admin-ecoride@ecoride.com / [Test1234!]
+**EcoRide** est une application web de **covoiturage éco-responsable**, conçue pour encourager l’utilisation de véhicules électriques et hybrides.
+Elle met l’accent sur :
 
+* la **simplicité d’utilisation** pour les usagers,
+* la **sécurité des données** (rôles, validation, CSRF, etc.),
+* et la **promotion d’une mobilité durable**.
 
-## Déploiement local
+L’utilisateur peut :
 
-### Prérequis
+* Créer un compte sécurisé
+* Publier et gérer ses trajets
+* Réserver ou participer à un covoiturage
+* Ajouter ses véhicules
+* Donner une **note et un avis** sur ses trajets
 
-> **Attention :** Pour un déploiement en local, veillez à vous placer sur la branche `developpement`.
+Deux espaces spécifiques complètent l’application :
 
-Environnement nécessaire :
-
-* **IDE** : Visual Studio Code + DBeaver
-* **Docker** et **Docker Compose** installés sur votre machine
-* **Node.js** et **npm** pour la gestion des assets
+* **Espace Employé** : validation et modération des avis
+* **Espace Administrateur** : gestion des utilisateurs, statistiques, création d’employés, suspension de comptes
 
 ---
 
-### Procédure
 
-1. **Cloner ou télécharger la branche `developpement` du projet**
+## **Stack technique**
 
-2. **Lancer les conteneurs Docker**
-   Dans votre terminal, à la racine du projet :
+### **Frontend**
+
+* **HTML5 / CSS3 / JavaScript / Bootstrap 5**
+* Interface responsive et moderne, intégrée via **Twig**
+* **Webpack Encore** pour la compilation des assets
+
+### **Backend**
+
+* **PHP 8.3 + Symfony 7**
+* Architecture MVC complète
+* Gestion des utilisateurs, rôles et sécurité via le composant Security
+* Formulaires, validations et logique métier structurée
+
+### **Bases de données**
+
+* **MariaDB** : gestion relationnelle (utilisateurs, trajets, réservations)
+* **MongoDB** : gestion non relationnelle (avis, statistiques, snapshots)
+
+### **Serveur et Conteneurisation**
+
+* **Nginx** comme reverse proxy et serveur web
+* **PHP-FPM** dans un conteneur dédié
+* **Docker Compose** pour orchestrer :
+
+  * `php` (backend)
+  * `nginx` (serveur web)
+  * `mariadb` (BDD principale)
+  * `mongodb` (données secondaires)
+* Configuration d’un **réseau Docker privé**  pour sécuriser les échanges entre services
+
+---
+
+## **Déploiement**
+
+### **Infrastructure**
+
+Le projet a été **déployé en production** sur un **serveur VPS OVH** à l’aide de Docker, avec une architecture modulaire et sécurisée :
+
+* Réseau privé Docker isolant les conteneurs applicatifs
+* Service Nginx exposé sur le port 80/443
+* MariaDB et MongoDB accessibles uniquement en interne
+* Certificats SSL gérés par le reverse proxy
+* Variables d’environnement stockées via secrets Docker
+
+### **Environnement de production**
+
+* Application : conteneur Docker (Nginx + PHP-FPM)
+* Base de données : MariaDB et MongoDB hébergées sur OVH
+
+
+### **Démo en ligne**
+
+https://www.ecoride-eco.fr/
+
+---
+
+## **Installation locale**
+
+### **Prérequis**
+
+* Docker & Docker Compose
+* Node.js & npm
+* Composer
+* Un IDE (VS Code recommandé)
+* DBeaver (ou tout client SQL)
+
+### **Procédure**
+
+1. **Cloner le dépôt**
 
    ```bash
-   docker compose up --build
+   git clone https://github.com/joch0117/EcoRide.git
+   cd EcoRide
    ```
 
-   Cette commande va construire les images :
+2. **Lancer les conteneurs**
 
-   * `php`
-   * `nginx` (serveur accessible à [http://localhost:8080])
-   * `mariadb` (BDD sur port 3309)
-   * `mongodb` (port 27017)
+   ```bash
+   docker compose up -d --build
+   ```
 
-3. **Ouvrir un terminal dans le conteneur PHP**
+   Les services suivants seront disponibles :
+
+   * PHP : port 9000
+   * Nginx : [http://localhost:8080](http://localhost:8080)
+   * MariaDB : port 3309
+   * MongoDB : port 27017
+
+3. **Installer les dépendances**
 
    ```bash
    docker compose exec php sh
+   composer install
+   npm install
+   npm run build
    ```
 
-   Cette commande vous ouvre le terminal du conteneur.
+4. **Initialiser la base de données**
 
-4. **Installer les dépendances**
+   ```bash
+   php bin/console doctrine:migrations:migrate
+   php bin/console app:create-admin
+   ```
 
-   * `composer install`
-     *Installe toutes les dépendances PHP*
-   * `npm install`
-     *Installe toutes les dépendances JavaScript/Node*
-   * `npm run build`
-     *Compile et prépare les fichiers front-end*
+5. **Données de test**
+   Un script SQL est disponible dans `doc/sql/fixture.sql`
 
----
-5. **Mise en place BDD relationnelle**
-- Un scripte SQL  est à votre disposition dans la branche main dans le dossier doc/sql/createDataBase.sql 
-Il permet de mettre en place la base de données 
-- Vous pouvez également procéder à une migration via symfony 
-```bash
-php bin/console doctrine:migrations:migrate
-```
-- créer le compte admin
-```bash
-php bin/console app:create-admin
-```
+6. **Accès à l’application**
+   [http://localhost:8080](http://localhost:8080)
 
-6. **Charger les données de teste**
-
-- un script SQL est à votre disposition dans la branche main dans le dossier doc/sql/fixture.sql
-- "j'ai injecté les fixtures via script sur Dbeaver"
-
-7. **Accéder à l'application**
-
-- rendez-vous sur http://localhost:8080
-- tester les iddentifiants admin fournient plus haut .
-
-
-
-
-##  Contact
-
-Auteur : Johan Chaigneau  
-Projet réalisé pour l’ECF DWWM 2025  
-
+   * **Admin** : `admin-ecoride@ecoride.com` / `Azote355538!`
 
 ---
 
+## **Compétences mises en œuvre**
+
+* Développement complet **front + back**
+* Création et intégration d’une **architecture Docker multi-conteneurs**
+* Configuration et optimisation **Nginx + PHP-FPM**
+* Gestion des **bases MariaDB et MongoDB**
+* Sécurisation des formulaires et des routes
+* Déploiement sur **VPS OVH** avec réseau Docker privé
+* Documentation technique complète et procédure de déploiement
+* Maîtrise du workflow **Git / GitHub / Docker**
+
+---
+## Documentation:
+
+* **Documentation compléte disponible dans l'onglet doc ainsi que les fixtures de l'application**
+
+## **Auteur**
+
+**Johan Chaigneau**
+Développeur Web & Web Mobile — Reconversion professionnelle
+Projet réalisé dans le cadre du Titre Professionnel DWWM (session 2025)
+[https://github.com/joch0117]
